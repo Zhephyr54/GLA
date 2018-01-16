@@ -41,6 +41,10 @@ public class User implements Serializable {
     @Column(name = "cancelled_bids")
     private int cancelledBids;
     
+    public User() {
+        
+    }
+    
     public Long getId() {
         return id;
     }
