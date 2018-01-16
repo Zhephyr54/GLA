@@ -19,7 +19,7 @@ import javax.persistence.PersistenceContext;
 @LocalBean
 public class CreditCardDAO extends AbstractDAO<CreditCard> {
     
-    @PersistenceContext(unitName = "imp-pu")
+    @PersistenceContext(unitName = "glaPU")
     private EntityManager em;
 
     public CreditCardDAO() {

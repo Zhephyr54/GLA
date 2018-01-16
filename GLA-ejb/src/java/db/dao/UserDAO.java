@@ -19,7 +19,7 @@ import javax.persistence.PersistenceContext;
 @LocalBean
 public class UserDAO extends AbstractDAO<User> {
     
-    @PersistenceContext(unitName = "imp-pu")
+    @PersistenceContext(unitName = "glaPU")
     private EntityManager em;
 
     public UserDAO() {

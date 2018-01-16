@@ -19,7 +19,7 @@ import javax.persistence.PersistenceContext;
 @LocalBean
 public class CategoryDAO extends AbstractDAO<Category> {
     
-    @PersistenceContext(unitName = "imp-pu")
+    @PersistenceContext(unitName = "glaPU")
     private EntityManager em;
 
     public CategoryDAO() {

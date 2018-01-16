@@ -19,7 +19,7 @@ import javax.persistence.PersistenceContext;
 @LocalBean
 public class OrderDAO extends AbstractDAO<Order> {
     
-    @PersistenceContext(unitName = "imp-pu")
+    @PersistenceContext(unitName = "glaPU")
     private EntityManager em;
 
     public OrderDAO() {

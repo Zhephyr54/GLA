@@ -19,7 +19,7 @@ import javax.persistence.PersistenceContext;
 @LocalBean
 public class ItemDAO extends AbstractDAO<Item> {
     
-    @PersistenceContext(unitName = "imp-pu")
+    @PersistenceContext(unitName = "glaPU")
     private EntityManager em;
 
     public ItemDAO() {
