@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -34,6 +35,9 @@ public class CreditCard implements Serializable {
     
     @Column(name = "name")
     private String name;
+    
+    @ManyToOne
+    private User user;
     
     public CreditCard() {
     } 
@@ -69,9 +73,15 @@ public class CreditCard implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    
-    
 
+    public User getU() {
+        return user;
+    }
+
+    public void setU(User u) {
+        this.user = u;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
