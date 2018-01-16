@@ -45,7 +45,7 @@ public class Item implements Serializable {
     private double startingBid;
     
     @Column(name = "end_bid_date")
-    private LocalDateTime endBidDate ;
+    private LocalDateTime endBidDate;
         
     @Column(name = "current_max_bid")
     private double currentMaxBid;

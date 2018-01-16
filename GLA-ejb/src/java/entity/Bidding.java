@@ -29,7 +29,7 @@ public class Bidding implements Serializable {
     private Long id;
     
     @Column(name = "bidding_date")
-    private LocalDateTime biddingDate;
+    private LocalDateTime biddingDate = LocalDateTime.now();
     
     @Column(name = "price")
     private double price;

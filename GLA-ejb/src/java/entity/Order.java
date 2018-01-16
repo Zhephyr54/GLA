@@ -34,13 +34,13 @@ public class Order implements Serializable {
     private Long id;
     
     @Column(name = "order_date")
-    private LocalDateTime orderDate;
+    private LocalDateTime orderDate = LocalDateTime.now();
     
     @Column(name = "total_price")
     private double totalPrice;
 
     @Column(name = "order_state")
-    private OrderState orderState;
+    private OrderState orderState = OrderState.IN_PROCESS;
     
     @ManyToOne
     private User user;

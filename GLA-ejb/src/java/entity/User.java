@@ -43,7 +43,7 @@ public class User implements Serializable {
     private String lastname;
     
     @Column(name = "cancelled_bids")
-    private int cancelledBids;
+    private int cancelledBids = 0;
     
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private List<CreditCard> creditCard = new ArrayList<>(); 
