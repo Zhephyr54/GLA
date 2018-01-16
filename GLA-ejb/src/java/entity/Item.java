@@ -15,6 +15,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -49,6 +52,13 @@ public class Item implements Serializable {
     
     @ManyToOne
     private User user;
+    
+    @ManyToMany
+    @JoinTable(
+      name = "item_subcategories",
+      joinColumns = @JoinColumn(name="item_id", referencedColumnName="id"),
+      inverseJoinColumns = @JoinColumn(name="subcategory_id", referencedColumnName="id"))
+    private List<Subcategory> subcategories = new ArrayList<Subcategory>();
     
     @OneToMany(mappedBy="item", cascade = CascadeType.ALL)
     private List<Bidding> bidding = new ArrayList<>(); 
@@ -130,6 +140,14 @@ public class Item implements Serializable {
     public void addBidding(Bidding bidding) {
         bidding.setItem(this);
         this.bidding.add(bidding);
+    }
+
+    public List<Subcategory> getSubcategories() {
+        return subcategories;
+    }
+
+    public void setSubcategories(List<Subcategory> subcategories) {
+        this.subcategories = subcategories;
     }
     
     @Override
