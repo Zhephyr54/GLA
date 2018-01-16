@@ -7,11 +7,16 @@ package entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -41,6 +46,12 @@ public class Item implements Serializable {
         
     @Column(name = "current_max_bid")
     private double currentMaxBid;
+    
+    @ManyToOne
+    private User user;
+    
+    @OneToMany(mappedBy="item", cascade = CascadeType.ALL)
+    private List<Bidding> bidding = new ArrayList<>(); 
 
     public Item() {
     }
@@ -93,6 +104,23 @@ public class Item implements Serializable {
         this.id = id;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
+    public List<Bidding> getBidding() {
+        return bidding;
+    }
+
+    public void addBidding(Bidding bidding) {
+        bidding.setItem(this);
+        this.bidding.add(bidding);
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

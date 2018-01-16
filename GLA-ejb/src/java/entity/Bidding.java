@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -32,7 +33,13 @@ public class Bidding implements Serializable {
     
     @Column(name = "price")
     private double price;
-
+    
+    @ManyToOne
+    private User user;
+    
+    @ManyToOne
+    private Item item;
+ 
     public Bidding() {
     }
 
@@ -58,6 +65,22 @@ public class Bidding implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
     
     @Override

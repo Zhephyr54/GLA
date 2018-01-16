@@ -46,10 +46,21 @@ public class User implements Serializable {
     private int cancelledBids;
     
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
-    private List<CreditCard> creditCard;
+    private List<CreditCard> creditCard = new ArrayList<>(); 
     
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private List<Item> item = new ArrayList<>(); 
+    
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private List<Address> adr = new ArrayList<>(); 
+    
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private List<Order> order = new ArrayList<>(); 
+    
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private List<Bidding> bidding = new ArrayList<>(); 
+       
     public User() {
-        this.creditCard = new ArrayList<>();      
     }
     
     public Long getId() {
@@ -108,6 +119,44 @@ public class User implements Serializable {
         c.setU(this);
         this.creditCard.add(c);
     }
+
+    public List<Item> getItem() {
+        return item;
+    }
+
+    public void addItem(Item i) {
+        i.setUser(this);
+        this.item.add(i);
+    }
+
+    public List<Address> getAdr() {
+        return adr;
+    }
+
+    public void addAdr(Address adr) {
+        adr.setUser(this);
+        this.adr.add(adr);
+    }
+
+    public List<Order> getOrder() {
+        return order;
+    }
+
+    public void addOrder(Order order) {
+        order.setUser(this);
+        this.order.add(order);
+    }
+
+    public List<Bidding> getBidding() {
+        return bidding;
+    }
+
+    public void addBidding(Bidding bidding) {
+        bidding.setUser(this);
+        this.bidding.add(bidding);
+    }
+    
+    
     
     @Override
     public int hashCode() {

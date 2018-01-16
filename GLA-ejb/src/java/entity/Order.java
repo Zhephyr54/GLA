@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -37,6 +38,9 @@ public class Order implements Serializable {
 
     @Column(name = "order_state")
     private OrderState orderState;
+    
+    @ManyToOne
+    private User user;
     
     public Order() {
     }
@@ -71,6 +75,14 @@ public class Order implements Serializable {
 
     public void setOrderState(OrderState orderState) {
         this.orderState = orderState;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
     
     @Override
