@@ -84,7 +84,6 @@ public class Item implements Serializable {
     public void setCurrentMaxBid(double currentMaxBid) {
         this.currentMaxBid = currentMaxBid;
     }
-
     
     public Long getId() {
         return id;

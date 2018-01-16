@@ -22,6 +22,8 @@ import javax.persistence.Table;
 @Table(name = "Orders")
 public class Order implements Serializable {
 
+    public enum OrderState { IN_PROCESS, SENT }
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,6 +35,9 @@ public class Order implements Serializable {
     @Column(name = "total_price")
     private double totalPrice;
 
+    @Column(name = "order_state")
+    private OrderState orderState;
+    
     public Order() {
     }
     
@@ -60,6 +65,13 @@ public class Order implements Serializable {
         this.totalPrice = totalPrice;
     }
 
+    public OrderState getOrderState() {
+        return orderState;
+    }
+
+    public void setOrderState(OrderState orderState) {
+        this.orderState = orderState;
+    }
     
     @Override
     public int hashCode() {

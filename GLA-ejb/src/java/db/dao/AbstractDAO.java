@@ -7,7 +7,6 @@ package db.dao;
 
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 /**
  * Abstract DAO class.
