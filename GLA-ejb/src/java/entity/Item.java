@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -42,6 +43,9 @@ public class Item implements Serializable {
     @Column(name = "current_max_bid")
     private double currentMaxBid;
 
+    @ManyToOne
+    private Order order;
+    
     public Item() {
     }
 
@@ -91,6 +95,14 @@ public class Item implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     @Override

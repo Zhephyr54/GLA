@@ -6,12 +6,14 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -38,6 +40,9 @@ public class CreditCard implements Serializable {
     
     @ManyToOne
     private User user;
+    
+    @OneToMany(mappedBy="creditCard")
+    private List<Order> orders;
     
     public CreditCard() {
     } 
@@ -74,12 +79,21 @@ public class CreditCard implements Serializable {
         this.name = name;
     }
 
-    public User getU() {
+    public User getUser() {
         return user;
     }
 
-    public void setU(User u) {
-        this.user = u;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void addOrder(Order order) {
+        order.setCreditCard(this);
+        this.orders.add(order);
     }
     
     @Override

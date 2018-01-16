@@ -7,11 +7,15 @@ package entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -37,6 +41,15 @@ public class Order implements Serializable {
 
     @Column(name = "order_state")
     private OrderState orderState;
+    
+    @ManyToOne
+    private Address address;
+    
+    @ManyToOne
+    private CreditCard creditCard;
+    
+    @OneToMany(mappedBy="order", cascade = CascadeType.ALL)
+    private List<Item> items;
     
     public Order() {
     }
@@ -71,6 +84,31 @@ public class Order implements Serializable {
 
     public void setOrderState(OrderState orderState) {
         this.orderState = orderState;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
+
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void addItem(Item item) {
+        item.setOrder(this);
+        this.items.add(item);
     }
     
     @Override

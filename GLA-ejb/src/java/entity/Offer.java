@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -34,6 +35,9 @@ public class Offer implements Serializable {
 
     @Column(name = "type")
     private OfferType type;
+    
+    @ManyToOne
+    private Category category;
     
     public Offer() {
     }
@@ -60,6 +64,14 @@ public class Offer implements Serializable {
 
     public void setType(OfferType type) {
         this.type = type;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override

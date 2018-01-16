@@ -6,11 +6,14 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -35,6 +38,9 @@ public class Address implements Serializable {
     @Column(name = "code")
     private Long code; 
 
+    @OneToMany(mappedBy="address")
+    private List<Order> orders;
+    
     public Address() {
     }
 
@@ -71,6 +77,15 @@ public class Address implements Serializable {
         this.id = id;
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void addOrder(Order order) {
+        order.setAddress(this);
+        this.orders.add(order);
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -95,7 +110,5 @@ public class Address implements Serializable {
     public String toString() {
         return "Address{" + "id=" + id + ", street=" + street + ", city=" + city + ", code=" + code + '}';
     }
-
-
     
 }

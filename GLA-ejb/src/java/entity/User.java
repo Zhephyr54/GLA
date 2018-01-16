@@ -105,7 +105,7 @@ public class User implements Serializable {
     }
 
     public void addCreditCard(CreditCard c) {
-        c.setU(this);
+        c.setUser(this);
         this.creditCard.add(c);
     }
     

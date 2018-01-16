@@ -6,11 +6,14 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -29,6 +32,12 @@ public class Category implements Serializable {
     @Column(name = "title")
     private String title;
 
+    @OneToMany(mappedBy="category", cascade = CascadeType.ALL)
+    private List<Subcategory> subcategories;
+    
+    @OneToMany(mappedBy="category")
+    private List<Offer> offers;
+    
     public Category() {
     }
     
@@ -46,6 +55,24 @@ public class Category implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public List<Subcategory> getSubcategories() {
+        return subcategories;
+    }
+
+    public void addSubcategorie(Subcategory subcategory) {
+        subcategory.setCategory(this);
+        this.subcategories.add(subcategory);
+    }
+
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public void addOffer(Offer offer) {
+        offer.setCategory(this);
+        this.offers.add(offer);
     }
     
     @Override
