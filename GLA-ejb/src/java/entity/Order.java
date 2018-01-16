@@ -43,6 +43,9 @@ public class Order implements Serializable {
     private OrderState orderState;
     
     @ManyToOne
+    private User user;
+    
+    @ManyToOne
     private Address address;
     
     @ManyToOne
@@ -84,6 +87,14 @@ public class Order implements Serializable {
 
     public void setOrderState(OrderState orderState) {
         this.orderState = orderState;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Address getAddress() {

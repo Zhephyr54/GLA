@@ -7,13 +7,13 @@ package entity;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -37,6 +37,9 @@ public class Address implements Serializable {
    
     @Column(name = "code")
     private Long code; 
+    
+    @ManyToOne
+    private User user;
 
     @OneToMany(mappedBy="address")
     private List<Order> orders;
@@ -86,6 +89,14 @@ public class Address implements Serializable {
         this.orders.add(order);
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
