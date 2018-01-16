@@ -52,8 +52,6 @@ public class Bidding implements Serializable {
         this.biddingDate = biddingDate;
     }
 
-
-
     public double getPrice() {
         return price;
     }

@@ -22,6 +22,8 @@ import javax.persistence.Table;
 @Table(name = "Offers")
 public class Offer implements Serializable {
 
+    public enum OfferType { FREE_DELIVERY, PRICE_DISCOUNT }
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,6 +32,9 @@ public class Offer implements Serializable {
     @Column(name = "end_offer_date")
     private LocalDateTime endOfferDate;
 
+    @Column(name = "type")
+    private OfferType type;
+    
     public Offer() {
     }
     
@@ -39,6 +44,22 @@ public class Offer implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public LocalDateTime getEndOfferDate() {
+        return endOfferDate;
+    }
+
+    public void setEndOfferDate(LocalDateTime endOfferDate) {
+        this.endOfferDate = endOfferDate;
+    }
+
+    public OfferType getType() {
+        return type;
+    }
+
+    public void setType(OfferType type) {
+        this.type = type;
     }
 
     @Override

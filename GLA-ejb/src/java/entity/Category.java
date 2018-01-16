@@ -47,7 +47,6 @@ public class Category implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
-
     
     @Override
     public int hashCode() {
