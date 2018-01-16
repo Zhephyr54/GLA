@@ -3,11 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package bean;
+
+import entity.User;
+import javax.ejb.Local;
 
 /**
  *
- * @author alexis
+ * @author yasar
  */
-public class Test {
-    
+@Local
+public interface GlaBeanLocal {
+    public User addUser(User p);
 }
