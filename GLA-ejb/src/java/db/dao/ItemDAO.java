@@ -6,6 +6,7 @@
 package db.dao;
 
 import entity.Item;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
@@ -31,4 +32,8 @@ public class ItemDAO extends AbstractDAO<Item> {
         return em;
     } 
 
+    public List<Item> findAll() {
+        return executeNamedQuery("Item.findAll");
+    }
+    
 }

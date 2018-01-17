@@ -19,7 +19,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -28,11 +31,16 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Items")
+@NamedQueries({
+    @NamedQuery(
+            name = "Item.findAll", 
+            query = "SELECT i FROM Item i")
+})
 public class Item implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     @Column(name = "title")
@@ -47,8 +55,9 @@ public class Item implements Serializable {
     @Column(name = "end_bid_date")
     private LocalDateTime endBidDate;
         
-    @Column(name = "current_max_bid")
-    private double currentMaxBid;
+    @OneToOne
+    @JoinColumn(name="current_max_bid")
+    private Bidding currentMaxBid;
     
     @ManyToOne
     private User user;
@@ -67,6 +76,13 @@ public class Item implements Serializable {
     private Order order;
     
     public Item() {
+    }
+
+    public Item(String title, String description, double startingBid, LocalDateTime endBidDate) {
+        this.title = title;
+        this.description = description;
+        this.startingBid = startingBid;
+        this.endBidDate = endBidDate;
     }
 
     public String getTitle() {
@@ -101,11 +117,11 @@ public class Item implements Serializable {
         this.endBidDate = endBidDate;
     }
 
-    public double getCurrentMaxBid() {
+    public Bidding getCurrentMaxBid() {
         return currentMaxBid;
     }
 
-    public void setCurrentMaxBid(double currentMaxBid) {
+    public void setCurrentMaxBid(Bidding currentMaxBid) {
         this.currentMaxBid = currentMaxBid;
     }
     
