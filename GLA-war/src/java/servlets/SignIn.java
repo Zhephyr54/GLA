@@ -1,7 +1,9 @@
 package servlets;
 
+import db.dao.UserDAO;
 import entity.User;
 import java.io.IOException;
+import javax.ejb.EJB;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,9 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import login.SignInForm;
-import static servlets.CreateAccount.URL_REDIRECTION;
 
 public class SignIn extends HttpServlet {
+
+    @EJB
+    UserDAO ud;
 
     public static final String ATT_USER = "utilisateur";
     public static final String ATT_FORM = "form";
@@ -29,7 +33,7 @@ public class SignIn extends HttpServlet {
         SignInForm form = new SignInForm();
 
         /* Traitement de la requête et récupération du bean en résultant */
-        User utilisateur = form.connecterUtilisateur(request);
+        User utilisateur = form.connecterUtilisateur(request,ud.testCo(request.getParameter("email"),request.getParameter("motdepasse")));
 
         /* Récupération de la session depuis la requête */
         HttpSession session = request.getSession();

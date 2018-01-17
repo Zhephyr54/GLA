@@ -13,6 +13,7 @@ public final class SignInForm {
 
     private String resultat;
     private Map<String, String> erreurs = new HashMap<String, String>();
+    boolean check;
 
     public String getResultat() {
         return resultat;
@@ -22,10 +23,11 @@ public final class SignInForm {
         return erreurs;
     }
 
-    public User connecterUtilisateur(HttpServletRequest request) {
+    public User connecterUtilisateur(HttpServletRequest request, boolean check) {
         /* Récupération des champs du formulaire */
         String email = getValeurChamp(request, CHAMP_EMAIL);
         String motDePasse = getValeurChamp(request, CHAMP_PASS);
+        this.check = check;
 
         User utilisateur = new User();
 
@@ -68,6 +70,8 @@ public final class SignInForm {
      * Valide le mot de passe saisi.
      */
     private void validationMotDePasse(String motDePasse) throws Exception {
+        if(!check)
+            throw new Exception("Les infos sont erronées.");
         if (motDePasse != null) {
             if (motDePasse.length() < 6) {
                 throw new Exception("Le mot de passe doit contenir au moins 6 caractères.");
