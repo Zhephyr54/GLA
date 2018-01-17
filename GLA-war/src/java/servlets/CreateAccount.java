@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import login.CreateAccountForm;
-import static servlets.LogOut.URL_REDIRECTION;
 
 
 
@@ -32,9 +31,10 @@ public class CreateAccount extends HttpServlet {
     public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
         /* Préparation de l'objet formulaire */
         CreateAccountForm form = new CreateAccountForm();
+        
 		
         /* Appel au traitement et à la validation de la requête, et récupération du bean en résultant */
-        User utilisateur = form.inscrireUtilisateur( request );
+        User utilisateur = form.inscrireUtilisateur( request,ud.findByEmail(request.getParameter("email")) );
         if(form.isOk()){
             ud.create(utilisateur);
                 /* Redirection vers la page de Connexion */

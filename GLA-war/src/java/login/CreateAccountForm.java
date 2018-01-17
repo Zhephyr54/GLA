@@ -13,7 +13,7 @@ public final class CreateAccountForm {
     private static final String CHAMP_CONF = "confirmation";
     private static final String CHAMP_NOM = "lastname";
     private static final String CHAMP_PRENOM = "firstname";
-    private boolean ok;
+    private boolean ok,emailexist;
 
     private String resultat;
     private Map<String, String> erreurs = new HashMap<String, String>();
@@ -26,12 +26,13 @@ public final class CreateAccountForm {
         return erreurs;
     }
 
-    public User inscrireUtilisateur(HttpServletRequest request) {
+    public User inscrireUtilisateur(HttpServletRequest request, boolean emailexist ) {
         String email = getValeurChamp(request, CHAMP_EMAIL);
         String motDePasse = getValeurChamp(request, CHAMP_PASS);
         String confirmation = getValeurChamp(request, CHAMP_CONF);
         String nom = getValeurChamp(request, CHAMP_NOM);
         String prenom = getValeurChamp(request, CHAMP_PRENOM);
+        this.emailexist = emailexist;
 
         User utilisateur = new User();
 
@@ -94,12 +95,15 @@ public final class CreateAccountForm {
     }
 
     private void validationMotsDePasse(String motDePasse, String confirmation) throws Exception {
+        if(emailexist)
+            throw new Exception("Cette email est deja utilise.");
         if (motDePasse != null && confirmation != null) {
             if (!motDePasse.equals(confirmation)) {
                 throw new Exception("Les mots de passe entrés sont différents, merci de les saisir à nouveau.");
             } else if (motDePasse.length() < 6) {
                 throw new Exception("Les mots de passe doivent contenir au moins 6 caractères.");
             }
+            
         } else {
             throw new Exception("Merci de saisir et confirmer votre mot de passe.");
         }
