@@ -6,60 +6,8 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-
-        <h:form>
-
-            <fieldset>
-                <legend>Registration Form </legend>
-
-                Firstname: 
-                <h:inputText value="#{register.firstname}"
-                             id="firstnameInput"/>
-                <br/>
-
-                Lastname: 
-                <h:inputText value="#{register.lastname}"
-                             id="lastnameInput"/>
-                <br/>
-
-                Email: 
-                <h:inputText value="#{register.email}"
-                             id="emailInput"/>
-                <br/>
-
-                Password: 
-                <h:inputSecret  value="#{register.password}"
-                                id="passwordInput"/>
-                <br/>
-            </fieldset>
-
-            <br/>
-
-            <fieldset>
-                <legend>Address </legend>
-
-                Street : 
-                <h:inputText value="#{register.street}"
-                             id="streetInput"/>
-                <br/>
-
-                City : 
-                <h:inputText value="#{register.city}"
-                             id="cityInput"/>
-                <br/>
-
-                Code : 
-                <h:inputText value="#{register.code}"
-                             id="codeInput"/>
-                <br/>
-            </fieldset>
-
-            <h:commandButton value="Submit" 
-                             action="#{register.registerUser()}" />
-            <br/>           
-
-        </h:form>
-
+       pour test l'inscription http://localhost:8080/GLA-war/inscription
     </h:body>
+    
 </html>
 

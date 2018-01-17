@@ -36,7 +36,7 @@ public class Address implements Serializable {
     private String city;
    
     @Column(name = "code")
-    private Long code; 
+    private String code; 
     
     @ManyToOne
     private User user;
@@ -47,7 +47,7 @@ public class Address implements Serializable {
     public Address() {
     }
 
-    public Address(String street, String city, Long code) {
+    public Address(String street, String city, String code) {
         this.street = street;
         this.city = city;
         this.code = code;
@@ -69,11 +69,11 @@ public class Address implements Serializable {
         this.city = city;
     }
 
-    public Long getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Long code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

@@ -13,13 +13,21 @@
         <servlet-name>DispatchServelet</servlet-name>
         <servlet-class>hello.DispatchServelet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>signIn</servlet-name>
+        <servlet-class>servlets.SignIn</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DispatchServelet</servlet-name>
-		<url-pattern>/Hello</url-pattern>
+        <url-pattern>/Hello</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>signIn</servlet-name>
+        <url-pattern>/inscription</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
