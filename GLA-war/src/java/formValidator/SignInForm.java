@@ -1,4 +1,4 @@
-package login;
+package formValidator;
 
 import entity.User;
 import java.util.HashMap;
@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 public final class SignInForm {
 
-    private static final String CHAMP_EMAIL = "email";
-    private static final String CHAMP_PASS = "motdepasse";
+    private final String CHAMP_EMAIL = "email";
+    private final String CHAMP_PASS = "motdepasse";
 
     private String resultat;
     private Map<String, String> erreurs = new HashMap<String, String>();
@@ -32,19 +32,11 @@ public final class SignInForm {
         User utilisateur = new User();
 
         /* Validation du champ email. */
-        try {
-            validationEmail(email);
-        } catch (Exception e) {
-            setErreur(CHAMP_EMAIL, e.getMessage());
-        }
+        validationEmail(email);
         utilisateur.setEmail(email);
 
         /* Validation du champ mot de passe. */
-        try {
-            validationMotDePasse(motDePasse);
-        } catch (Exception e) {
-            setErreur(CHAMP_PASS, e.getMessage());
-        }
+        validationMotDePasse(motDePasse);
         utilisateur.setPassword(motDePasse);
 
         /* Initialisation du résultat global de la validation. */
@@ -60,24 +52,31 @@ public final class SignInForm {
     /**
      * Valide l'adresse email saisie.
      */
-    private void validationEmail(String email) throws Exception {
-        if (email != null && !email.matches("([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)")) {
-            throw new Exception("Merci de saisir une adresse mail valide.");
+    private void validationEmail(String email) {
+        if (email != null) {
+            if (!email.matches("([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)")) {
+                setErreur(CHAMP_EMAIL, "Merci de saisir une adresse mail valide.");
+            }
+        } else {
+            setErreur(CHAMP_EMAIL, "Merci de saisir une adresse mail.");
         }
     }
 
     /**
      * Valide le mot de passe saisi.
      */
-    private void validationMotDePasse(String motDePasse) throws Exception {
-        if(!check)
-            throw new Exception("Les infos sont erronées.");
+    private void validationMotDePasse(String motDePasse) {
+        if (!check) {
+            setErreur(CHAMP_PASS, "Les infos sont erronées.");
+        }
         if (motDePasse != null) {
             if (motDePasse.length() < 6) {
-                throw new Exception("Le mot de passe doit contenir au moins 6 caractères.");
+                setErreur(CHAMP_PASS, "Le mot de passe doit contenir au moins 6 caractères.");
+
             }
         } else {
-            throw new Exception("Merci de saisir votre mot de passe.");
+            setErreur(CHAMP_PASS, "Merci de saisir votre mot de passe.");
+
         }
     }
 
@@ -92,7 +91,7 @@ public final class SignInForm {
      * Méthode utilitaire qui retourne null si un champ est vide, et son contenu
      * sinon.
      */
-    private static String getValeurChamp(HttpServletRequest request, String nomChamp) {
+    private String getValeurChamp(HttpServletRequest request, String nomChamp) {
         String valeur = request.getParameter(nomChamp);
         if (valeur == null || valeur.trim().length() == 0) {
             return null;

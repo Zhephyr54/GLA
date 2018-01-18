@@ -1,4 +1,4 @@
-package login;
+package formValidator;
 
 import entity.User;
 import java.util.HashMap;
@@ -8,12 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 
 public final class CreateAccountForm {
 
-    private static final String CHAMP_EMAIL = "email";
-    private static final String CHAMP_PASS = "motdepasse";
-    private static final String CHAMP_CONF = "confirmation";
-    private static final String CHAMP_NOM = "lastname";
-    private static final String CHAMP_PRENOM = "firstname";
-    private boolean ok,emailexist;
+    private final String CHAMP_EMAIL = "email";
+    private final String CHAMP_PASS = "motdepasse";
+    private final String CHAMP_CONF = "confirmation";
+    private final String CHAMP_NOM = "lastname";
+    private final String CHAMP_PRENOM = "firstname";
+    private boolean ok, emailexist;
 
     private String resultat;
     private Map<String, String> erreurs = new HashMap<String, String>();
@@ -26,7 +26,7 @@ public final class CreateAccountForm {
         return erreurs;
     }
 
-    public User inscrireUtilisateur(HttpServletRequest request, boolean emailexist ) {
+    public User inscrireUtilisateur(HttpServletRequest request, boolean emailexist) {
         String email = getValeurChamp(request, CHAMP_EMAIL);
         String motDePasse = getValeurChamp(request, CHAMP_PASS);
         String confirmation = getValeurChamp(request, CHAMP_CONF);
@@ -36,33 +36,16 @@ public final class CreateAccountForm {
 
         User utilisateur = new User();
 
-        try {
-            validationEmail(email);
-        } catch (Exception e) {
-            setErreur(CHAMP_EMAIL, e.getMessage());
-        }
+        validationEmail(email);
         utilisateur.setEmail(email);
 
-        try {
-            validationMotsDePasse(motDePasse, confirmation);
-        } catch (Exception e) {
-            setErreur(CHAMP_PASS, e.getMessage());
-            setErreur(CHAMP_CONF, null);
-        }
+        validationMotsDePasse(motDePasse, confirmation);
         utilisateur.setPassword(motDePasse);
 
-        try {
-            validationNom(nom);
-        } catch (Exception e) {
-            setErreur(CHAMP_NOM, e.getMessage());
-        }
+        validationNom(nom);
         utilisateur.setLastname(nom);
 
-        try {
-            validationPrenom(prenom);
-        } catch (Exception e) {
-            setErreur(CHAMP_PRENOM, e.getMessage());
-        }
+        validationPrenom(prenom);
         utilisateur.setFirstname(prenom);
 
         if (erreurs.isEmpty()) {
@@ -84,49 +67,53 @@ public final class CreateAccountForm {
         this.ok = ok;
     }
 
-    private void validationEmail(String email) throws Exception {
+    private void validationEmail(String email) {
+        if (emailexist) {
+            setErreur(CHAMP_EMAIL, "Cette email est deja utilise.");
+        }
         if (email != null) {
             if (!email.matches("([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)")) {
-                throw new Exception("Merci de saisir une adresse mail valide.");
+                setErreur(CHAMP_EMAIL, "Merci de saisir une adresse mail valide.");
             }
         } else {
-            throw new Exception("Merci de saisir une adresse mail.");
+            setErreur(CHAMP_EMAIL, "Merci de saisir une adresse mail.");
         }
     }
 
-    private void validationMotsDePasse(String motDePasse, String confirmation) throws Exception {
-        if(emailexist)
-            throw new Exception("Cette email est deja utilise.");
+    private void validationMotsDePasse(String motDePasse, String confirmation) {
         if (motDePasse != null && confirmation != null) {
             if (!motDePasse.equals(confirmation)) {
-                throw new Exception("Les mots de passe entrés sont différents, merci de les saisir à nouveau.");
+                setErreur(CHAMP_PASS, "Les mots de passe entrés sont différents, merci de les saisir à nouveau.");
+                setErreur(CHAMP_CONF, null);
             } else if (motDePasse.length() < 6) {
-                throw new Exception("Les mots de passe doivent contenir au moins 6 caractères.");
+                setErreur(CHAMP_PASS, "Les mots de passe doivent contenir au moins 6 caractères.");
+                setErreur(CHAMP_CONF, null);
             }
-            
         } else {
-            throw new Exception("Merci de saisir et confirmer votre mot de passe.");
+            setErreur(CHAMP_PASS, "Merci de saisir et confirmer votre mot de passe.");
+            setErreur(CHAMP_CONF, null);
         }
     }
 
-    private void validationNom(String nom) throws Exception {
+    private void validationNom(String nom) {
         if (nom != null) {
             if (nom.length() < 3) {
-                throw new Exception("Le nom d'utilisateur doit contenir au moins 3 caractères.");
+                setErreur(CHAMP_NOM, "Le nom d'utilisateur doit contenir au moins 3 caractères.");
             }
         } else {
-            throw new Exception("Merci de saisir votre nom.");
+            setErreur(CHAMP_NOM, "Merci de saisir votre nom.");
         }
 
     }
 
-    private void validationPrenom(String nom) throws Exception {
-       if (nom != null) {
+    private void validationPrenom(String nom) {
+        if (nom != null) {
             if (nom.length() < 3) {
-                throw new Exception("Le prenom d'utilisateur doit contenir au moins 3 caractères.");
+                setErreur(CHAMP_PRENOM, "Le prenom d'utilisateur doit contenir au moins 3 caractères.");
             }
         } else {
-            throw new Exception("Merci de saisir votre prenom.");
+            setErreur(CHAMP_PRENOM, "Merci de saisir votre prenom.");
+
         }
     }
 
@@ -141,7 +128,7 @@ public final class CreateAccountForm {
  * Méthode utilitaire qui retourne null si un champ est vide, et son contenu
  * sinon.
      */
-    private static String getValeurChamp(HttpServletRequest request, String nomChamp) {
+    private String getValeurChamp(HttpServletRequest request, String nomChamp) {
         String valeur = request.getParameter(nomChamp);
         if (valeur == null || valeur.trim().length() == 0) {
             return null;

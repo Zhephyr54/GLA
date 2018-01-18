@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import login.SignInForm;
+import formValidator.SignInForm;
 
 public class SignIn extends HttpServlet {
 
@@ -23,11 +23,13 @@ public class SignIn extends HttpServlet {
     public static final String VUE = "/SignIn.jsp";
     public static final String URL_REDIRECTION = "/GLA-war";
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         /* Affichage de la page de connexion */
         this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
     }
 
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         /* Préparation de l'objet formulaire */
         SignInForm form = new SignInForm();
