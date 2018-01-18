@@ -15,9 +15,7 @@ import java.math.BigDecimal;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 
 /**

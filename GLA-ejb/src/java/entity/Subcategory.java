@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -27,11 +28,16 @@ import javax.persistence.Table;
 @Table(name = "Subcategories")
 @NamedQueries({
     @NamedQuery(
-            name = "Subcategory.findByCategory", 
-            query = "SELECT s FROM Subcategory s WHERE s.category.id = :id "),
+            name = "Subcategory.findByCategory",
+            query = "SELECT s FROM Subcategory s WHERE s.category.id = :id ")
+    ,
      @NamedQuery(
-            name = "Subcategory.findAll", 
-            query = "SELECT s FROM Subcategory s")
+            name = "Subcategory.findAll",
+            query = "SELECT s FROM Subcategory s ")
+    ,
+     @NamedQuery(
+            name = "Subcategory.findById",
+            query = "SELECT s FROM Subcategory s WHERE s.id = :id")
 })
 public class Subcategory implements Serializable {
 
@@ -39,24 +45,23 @@ public class Subcategory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(name = "title")
     private String title;
 
     @ManyToOne
     private Category category;
-    
-    @ManyToMany(mappedBy = "subcategories")
-    
+
+    @OneToMany(mappedBy = "subcategory")
     private List<Item> items = new ArrayList<Item>();
-    
+
     public Subcategory() {
     }
 
     public Subcategory(String title) {
         this.title = title;
     }
-   
+
     public Long getId() {
         return id;
     }
@@ -71,7 +76,7 @@ public class Subcategory implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }    
+    }
 
     public Category getCategory() {
         return category;
@@ -85,8 +90,9 @@ public class Subcategory implements Serializable {
         return items;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void addItems(Item item) {
+        item.setSubcategory(this);
+        this.items.add(item);
     }
 
     @Override
@@ -112,5 +118,5 @@ public class Subcategory implements Serializable {
     @Override
     public String toString() {
         return "Subcategory{" + "id=" + id + ", title=" + title + '}';
-    }    
+    }
 }

@@ -11,6 +11,7 @@ import entity.Item;
 import entity.Subcategory;
 import entity.User;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.ejb.EJB;
@@ -28,15 +29,16 @@ import static servlets.SignIn.ATT_SESSION_USER;
  */
 @WebServlet(name = "CreateBidding", urlPatterns = {"/enchere"})
 public class CreateBidding extends HttpServlet {
-        public static final String VUE = "/CreateBidding.jsp";
-        private List<Subcategory> subcategory;
 
-        @EJB
-        SubcategoryDAO s;
-        
-        @EJB
-        ItemDAO item;
-        
+    public static final String VUE = "/CreateBidding.jsp";
+    public static final String URL_REDIRECTION = "/GLA-war";
+    private List<Subcategory> subcategory;
+
+    @EJB
+    SubcategoryDAO s;
+
+    @EJB
+    ItemDAO item;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,11 +51,10 @@ public class CreateBidding extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-             this.subcategory = s.findAll();
-             request.setAttribute("subcategory", subcategory);
+        this.subcategory = s.findAll();
+        request.setAttribute("subcategory", subcategory);
 
-      
-                this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+        this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
     }
 
     /**
@@ -68,7 +69,7 @@ public class CreateBidding extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-                  }
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -81,15 +82,21 @@ public class CreateBidding extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       String title = request.getParameter("title");
-       String desc = request.getParameter("desc");
-       String price = request.getParameter("price");
-       String time = request.getParameter("time");
-       Item i = new Item(title,desc,Double.parseDouble(price),LocalDateTime.now().plusDays(Integer.parseInt(time)));
-       HttpSession session = request.getSession(); 
-       User u = (User)session.getAttribute(ATT_SESSION_USER);
-       i.setUser(u);
-       item.create(i);
+        String title = request.getParameter("title");
+        String desc = request.getParameter("desc");
+        String price = request.getParameter("price");
+        String time = request.getParameter("time");
+
+        Item i = new Item(title, desc, new BigDecimal(price), LocalDateTime.now().plusDays(Integer.parseInt(time)));
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute(ATT_SESSION_USER);
+        i.setUser(u);
+        String idSubCategory = request.getParameter("sub");
+        Subcategory subcategory  = s.findById(Integer.parseInt(idSubCategory));
+        i.setSubcategory(subcategory);
+        item.create(i);
+        response.sendRedirect(URL_REDIRECTION);
+
     }
 
     /**

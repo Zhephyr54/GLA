@@ -66,12 +66,9 @@ public class Item implements Serializable {
     @ManyToOne
     private User user;
     
-    @ManyToMany
-    @JoinTable(
-      name = "item_subcategories",
-      joinColumns = @JoinColumn(name="item_id", referencedColumnName="id"),
-      inverseJoinColumns = @JoinColumn(name="subcategory_id", referencedColumnName="id"))
-    private List<Subcategory> subcategories = new ArrayList<Subcategory>();
+    @ManyToOne
+    private Subcategory subcategory;
+
     
     @OneToMany(mappedBy="item", cascade = CascadeType.ALL)
     private List<Bidding> biddings = new ArrayList<>(); 
@@ -162,12 +159,12 @@ public class Item implements Serializable {
         this.biddings.add(bidding);
     }
 
-    public List<Subcategory> getSubcategories() {
-        return subcategories;
+    public Subcategory getSubcategory() {
+        return subcategory;
     }
 
-    public void setSubcategories(List<Subcategory> subcategories) {
-        this.subcategories = subcategories;
+    public void setSubcategory(Subcategory subcategory) {
+        this.subcategory = subcategory;
     }
     
     /**
