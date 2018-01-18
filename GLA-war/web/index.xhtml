@@ -10,7 +10,8 @@
     <h:body>
        
         <c:if test="${!empty sessionScope.sessionUtilisateur}">
-                    <p class="succes">Vous êtes connecté(e) avec l'adresse : ${sessionScope.sessionUtilisateur.email}</p>
+                    <p class="succes">Vous êtes connecté(e) avec l'adresse : ${sessionScope.sessionUtilisateur}</p>
+                    <a href="enchere">Creer une enchère</a>
                     <a href="deconnexion">Deconnexion</a>
         </c:if>
          <c:if test="${empty sessionScope.sessionUtilisateur}">

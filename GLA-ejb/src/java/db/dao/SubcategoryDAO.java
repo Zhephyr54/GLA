@@ -6,10 +6,12 @@
 package db.dao;
 
 import entity.Subcategory;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -31,4 +33,15 @@ public class SubcategoryDAO extends AbstractDAO<Subcategory> {
         return em;
     } 
 
+    public List<Subcategory> findByCategory(int id) {
+        TypedQuery<Subcategory> query = getEntityManager().createNamedQuery("Subcategory.findByCategory", Subcategory.class);
+        List<Subcategory> s = query.setParameter("id", id).getResultList();
+        return s;
+    }
+    
+        public List<Subcategory> findAll() {
+        TypedQuery<Subcategory> query = getEntityManager().createNamedQuery("Subcategory.findAll", Subcategory.class);
+        List<Subcategory> s = query.getResultList();
+        return s;
+    }
 }

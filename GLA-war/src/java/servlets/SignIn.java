@@ -35,7 +35,7 @@ public class SignIn extends HttpServlet {
         SignInForm form = new SignInForm();
 
         /* Traitement de la requête et récupération du bean en résultant */
-        User utilisateur = form.connecterUtilisateur(request,ud.testCo(request.getParameter("email"),request.getParameter("motdepasse")));
+        User utilisateur = form.connecterUtilisateur(request,ud.getUserByMail(request.getParameter("email"),request.getParameter("motdepasse")));
 
         /* Récupération de la session depuis la requête */
         HttpSession session = request.getSession();

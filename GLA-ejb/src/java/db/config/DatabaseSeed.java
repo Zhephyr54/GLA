@@ -5,9 +5,10 @@
  */
 package db.config;
 
+import entity.Category;
 import entity.Item;
+import entity.Subcategory;
 import entity.User;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -35,9 +36,29 @@ public class DatabaseSeed {
         
         Item item1 = new Item("Iphone 12", "Le tout nouvel iphone quasi neuf !", 499.99, LocalDateTime.now().plusDays(5));
         item1.setUser(user1);
+        
+        Category c1 = new Category("Multimedia"); 
+        Category c2 = new Category("Loisirs"); 
+        
+        Subcategory s1 = new Subcategory("Informatique");
+        Subcategory s2 = new Subcategory("Jeux");
+        Subcategory s3 = new Subcategory("Livres");
+        Subcategory s4 = new Subcategory("Velos");
+        
+        s1.setCategory(c1);
+        s2.setCategory(c1);
+        s3.setCategory(c2);
+        s4.setCategory(c2);
 
         em.persist(user1);
-        em.persist(item1);    
+        em.persist(item1); 
+        em.persist(c1);
+        em.persist(c2);
+        em.persist(s1);
+        em.persist(s2);
+        em.persist(s3);
+        em.persist(s4);
+        
     }   
 
 }

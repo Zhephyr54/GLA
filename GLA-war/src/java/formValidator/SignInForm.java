@@ -13,7 +13,7 @@ public final class SignInForm {
 
     private String resultat;
     private Map<String, String> erreurs = new HashMap<String, String>();
-    boolean check;
+    private User u;
 
     public String getResultat() {
         return resultat;
@@ -23,11 +23,11 @@ public final class SignInForm {
         return erreurs;
     }
 
-    public User connecterUtilisateur(HttpServletRequest request, boolean check) {
+    public User connecterUtilisateur(HttpServletRequest request,User u) {
         /* Récupération des champs du formulaire */
         String email = getValeurChamp(request, CHAMP_EMAIL);
         String motDePasse = getValeurChamp(request, CHAMP_PASS);
-        this.check = check;
+        this.u = u;
 
         User utilisateur = new User();
 
@@ -41,7 +41,7 @@ public final class SignInForm {
 
         /* Initialisation du résultat global de la validation. */
         if (erreurs.isEmpty()) {
-            resultat = "Succès de la connexion.";
+          return u;
         } else {
             resultat = "Échec de la connexion.";
         }
@@ -66,7 +66,7 @@ public final class SignInForm {
      * Valide le mot de passe saisi.
      */
     private void validationMotDePasse(String motDePasse) {
-        if (!check) {
+        if (u == null) {
             setErreur(CHAMP_PASS, "Les infos sont erronées.");
         }
         if (motDePasse != null) {
