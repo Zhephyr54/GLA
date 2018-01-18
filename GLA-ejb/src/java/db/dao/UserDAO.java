@@ -41,12 +41,13 @@ public class UserDAO extends AbstractDAO<User> {
         return false;
     }
       
-    public Boolean testCo(String mail, String password) {
+    public User getUserByMail(String mail, String password) {
         TypedQuery<User> query = getEntityManager().createNamedQuery("User.findByEmailAndPassword", User.class);
         query.setParameter("email", mail);
         List<User> u = query.setParameter("password", password).getResultList();
         if(u.size() > 0)
-            return true;
-        return false;
+            return u.get(0);
+        return null;
     }
+    
 }

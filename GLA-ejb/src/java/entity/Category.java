@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,6 +24,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Categories")
+@NamedQueries({
+    @NamedQuery(
+            name = "Category.findAll", 
+            query = "SELECT c FROM Category c ")
+})
 public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,7 +47,11 @@ public class Category implements Serializable {
     
     public Category() {
     }
-    
+
+    public Category(String title) {
+        this.title = title;
+    }
+      
     public Long getId() {
         return id;
     }

@@ -6,10 +6,12 @@
 package db.dao;
 
 import entity.Category;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -30,5 +32,11 @@ public class CategoryDAO extends AbstractDAO<Category> {
     protected EntityManager getEntityManager() {
         return em;
     } 
+
+    public List<Category> findall() {
+        TypedQuery<Category> query = getEntityManager().createNamedQuery("Category.findAll", Category.class);
+        List<Category> u = query.getResultList();
+        return u;
+    }
 
 }

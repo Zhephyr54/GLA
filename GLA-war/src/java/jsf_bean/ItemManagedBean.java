@@ -76,8 +76,7 @@ public class ItemManagedBean implements Serializable {
      */
     public void outbid() {
         User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUtilisateur");
-        //System.out.println(user);
-        Bidding bidding = new Bidding(bid, null, item);
+        Bidding bidding = new Bidding(bid, user, item);
         biddingDAO.create(bidding);
         item.setCurrentMaxBid(bidding);
         itemDAO.edit(item);

@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -23,6 +25,14 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Subcategories")
+@NamedQueries({
+    @NamedQuery(
+            name = "Subcategory.findByCategory", 
+            query = "SELECT s FROM Subcategory s WHERE s.category.id = :id "),
+     @NamedQuery(
+            name = "Subcategory.findAll", 
+            query = "SELECT s FROM Subcategory s")
+})
 public class Subcategory implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,6 +51,10 @@ public class Subcategory implements Serializable {
     private List<Item> items = new ArrayList<Item>();
     
     public Subcategory() {
+    }
+
+    public Subcategory(String title) {
+        this.title = title;
     }
    
     public Long getId() {

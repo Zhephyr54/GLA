@@ -11,8 +11,9 @@
     <h:body>
 
         <c:if test="${!empty sessionScope.sessionUtilisateur}">
-            <p class="succes">Vous êtes connecté(e) avec l'adresse : ${sessionScope.sessionUtilisateur.email}</p>
-            <a href="deconnexion">Deconnexion</a>
+            <p class="succes">Bonjour : ${sessionScope.sessionUtilisateur.lastname} ${sessionScope.sessionUtilisateur.firstname}</p>
+            <a href="enchere">Creer une enchère</a>
+            <a href="deconnexion">Déconnexion</a>
         </c:if>
         <c:if test="${empty sessionScope.sessionUtilisateur}">
             <a href="connexion">Connexion</a>
@@ -26,11 +27,11 @@
                     <f:param name="id" value="#{item.id}" />
                 </h:link>
             </h3>
-            
+
             <div>#{item.getCurrentPrice()} &euro;</div>
-            
+
             <div>#{itemUtilsBean.getItemBiddingsNumber(item)} ench&egrave;res</div>
-            
+
             <div>
                 Il reste #{itemUtilsBean.getEndBidTime(item.endBidDate)}
                 (#{itemUtilsBean.formatEndBidDate(item.endBidDate)})

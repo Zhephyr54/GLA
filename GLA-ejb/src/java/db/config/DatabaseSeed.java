@@ -6,7 +6,9 @@
 package db.config;
 
 import entity.Bidding;
+import entity.Category;
 import entity.Item;
+import entity.Subcategory;
 import entity.User;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -37,6 +39,19 @@ public class DatabaseSeed {
         
         Item item1 = new Item("Iphone 12", "Le tout nouvel iphone quasi neuf !", BigDecimal.valueOf(499.99), LocalDateTime.now().plusDays(5));
         item1.setUser(user1);
+        
+        Category c1 = new Category("Multimedia"); 
+        Category c2 = new Category("Loisirs"); 
+        
+        Subcategory s1 = new Subcategory("Informatique");
+        Subcategory s2 = new Subcategory("Jeux");
+        Subcategory s3 = new Subcategory("Livres");
+        Subcategory s4 = new Subcategory("Velos");
+        
+        s1.setCategory(c1);
+        s2.setCategory(c1);
+        s3.setCategory(c2);
+        s4.setCategory(c2);
 
         Bidding bidding1 = new Bidding(BigDecimal.valueOf(500), user2, item1);
         item1.setCurrentMaxBid(bidding1);
@@ -45,6 +60,12 @@ public class DatabaseSeed {
         em.persist(user2);
         em.persist(item1);
         em.persist(bidding1);
+        em.persist(c1);
+        em.persist(c2);
+        em.persist(s1);
+        em.persist(s2);
+        em.persist(s3);
+        em.persist(s4);        
     }   
 
 }

@@ -26,8 +26,8 @@ public class BidPriceValidator implements Validator {
         boolean isFirstBid = (boolean) component.getAttributes().get("isFirstBid");
         
         if (((BigDecimal) value).compareTo(minPrice) == -1 || !isFirstBid && ((BigDecimal) value).compareTo(minPrice) == 0) {
-            String msg = isFirstBid ? "Vous devez entrer un montant supérieur ou égal au montant initial de l'enchère " + minPrice
-                    : "Vous devez entrer un montant supérieur au montant de la meilleure enchère " + minPrice;
+            String msg = isFirstBid ? "Vous devez entrer un montant supérieur ou égal au montant initial de l'enchère (" + minPrice + ")"
+                    : "Vous devez entrer un montant supérieur au montant de la meilleure enchère (" + minPrice + ")";
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
         }
     }
