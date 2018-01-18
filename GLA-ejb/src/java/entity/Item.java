@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +53,8 @@ public class Item implements Serializable {
     @Column(name = "description")
     private String description;
     
-    @Column(name = "starting_bid")
-    private double startingBid;
+    @Column(name = "starting_bid", precision = 9, scale = 2)
+    private BigDecimal startingBid;
     
     @Column(name = "end_bid_date")
     private LocalDateTime endBidDate;
@@ -81,7 +82,7 @@ public class Item implements Serializable {
     public Item() {
     }
 
-    public Item(String title, String description, double startingBid, LocalDateTime endBidDate) {
+    public Item(String title, String description, BigDecimal startingBid, LocalDateTime endBidDate) {
         this.title = title;
         this.description = description;
         this.startingBid = startingBid;
@@ -104,11 +105,11 @@ public class Item implements Serializable {
         this.description = description;
     }
 
-    public double getStartingBid() {
+    public BigDecimal getStartingBid() {
         return startingBid;
     }
 
-    public void setStartingBid(double startingBid) {
+    public void setStartingBid(BigDecimal startingBid) {
         this.startingBid = startingBid;
     }
 
@@ -175,11 +176,21 @@ public class Item implements Serializable {
      * 
      * @return the current price for this item.
      */
-    public double getCurrentPrice() {
+    public BigDecimal getCurrentPrice() {
         if (currentMaxBid != null) {
             return currentMaxBid.getPrice();
         }
         return startingBid;
+    }
+    
+    /**
+     * Return true if this item has at least one bidding
+     * or false otherwise.
+     * 
+     * @return boolean
+     */
+    public boolean hasBid() {
+        return currentMaxBid != null;
     }
     
     @Override

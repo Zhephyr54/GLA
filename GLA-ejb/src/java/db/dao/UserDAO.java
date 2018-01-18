@@ -49,4 +49,5 @@ public class UserDAO extends AbstractDAO<User> {
             return u.get(0);
         return null;
     }
+    
 }

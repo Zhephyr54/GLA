@@ -5,10 +5,12 @@
  */
 package db.config;
 
+import entity.Bidding;
 import entity.Category;
 import entity.Item;
 import entity.Subcategory;
 import entity.User;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -33,8 +35,9 @@ public class DatabaseSeed {
     @PostConstruct
     public void seed() {
         User user1 = new User("jean.valjean@mail.fr", "password", "Jean", "Valjean");
+        User user2 = new User("nihad.jeveux5utilisateurs@mail.fr", "password", "Nihad", "JeVeux5utilisateurs");
         
-        Item item1 = new Item("Iphone 12", "Le tout nouvel iphone quasi neuf !", 499.99, LocalDateTime.now().plusDays(5));
+        Item item1 = new Item("Iphone 12", "Le tout nouvel iphone quasi neuf !", BigDecimal.valueOf(499.99), LocalDateTime.now().plusDays(5));
         item1.setUser(user1);
         
         Category c1 = new Category("Multimedia"); 
@@ -50,15 +53,19 @@ public class DatabaseSeed {
         s3.setCategory(c2);
         s4.setCategory(c2);
 
+        Bidding bidding1 = new Bidding(BigDecimal.valueOf(500), user2, item1);
+        item1.setCurrentMaxBid(bidding1);
+        
         em.persist(user1);
-        em.persist(item1); 
+        em.persist(user2);
+        em.persist(item1);
+        em.persist(bidding1);
         em.persist(c1);
         em.persist(c2);
         em.persist(s1);
         em.persist(s2);
         em.persist(s3);
-        em.persist(s4);
-        
+        em.persist(s4);        
     }   
 
 }

@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,8 +32,8 @@ public class Bidding implements Serializable {
     @Column(name = "bidding_date")
     private LocalDateTime biddingDate = LocalDateTime.now();
     
-    @Column(name = "price")
-    private double price;
+    @Column(name = "price", precision = 9, scale = 2)
+    private BigDecimal price;
     
     @ManyToOne
     private User user;
@@ -41,6 +42,12 @@ public class Bidding implements Serializable {
     private Item item;
  
     public Bidding() {
+    }
+
+    public Bidding(BigDecimal price, User user, Item item) {
+        this.price = price;
+        this.user = user;
+        this.item = item;
     }
 
     public Long getId() {
@@ -59,11 +66,11 @@ public class Bidding implements Serializable {
         this.biddingDate = biddingDate;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

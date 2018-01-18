@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <c:if test="#{empty itemBean.item}">
+            <title>#{itemBean.item.title}</title>
+        </c:if>
+        <c:if test="#{not empty itemBean.item}">
+            <title>#{itemBean.item.title}</title>
+        </c:if>
+        <f:metadata>
+            <f:viewParam name="id" value="#{itemBean.itemId}"/>
+            <f:viewAction action="#{itemBean.onload}"/>
+        </f:metadata>
+    </h:head>
+    <h:body>
+        <c:if test="#{empty itemBean.item}">
+            <p>Enchère introuvable</p>
+        </c:if>
+        <c:if test="#{not empty itemBean.item}">
+            <h3>#{itemBean.item.title}</h3>
+
+            <div>#{itemBean.item.getCurrentPrice()} &euro;</div>
+
+            <div>#{itemUtilsBean.getItemBiddingsNumber(itemBean.item)} ench&egrave;res</div>
+
+            <div>
+                Il reste #{itemUtilsBean.getEndBidTime(itemBean.item.endBidDate)}
+                (#{itemUtilsBean.formatEndBidDate(itemBean.item.endBidDate)})
+            </div>
+
+            <h:form>
+                <h:inputText value="#{itemBean.bid}" required="true" requiredMessage="Vous devez indiquer un montant afin de pouvoir enchérir">
+                    <f:attribute name="minPrice" value="#{itemBean.item.getCurrentPrice()}"/>
+                    <f:attribute name="isFirstBid" value="#{!itemBean.item.hasBid()}"/>
+                    <f:validator validatorId="BidPriceValidator"/>
+                </h:inputText>
+                <h:messages />
+                <h:commandButton value="Ench&eacute;rir" action="#{itemBean.outbid}"/>
+            </h:form>
+        </c:if>
+    </h:body>
+</html>
+
