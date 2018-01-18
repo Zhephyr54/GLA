@@ -8,6 +8,10 @@ package jsf_bean;
 
 import db.dao.ItemDAO;
 import entity.Item;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -24,25 +28,40 @@ public class IndexManagedBean {
 
     @EJB
     ItemDAO itemDAO;
-    
-    /**
-     * Items for which the biddings are not over
-     */
-    private List<Item> items; 
-    
+        
     /**
      * Creates a new instance of IndexManagedBean
      */
     public IndexManagedBean() {
     }
-
-    @PostConstruct
-    private void init() {
-        items = itemDAO.findAll();
-    }
     
     public List<Item> getItems() {
-        return items;
+        return itemDAO.findAll();
+    }
+    
+    public Long getItemBiddingsNumber(Item item) {
+        return itemDAO.getNumberOfBiddingsById(item.getId());
+    }
+    
+    public String getEndBidTime(LocalDateTime endBidDate) {
+        long days = ChronoUnit.DAYS.between(LocalDateTime.now(), endBidDate);
+        endBidDate = endBidDate.minusDays(days);
+        long hours = ChronoUnit.HOURS.between(LocalDateTime.now(), endBidDate);
+        endBidDate = endBidDate.minusHours(hours);
+        long minutes = ChronoUnit.MINUTES.between(LocalDateTime.now(), endBidDate);
+        endBidDate = endBidDate.minusHours(hours);
+        long seconds = ChronoUnit.SECONDS.between(LocalDateTime.now(), endBidDate);
+        
+        String result = days > 0 ? days + " j " : "";
+        result += hours > 0 ? hours + " h " : "";
+        result += days <= 0 && minutes > 0 ? minutes + " m " : "";
+        result += days <= 0 && hours <= 0 && seconds > 0 ? seconds + " s " : "";
+        return result;
+    }
+    
+    public String formatEndBidDate(LocalDateTime endBidDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd, HH:mm");
+        return endBidDate.format(formatter);
     }
     
 }

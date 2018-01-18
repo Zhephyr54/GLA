@@ -34,7 +34,10 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(
             name = "Item.findAll", 
-            query = "SELECT i FROM Item i")
+            query = "SELECT i FROM Item i"),
+    @NamedQuery(
+            name = "Item.getNumberOfBiddings", 
+            query = "SELECT count(b) as nbBiddings FROM Bidding b JOIN b.item i WHERE i.id = :itemId")
 })
 public class Item implements Serializable {
 
@@ -70,7 +73,7 @@ public class Item implements Serializable {
     private List<Subcategory> subcategories = new ArrayList<Subcategory>();
     
     @OneToMany(mappedBy="item", cascade = CascadeType.ALL)
-    private List<Bidding> bidding = new ArrayList<>(); 
+    private List<Bidding> biddings = new ArrayList<>(); 
 
     @ManyToOne
     private Order order;
@@ -149,13 +152,13 @@ public class Item implements Serializable {
         this.user = user;
     }
     
-    public List<Bidding> getBidding() {
-        return bidding;
+    public List<Bidding> getBiddings() {
+        return biddings;
     }
 
     public void addBidding(Bidding bidding) {
         bidding.setItem(this);
-        this.bidding.add(bidding);
+        this.biddings.add(bidding);
     }
 
     public List<Subcategory> getSubcategories() {
@@ -164,6 +167,19 @@ public class Item implements Serializable {
 
     public void setSubcategories(List<Subcategory> subcategories) {
         this.subcategories = subcategories;
+    }
+    
+    /**
+     * Return the max bid value if this item has any biddings
+     * or the starting bid value otherwise.
+     * 
+     * @return the current price for this item.
+     */
+    public double getCurrentPrice() {
+        if (currentMaxBid != null) {
+            return currentMaxBid.getPrice();
+        }
+        return startingBid;
     }
     
     @Override
