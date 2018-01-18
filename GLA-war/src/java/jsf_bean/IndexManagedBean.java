@@ -39,29 +39,4 @@ public class IndexManagedBean {
         return itemDAO.findAll();
     }
     
-    public Long getItemBiddingsNumber(Item item) {
-        return itemDAO.getNumberOfBiddingsById(item.getId());
-    }
-    
-    public String getEndBidTime(LocalDateTime endBidDate) {
-        long days = ChronoUnit.DAYS.between(LocalDateTime.now(), endBidDate);
-        endBidDate = endBidDate.minusDays(days);
-        long hours = ChronoUnit.HOURS.between(LocalDateTime.now(), endBidDate);
-        endBidDate = endBidDate.minusHours(hours);
-        long minutes = ChronoUnit.MINUTES.between(LocalDateTime.now(), endBidDate);
-        endBidDate = endBidDate.minusHours(hours);
-        long seconds = ChronoUnit.SECONDS.between(LocalDateTime.now(), endBidDate);
-        
-        String result = days > 0 ? days + " j " : "";
-        result += hours > 0 ? hours + " h " : "";
-        result += days <= 0 && minutes > 0 ? minutes + " m " : "";
-        result += days <= 0 && hours <= 0 && seconds > 0 ? seconds + " s " : "";
-        return result;
-    }
-    
-    public String formatEndBidDate(LocalDateTime endBidDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd, HH:mm");
-        return endBidDate.format(formatter);
-    }
-    
 }

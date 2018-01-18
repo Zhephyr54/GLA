@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -36,8 +37,8 @@ public class Order implements Serializable {
     @Column(name = "order_date")
     private LocalDateTime orderDate = LocalDateTime.now();
     
-    @Column(name = "total_price")
-    private double totalPrice;
+    @Column(name = "total_price", precision = 9, scale = 2)
+    private BigDecimal totalPrice;
 
     @Column(name = "order_state")
     private OrderState orderState = OrderState.IN_PROCESS;
@@ -73,11 +74,11 @@ public class Order implements Serializable {
         this.orderDate = orderDate;
     }
 
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 
