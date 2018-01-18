@@ -5,11 +5,13 @@
  */
 package servlets;
 
-import db.dao.CategoryDAO;
+import db.dao.ItemDAO;
 import db.dao.SubcategoryDAO;
-import entity.Category;
+import entity.Item;
 import entity.Subcategory;
+import entity.User;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -17,6 +19,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import static servlets.SignIn.ATT_SESSION_USER;
 
 /**
  *
@@ -29,6 +33,9 @@ public class CreateBidding extends HttpServlet {
 
         @EJB
         SubcategoryDAO s;
+        
+        @EJB
+        ItemDAO item;
         
 
     /**
@@ -61,7 +68,7 @@ public class CreateBidding extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-    }
+                  }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -78,8 +85,11 @@ public class CreateBidding extends HttpServlet {
        String desc = request.getParameter("desc");
        String price = request.getParameter("price");
        String time = request.getParameter("time");
-
-       System.out.println(title + desc + price + time);
+       Item i = new Item(title,desc,Double.parseDouble(price),LocalDateTime.now().plusDays(Integer.parseInt(time)));
+       HttpSession session = request.getSession(); 
+       User u = (User)session.getAttribute(ATT_SESSION_USER);
+       i.setUser(u);
+       item.create(i);
     }
 
     /**
