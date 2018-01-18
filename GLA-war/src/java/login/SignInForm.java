@@ -10,13 +10,10 @@ public final class SignInForm {
 
     private static final String CHAMP_EMAIL = "email";
     private static final String CHAMP_PASS = "motdepasse";
-    private static final String CHAMP_CONF = "confirmation";
-    private static final String CHAMP_NOM = "lastname";
-    private static final String CHAMP_PRENOM = "firstname";
-    private boolean ok;
 
     private String resultat;
     private Map<String, String> erreurs = new HashMap<String, String>();
+    boolean check;
 
     public String getResultat() {
         return resultat;
@@ -26,15 +23,15 @@ public final class SignInForm {
         return erreurs;
     }
 
-    public User inscrireUtilisateur(HttpServletRequest request) {
+    public User connecterUtilisateur(HttpServletRequest request, boolean check) {
+        /* Récupération des champs du formulaire */
         String email = getValeurChamp(request, CHAMP_EMAIL);
         String motDePasse = getValeurChamp(request, CHAMP_PASS);
-        String confirmation = getValeurChamp(request, CHAMP_CONF);
-        String nom = getValeurChamp(request, CHAMP_NOM);
-        String prenom = getValeurChamp(request, CHAMP_PRENOM);
+        this.check = check;
 
         User utilisateur = new User();
 
+        /* Validation du champ email. */
         try {
             validationEmail(email);
         } catch (Exception e) {
@@ -42,107 +39,65 @@ public final class SignInForm {
         }
         utilisateur.setEmail(email);
 
+        /* Validation du champ mot de passe. */
         try {
-            validationMotsDePasse(motDePasse, confirmation);
+            validationMotDePasse(motDePasse);
         } catch (Exception e) {
             setErreur(CHAMP_PASS, e.getMessage());
-            setErreur(CHAMP_CONF, null);
         }
         utilisateur.setPassword(motDePasse);
 
-        try {
-            validationNom(nom);
-        } catch (Exception e) {
-            setErreur(CHAMP_NOM, e.getMessage());
-        }
-        utilisateur.setLastname(nom);
-
-        try {
-            validationPrenom(prenom);
-        } catch (Exception e) {
-            setErreur(CHAMP_PRENOM, e.getMessage());
-        }
-        utilisateur.setFirstname(prenom);
-
+        /* Initialisation du résultat global de la validation. */
         if (erreurs.isEmpty()) {
-            resultat = "Succès de l'inscription.";
-            ok = true;
+            resultat = "Succès de la connexion.";
         } else {
-            resultat = "Échec de l'inscription.";
-            ok = false;
+            resultat = "Échec de la connexion.";
         }
 
         return utilisateur;
     }
 
-    public boolean isOk() {
-        return ok;
-    }
-
-    public void setOk(boolean ok) {
-        this.ok = ok;
-    }
-
+    /**
+     * Valide l'adresse email saisie.
+     */
     private void validationEmail(String email) throws Exception {
-        if (email != null) {
-            if (!email.matches("([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)")) {
-                throw new Exception("Merci de saisir une adresse mail valide.");
-            }
-        } else {
-            throw new Exception("Merci de saisir une adresse mail.");
+        if (email != null && !email.matches("([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)")) {
+            throw new Exception("Merci de saisir une adresse mail valide.");
         }
     }
 
-    private void validationMotsDePasse(String motDePasse, String confirmation) throws Exception {
-        if (motDePasse != null && confirmation != null) {
-            if (!motDePasse.equals(confirmation)) {
-                throw new Exception("Les mots de passe entrés sont différents, merci de les saisir à nouveau.");
-            } else if (motDePasse.length() < 6) {
-                throw new Exception("Les mots de passe doivent contenir au moins 6 caractères.");
+    /**
+     * Valide le mot de passe saisi.
+     */
+    private void validationMotDePasse(String motDePasse) throws Exception {
+        if(!check)
+            throw new Exception("Les infos sont erronées.");
+        if (motDePasse != null) {
+            if (motDePasse.length() < 6) {
+                throw new Exception("Le mot de passe doit contenir au moins 6 caractères.");
             }
         } else {
-            throw new Exception("Merci de saisir et confirmer votre mot de passe.");
-        }
-    }
-
-    private void validationNom(String nom) throws Exception {
-        if (nom != null) {
-            if (nom.length() < 3) {
-                throw new Exception("Le nom d'utilisateur doit contenir au moins 3 caractères.");
-            }
-        } else {
-            throw new Exception("Merci de saisir votre nom.");
-        }
-
-    }
-
-    private void validationPrenom(String nom) throws Exception {
-       if (nom != null) {
-            if (nom.length() < 3) {
-                throw new Exception("Le prenom d'utilisateur doit contenir au moins 3 caractères.");
-            }
-        } else {
-            throw new Exception("Merci de saisir votre prenom.");
+            throw new Exception("Merci de saisir votre mot de passe.");
         }
     }
 
     /*
- * Ajoute un message correspondant au champ spécifié à la map des erreurs.
+     * Ajoute un message correspondant au champ spécifié à la map des erreurs.
      */
     private void setErreur(String champ, String message) {
         erreurs.put(champ, message);
     }
 
     /*
- * Méthode utilitaire qui retourne null si un champ est vide, et son contenu
- * sinon.
+     * Méthode utilitaire qui retourne null si un champ est vide, et son contenu
+     * sinon.
      */
     private static String getValeurChamp(HttpServletRequest request, String nomChamp) {
         String valeur = request.getParameter(nomChamp);
         if (valeur == null || valeur.trim().length() == 0) {
             return null;
         } else {
-            return valeur.trim();
+            return valeur;
         }
     }
 }

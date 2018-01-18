@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,6 +25,14 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Users")
+@NamedQueries({
+    @NamedQuery(
+            name = "User.findByEmail", 
+            query = "SELECT u FROM User u WHERE u.email = :email "),
+     @NamedQuery(
+            name = "User.findByEmailAndPassword", 
+            query = "SELECT u FROM User u WHERE u.email = :email AND u.password = :password ")
+})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;

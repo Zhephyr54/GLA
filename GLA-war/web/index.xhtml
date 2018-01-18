@@ -4,10 +4,19 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Accueil</title>
     </h:head>
     <h:body>
-        pour test l'inscription http://localhost:8080/GLA-war/inscription
+       
+        <c:if test="${!empty sessionScope.sessionUtilisateur}">
+                    <p class="succes">Vous êtes connecté(e) avec l'adresse : ${sessionScope.sessionUtilisateur.email}</p>
+                    <a href="deconnexion">Deconnexion</a>
+        </c:if>
+         <c:if test="${empty sessionScope.sessionUtilisateur}">
+                 <a href="connexion">Connexion</a>
+                 <a href="inscription">Inscription</a>
+        </c:if>
+
 
         <h2>Liste des enchères en cours</h2>
         <ui:repeat var="item" value="#{indexBean.getItems()}">
