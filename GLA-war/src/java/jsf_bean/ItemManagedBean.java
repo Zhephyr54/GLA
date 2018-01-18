@@ -14,10 +14,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
-import javax.validation.constraints.DecimalMin;
+import javax.faces.view.ViewScoped;
 import javax.validation.constraints.Digits;
 
 /**
@@ -25,7 +23,7 @@ import javax.validation.constraints.Digits;
  * @author alexis
  */
 @Named(value = "itemBean")
-@SessionScoped
+@ViewScoped
 public class ItemManagedBean implements Serializable {
 
     @EJB
