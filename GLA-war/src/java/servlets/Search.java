@@ -8,14 +8,11 @@ package servlets;
 import db.dao.CategoryDAO;
 import db.dao.ItemDAO;
 import db.dao.SubcategoryDAO;
-import db.dao.UserDAO;
 import entity.Category;
 import entity.Item;
 import entity.Subcategory;
 import entity.User;
-import formValidator.CreateAccountForm;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,10 +23,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import static servlets.CreateAccount.ATT_FORM;
-import static servlets.CreateAccount.ATT_USER;
-import static servlets.CreateAccount.URL_REDIRECTION;
-import static servlets.CreateAccount.VUE;
 import static servlets.SignIn.ATT_SESSION_USER;
 
 /**
@@ -69,6 +62,7 @@ public class Search extends HttpServlet {
         
         request.setAttribute("subcategory", subcategory);
         request.setAttribute("category", category);
+        
         
         this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
     }
