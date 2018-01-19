@@ -13,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -21,9 +23,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Offers")
+@NamedQueries({
+    @NamedQuery(
+            name = "Offer.findOffer",
+            query = "SELECT o FROM Offer o")
+})
 public class Offer implements Serializable {
-
-    public enum OfferType { FREE_DELIVERY, PRICE_DISCOUNT }
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,14 +37,16 @@ public class Offer implements Serializable {
     
     @Column(name = "end_offer_date")
     private LocalDateTime endOfferDate;
-
-    @Column(name = "type")
-    private OfferType type;
     
     @ManyToOne
-    private Category category;
+    private Subcategory subcategory;
     
     public Offer() {
+    }
+
+    public Offer(LocalDateTime endOfferDate, Subcategory subcategory) {
+        this.endOfferDate = endOfferDate;
+        this.subcategory = subcategory;
     }
     
     public Long getId() {
@@ -58,20 +65,12 @@ public class Offer implements Serializable {
         this.endOfferDate = endOfferDate;
     }
 
-    public OfferType getType() {
-        return type;
+    public Subcategory getSubcategory() {
+        return subcategory;
     }
 
-    public void setType(OfferType type) {
-        this.type = type;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setSubcategory(Subcategory subcategory) {
+        this.subcategory = subcategory;
     }
 
     @Override
