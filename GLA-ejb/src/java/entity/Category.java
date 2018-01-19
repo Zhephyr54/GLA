@@ -42,9 +42,6 @@ public class Category implements Serializable {
     @OneToMany(mappedBy="category", cascade = CascadeType.ALL)
     private List<Subcategory> subcategories;
     
-    @OneToMany(mappedBy="category")
-    private List<Offer> offers;
-    
     public Category() {
     }
 
@@ -75,15 +72,6 @@ public class Category implements Serializable {
     public void addSubcategorie(Subcategory subcategory) {
         subcategory.setCategory(this);
         this.subcategories.add(subcategory);
-    }
-
-    public List<Offer> getOffers() {
-        return offers;
-    }
-
-    public void addOffer(Offer offer) {
-        offer.setCategory(this);
-        this.offers.add(offer);
     }
     
     @Override

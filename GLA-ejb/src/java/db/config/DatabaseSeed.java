@@ -8,10 +8,13 @@ package db.config;
 import entity.Bidding;
 import entity.Category;
 import entity.Item;
+import entity.Offer;
 import entity.Subcategory;
 import entity.User;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.LocalBean;
@@ -60,6 +63,12 @@ public class DatabaseSeed {
         Bidding bidding1 = new Bidding(BigDecimal.valueOf(500), user2, item1);
         item1.setCurrentMaxBid(bidding1);
         
+        LocalTime midnight = LocalTime.MIDNIGHT;
+        LocalDate today = LocalDate.now().plusDays(1);
+        LocalDateTime todayMidnight = LocalDateTime.of(today, midnight);
+        
+        Offer o = new Offer(todayMidnight,s1);
+        
         em.persist(user1);
         em.persist(user2);
         em.persist(item1);
@@ -70,7 +79,8 @@ public class DatabaseSeed {
         em.persist(s1);
         em.persist(s2);
         em.persist(s3);
-        em.persist(s4);        
+        em.persist(s4); 
+        em.persist(o);
     }   
 
 }

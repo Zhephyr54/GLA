@@ -7,7 +7,9 @@ package jsf_bean;
  */
 
 import db.dao.ItemDAO;
+import db.dao.OfferDAO;
 import entity.Item;
+import entity.Offer;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -23,6 +25,10 @@ public class IndexManagedBean {
 
     @EJB
     ItemDAO itemDAO;
+    
+    @EJB
+    OfferDAO offer;
+    
         
     /**
      * Creates a new instance of IndexManagedBean
@@ -34,4 +40,8 @@ public class IndexManagedBean {
         return itemDAO.findAllNotOver();
     }
     
+        
+    public List<Offer> getOfferOfDay(){
+        return offer.getOffer();
+    }    
 }
