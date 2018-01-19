@@ -47,6 +47,10 @@
         <servlet-name>CreateBidding</servlet-name>
         <servlet-class>servlets.CreateBidding</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Search</servlet-name>
+        <servlet-class>servlets.Search</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
@@ -70,6 +74,10 @@
     <servlet-mapping>
         <servlet-name>CreateBidding</servlet-name>
         <url-pattern>/enchere</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Search</servlet-name>
+        <url-pattern>/recherche</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

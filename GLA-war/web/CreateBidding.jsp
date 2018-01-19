@@ -21,15 +21,15 @@
 
                 <label for="title">Titre <span class="requis">*</span></label>
                 <input type="text" id="title" name="title" size="20" maxlength="60" required/>
-                <br />
+                <br/>
 
                 <label for="desc">Description <span class="requis">*</span></label>
                 <input type="text" id="desc" name="desc" size="20" minlength="10" required/>
-                <br />
+                <br/>
 
                 <label for="price">Prix de départ <span class="requis">*</span></label>
                 <input type="number" min="0" step="0.01" id="price" name="price"  size="20" maxlength="60" required> €
-                <br />
+                <br/>
 
                 <label for="time">Choisir la durée de l'enchère<span class="requis">*</span></label>
                 <select name="time" id="time">
@@ -41,7 +41,7 @@
                     <option value=6>6 jours</option>
                     <option value=7>1 semaine</option>
                 </select>
-                <br />
+                <br/>
 
                 
             <label for="SubCategory">Choisir la sous categorie<span class="requis">*</span></label>
@@ -50,10 +50,10 @@
                         <option value=${c.id}>${c.title}</option>
                     </c:forEach>
                 </select>
-                <br />
+                <br/>
 
                 <input type="submit" value="Valider" />
-                <br />
+                <br/>
             </fieldset>
         </form>
     </body>

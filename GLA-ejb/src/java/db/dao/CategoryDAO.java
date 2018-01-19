@@ -33,7 +33,7 @@ public class CategoryDAO extends AbstractDAO<Category> {
         return em;
     } 
 
-    public List<Category> findall() {
+    public List<Category> findAll() {
         TypedQuery<Category> query = getEntityManager().createNamedQuery("Category.findAll", Category.class);
         List<Category> u = query.getResultList();
         return u;

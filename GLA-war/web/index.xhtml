@@ -10,6 +10,7 @@
     </h:head>
     <h:body>
 
+        <a href="recherche">Chercher un article</a>
         <c:if test="${!empty sessionScope.sessionUtilisateur}">
             <p class="succes">Bonjour : ${sessionScope.sessionUtilisateur.lastname} ${sessionScope.sessionUtilisateur.firstname}</p>
             <a href="enchere">Creer une enchère</a>

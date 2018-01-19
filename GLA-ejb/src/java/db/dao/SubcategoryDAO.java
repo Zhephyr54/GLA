@@ -39,13 +39,13 @@ public class SubcategoryDAO extends AbstractDAO<Subcategory> {
         return s;
     }
     
-        public List<Subcategory> findAll() {
+    public List<Subcategory> findAll() {
         TypedQuery<Subcategory> query = getEntityManager().createNamedQuery("Subcategory.findAll", Subcategory.class);
         List<Subcategory> s = query.getResultList();
         return s;
     }
         
-       public Subcategory findById(int id) {
+    public Subcategory findById(int id) {
         TypedQuery<Subcategory> query = getEntityManager().createNamedQuery("Subcategory.findById", Subcategory.class);
         List<Subcategory> s = query.setParameter("id", id).getResultList();
         if(s.size() > 0)
