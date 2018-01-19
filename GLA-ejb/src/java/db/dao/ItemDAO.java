@@ -6,6 +6,7 @@
 package db.dao;
 
 import entity.Item;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -38,8 +39,20 @@ public class ItemDAO extends AbstractDAO<Item> {
     }
     
     /**
+     * Return all the items for which the biddings aren't over.
+     * 
+     * @return List of items
+     */
+    public List<Item> findAllNotOver() {
+        TypedQuery<Item> query = getEntityManager().createNamedQuery("Item.findAllNotOver", Item.class);
+        query.setParameter("currentDate", LocalDateTime.now());
+        return query.getResultList();
+    }
+    
+    /**
      * Return the number of biggings for this item using
      * a count query.
+     * 
      * @param itemId the item id
      * @return The number of biddings for this item
      */

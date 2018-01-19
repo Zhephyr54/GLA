@@ -15,6 +15,12 @@
             <p class="succes">Bonjour : ${sessionScope.sessionUtilisateur.lastname} ${sessionScope.sessionUtilisateur.firstname}</p>
             <a href="enchere">Creer une enchère</a>
             <a href="deconnexion">Déconnexion</a>
+            <p>Les offres du jour sont sur la sous catégories (se met a jour tous les 24h):
+                <ui:repeat var="offer" value= "#{indexBean.getOfferOfDay()}">
+                    <li>#{offer.subcategory.title} jusqu 'au #{offer.endOfferDate}</li>
+                </ui:repeat>
+                
+                </p>
         </c:if>
         <c:if test="${empty sessionScope.sessionUtilisateur}">
             <a href="connexion">Connexion</a>
@@ -34,8 +40,8 @@
             <div>#{itemUtilsBean.getItemBiddingsNumber(item)} ench&egrave;res</div>
 
             <div>
-                Il reste #{itemUtilsBean.getEndBidTime(item.endBidDate)}
-                (#{itemUtilsBean.formatEndBidDate(item.endBidDate)})
+                    Il reste #{itemUtilsBean.getBidRemainingTime(item.endBidDate)}
+                (#{itemUtilsBean.formatEndBidDate(item.endBidDate, "EEEE dd/MM, HH:mm")})
             </div>
         </ui:repeat>
 

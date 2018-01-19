@@ -13,7 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -54,6 +53,10 @@ public class Subcategory implements Serializable {
 
     @OneToMany(mappedBy = "subcategory")
     private List<Item> items = new ArrayList<Item>();
+    
+    @OneToMany(mappedBy="subcategory")
+    private List<Offer> offers;
+    
 
     public Subcategory() {
     }
@@ -93,6 +96,15 @@ public class Subcategory implements Serializable {
     public void addItems(Item item) {
         item.setSubcategory(this);
         this.items.add(item);
+    }
+    
+        public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public void addOffer(Offer offer) {
+        offer.setSubcategory(this);
+        this.offers.add(offer);
     }
 
     @Override
