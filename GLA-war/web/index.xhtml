@@ -14,7 +14,7 @@
             <p class="succes">Bonjour : ${sessionScope.sessionUtilisateur.lastname} ${sessionScope.sessionUtilisateur.firstname}</p>
             <a href="enchere">Creer une enchère</a>
             <a href="deconnexion">Déconnexion</a>
-            <p>Les offres du jour sont sur la sous catégories:
+            <p>Les offres du jour sont sur la sous catégories (se met a jour tous les 24h):
                 <ui:repeat var="offer" value= "#{indexBean.getOfferOfDay()}">
                     <li>#{offer.subcategory.title} jusqu 'au #{offer.endOfferDate}</li>
                 </ui:repeat>

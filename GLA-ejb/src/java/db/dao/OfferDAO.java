@@ -7,7 +7,6 @@ package db.dao;
 
 import entity.Offer;
 import entity.Subcategory;
-import entity.User;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -54,7 +53,7 @@ public class OfferDAO extends AbstractDAO<Offer> {
      
      public List<Offer> getOffer(){
         TypedQuery<Offer> query = getEntityManager().createNamedQuery("Offer.findOffer", Offer.class);
-        List<Offer> o = query.getResultList();
+        List<Offer> o = query.setParameter("currentDate", LocalDateTime.now()).getResultList();
         return o;
      }
 

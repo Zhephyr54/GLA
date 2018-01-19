@@ -26,7 +26,7 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(
             name = "Offer.findOffer",
-            query = "SELECT o FROM Offer o")
+            query = "SELECT o FROM Offer o WHERE o.endOfferDate > :currentDate")
 })
 public class Offer implements Serializable {
     
