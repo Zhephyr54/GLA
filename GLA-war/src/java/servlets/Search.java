@@ -97,8 +97,10 @@ public class Search extends HttpServlet {
         String idCategory = request.getParameter("cat");
         String idSubCategory = request.getParameter("sub");
         
-        //items  = item.findNotOver(title, Integer.parseInt(idCategory), Integer.parseInt(idSubCategory));
-        items  = item.findNotOverByTitle(title);
+        //Recherche par titre, category, sous-category
+        items  = item.findNotOver(title, Integer.parseInt(idCategory), Integer.parseInt(idSubCategory));
+        //Recherche par titre
+        //items  = item.findNotOverByTitle(title);
         request.setAttribute("items", items);
         this.getServletContext().getRequestDispatcher(URL_REDIRECTION).forward(request, response);
         
