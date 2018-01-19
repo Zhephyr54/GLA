@@ -23,7 +23,7 @@
                 <input type="text" id="title" name="title" size="20" maxlength="60" required/>
                 <br/>
 
-                <label for="Category">Choisir une catégorie<span class="requis">*</span></label>
+                <label for="cat">Choisir une catégorie<span class="requis">*</span></label>
                 <select name="cat" id="cat">
                     <c:forEach items="${category}" var="c">
                         <option value=${c.id}>${c.title}</option>
@@ -31,7 +31,7 @@
                 </select>
                 <br/>
                 
-                <label for="SubCategory">Choisir une sous catégorie<span class="requis">*</span></label>
+                <label for="sub">Choisir une sous catégorie<span class="requis">*</span></label>
                 <select name="sub" id="sub">
                     <c:forEach items="${subcategory}" var="s">
                         <option value=${s.id}>${s.title}</option>

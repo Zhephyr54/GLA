@@ -49,6 +49,30 @@ public class ItemDAO extends AbstractDAO<Item> {
         return query.getResultList();
     }
     
+    
+    /**
+     * Return searched items for which the biddings aren't over.
+     * 
+     * @param title
+     * @param idCategory
+     * @param idSubCategory
+     * @return List of items
+     */
+    public List<Item> findNotOver(String title, int idCategory, int idSubCategory) {
+        TypedQuery<Item> query = getEntityManager().createNamedQuery("Item.searchNotOver", Item.class);
+        query.setParameter("title", title);
+        query.setParameter("cat", idCategory);
+        query.setParameter("sub", idSubCategory);
+        return query.getResultList();
+    }
+    
+    public List<Item> findNotOverByTitle(String title) {
+        TypedQuery<Item> query = getEntityManager().createNamedQuery("Item.searchByTitle", Item.class);
+        query.setParameter("title", title);
+        return query.getResultList();
+    }
+    
+    
     /**
      * Return the number of biggings for this item using
      * a count query.

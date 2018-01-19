@@ -59,6 +59,10 @@ public class DatabaseSeed {
         s2.setCategory(c1);
         s3.setCategory(c2);
         s4.setCategory(c2);
+        
+        
+        item1.setSubcategory(s1);
+        item2.setSubcategory(s1);
 
         Bidding bidding1 = new Bidding(BigDecimal.valueOf(500), user2, item1);
         item1.setCurrentMaxBid(bidding1);
