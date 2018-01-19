@@ -35,10 +35,14 @@ public class DatabaseSeed {
     @PostConstruct
     public void seed() {
         User user1 = new User("jean.valjean@mail.fr", "password", "Jean", "Valjean");
-        User user2 = new User("nihad.jeveux5utilisateurs@mail.fr", "password", "Nihad", "JeVeux5utilisateurs");
+        User user2 = new User("test@mail.fr", "test", "Nihad", "JeVeux5utilisateurs");
         
         Item item1 = new Item("Iphone 12", "Le tout nouvel iphone quasi neuf !", BigDecimal.valueOf(499.99), LocalDateTime.now().plusDays(5));
         item1.setUser(user1);
+        
+        // item for checking out of date biddings
+        Item item2 = new Item("Iphone périmé", "Périmé depuis 10 ans", BigDecimal.valueOf(1), LocalDateTime.now().minusYears(10));
+        item2.setUser(user1);
         
         Category c1 = new Category("Multimedia"); 
         Category c2 = new Category("Loisirs"); 
@@ -59,6 +63,7 @@ public class DatabaseSeed {
         em.persist(user1);
         em.persist(user2);
         em.persist(item1);
+        em.persist(item2);
         em.persist(bidding1);
         em.persist(c1);
         em.persist(c2);

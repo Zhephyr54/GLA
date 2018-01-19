@@ -31,11 +31,32 @@ public class ItemUtilsManagedBean {
     public ItemUtilsManagedBean() {
     }
     
-        public Long getItemBiddingsNumber(Item item) {
+    public Long getItemBiddingsNumber(Item item) {
         return itemDAO.getNumberOfBiddingsById(item.getId());
     }
     
-    public String getEndBidTime(LocalDateTime endBidDate) {
+    /**
+     * Return true if the bidding is over, else otherwise.
+     * 
+     * @param endBidDate The end bidding date for an item
+     * 
+     * @return boolean
+     */
+    public boolean isBidOver(LocalDateTime endBidDate) {
+        System.out.println("LOL");
+        System.out.println(endBidDate);
+        return endBidDate.isBefore(LocalDateTime.now());
+    }
+    
+    /**
+     * Return the biddings remaining time formatted as "1j 4h"
+     * or "5h 42m" or "10m 50s".
+     * 
+     * @param endBidDate The end bidding date for an item
+     * 
+     * @return String describing the remaining time
+     */
+    public String getBidRemainingTime(LocalDateTime endBidDate) {
         long days = ChronoUnit.DAYS.between(LocalDateTime.now(), endBidDate);
         endBidDate = endBidDate.minusDays(days);
         long hours = ChronoUnit.HOURS.between(LocalDateTime.now(), endBidDate);
@@ -44,15 +65,23 @@ public class ItemUtilsManagedBean {
         endBidDate = endBidDate.minusHours(hours);
         long seconds = ChronoUnit.SECONDS.between(LocalDateTime.now(), endBidDate);
         
-        String result = days > 0 ? days + " j " : "";
-        result += hours > 0 ? hours + " h " : "";
-        result += days <= 0 && minutes > 0 ? minutes + " m " : "";
-        result += days <= 0 && hours <= 0 && seconds > 0 ? seconds + " s " : "";
+        String result = days > 0 ? days + "j " : "";
+        result += hours > 0 ? hours + "h " : "";
+        result += days <= 0 && minutes > 0 ? minutes + "m " : "";
+        result += days <= 0 && hours <= 0 && seconds > 0 ? seconds + "s " : "";
         return result;
     }
     
-    public String formatEndBidDate(LocalDateTime endBidDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd, HH:mm");
+    /**
+     * Format the end bidding date.
+     * 
+     * @param endBidDate The end bidding date for an item
+     * @param pattern String format
+     * 
+     * @return String 
+     */
+    public String formatEndBidDate(LocalDateTime endBidDate, String pattern) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
         return endBidDate.format(formatter);
     }
     

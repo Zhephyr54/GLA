@@ -25,29 +25,43 @@
             <c:if test="#{sessionScope.sessionUtilisateur.id == itemBean.item.user.id}">
                 <small>(Une de vos enchères)</small>
             </c:if>
-            
-            <h3>#{itemBean.item.title}</h3>
+
+            <h1>#{itemBean.item.title}</h1>
 
             <div>#{itemBean.item.getCurrentPrice()} &euro;</div>
 
             <div>#{itemUtilsBean.getItemBiddingsNumber(itemBean.item)} ench&egrave;res</div>
 
             <div>
-                Il reste #{itemUtilsBean.getEndBidTime(itemBean.item.endBidDate)}
-                (#{itemUtilsBean.formatEndBidDate(itemBean.item.endBidDate)})
+                <!-- if bidding is over -->
+                <c:if test="#{itemUtilsBean.isBidOver(itemBean.item.endBidDate)}">
+                    Ench&egrave;re termin&eacute;e
+                    (#{itemUtilsBean.formatEndBidDate(itemBean.item.endBidDate, "EEEE dd/MM/YYYY")})
+                </c:if>
+                <!-- else -->
+                <c:if test="#{!itemUtilsBean.isBidOver(itemBean.item.endBidDate)}">
+                    Il reste #{itemUtilsBean.getBidRemainingTime(itemBean.item.endBidDate)}
+                    (#{itemUtilsBean.formatEndBidDate(itemBean.item.endBidDate, "EEEE dd/MM, HH:mm")})
+                </c:if>
             </div>
-            
-            <!-- if user is logged in and it's not one of his items -->
-            <c:if test="#{(!empty sessionScope.sessionUtilisateur) and (sessionScope.sessionUtilisateur.id != itemBean.item.user.id)}">
-            <h:form>
-                <h:inputText value="#{itemBean.bid}" required="true" requiredMessage="Vous devez indiquer un montant afin de pouvoir enchérir">
-                    <f:attribute name="minPrice" value="#{itemBean.item.getCurrentPrice()}"/>
-                    <f:attribute name="isFirstBid" value="#{!itemBean.item.hasBid()}"/>
-                    <f:validator validatorId="BidPriceValidator"/>
-                </h:inputText>
-                <h:messages />
-                <h:commandButton value="Ench&eacute;rir" action="#{itemBean.outbid}"/>
-            </h:form>
+
+            <div>
+                <h3>Description</h3>
+                #{itemBean.item.description}
+            </div>
+
+            <!-- if user is logged in and it's not one of his items and the biddings are not over -->
+            <c:if test="#{(!empty sessionScope.sessionUtilisateur) and (sessionScope.sessionUtilisateur.id != itemBean.item.user.id)
+                          and (!itemUtilsBean.isBidOver(itemBean.item.endBidDate))}">
+                <h:form>
+                    <h:inputText value="#{itemBean.bid}" required="true" requiredMessage="Vous devez indiquer un montant afin de pouvoir enchérir">
+                        <f:attribute name="minPrice" value="#{itemBean.item.getCurrentPrice()}"/>
+                        <f:attribute name="isFirstBid" value="#{!itemBean.item.hasBid()}"/>
+                        <f:validator validatorId="BidPriceValidator"/>
+                    </h:inputText>
+                    <h:messages />
+                    <h:commandButton value="Ench&eacute;rir" action="#{itemBean.outbid}"/>
+                </h:form>
             </c:if>
             <!-- not logged in -->
             <c:if test="#{empty sessionScope.sessionUtilisateur}">

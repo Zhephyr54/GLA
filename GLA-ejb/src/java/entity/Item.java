@@ -17,8 +17,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -36,6 +34,9 @@ import javax.persistence.Table;
     @NamedQuery(
             name = "Item.findAll", 
             query = "SELECT i FROM Item i"),
+    @NamedQuery(
+            name = "Item.findAllNotOver",
+            query = "SELECT i FROM Item i WHERE i.endBidDate > :currentDate"),
     @NamedQuery(
             name = "Item.getNumberOfBiddings", 
             query = "SELECT count(b) as nbBiddings FROM Bidding b JOIN b.item i WHERE i.id = :itemId")

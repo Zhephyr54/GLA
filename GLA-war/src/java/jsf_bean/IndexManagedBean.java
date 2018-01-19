@@ -8,12 +8,7 @@ package jsf_bean;
 
 import db.dao.ItemDAO;
 import entity.Item;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -36,7 +31,7 @@ public class IndexManagedBean {
     }
     
     public List<Item> getItems() {
-        return itemDAO.findAll();
+        return itemDAO.findAllNotOver();
     }
     
 }
