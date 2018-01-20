@@ -38,6 +38,12 @@ import javax.persistence.Table;
             name = "Item.findAllNotOver",
             query = "SELECT i FROM Item i WHERE i.endBidDate > :currentDate"),
     @NamedQuery(
+            name = "Item.searchNotOver",
+            query = "SELECT i FROM Item i WHERE i.title LIKE :title AND i.subcategory.category.id = :cat AND i.subcategory.id = :sub"),
+    @NamedQuery(
+            name = "Item.searchByTitle",
+            query = "SELECT i FROM Item i WHERE i.title LIKE :title"),
+    @NamedQuery(
             name = "Item.getNumberOfBiddings", 
             query = "SELECT count(b) as nbBiddings FROM Bidding b JOIN b.item i WHERE i.id = :itemId")
 })

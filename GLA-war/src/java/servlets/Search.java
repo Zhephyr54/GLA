@@ -33,9 +33,10 @@ import static servlets.SignIn.ATT_SESSION_USER;
 public class Search extends HttpServlet {
 
     public static final String VUE = "/Search.jsp";
-    public static final String URL_REDIRECTION = "/SearchResult";
+    public static final String URL_REDIRECTION = "/SearchResult.jsp";
     private List<Category> category;
     private List<Subcategory> subcategory;
+    private List<Item> items;
 
     @EJB
     SubcategoryDAO s;
@@ -90,23 +91,19 @@ public class Search extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
         String title = request.getParameter("title");
-        String desc = request.getParameter("desc");
-        String price = request.getParameter("price");
-        String time = request.getParameter("time");
-
-        Item i = new Item(title, desc, new BigDecimal(price), LocalDateTime.now().plusDays(Integer.parseInt(time)));
-        HttpSession session = request.getSession();
-        User u = (User) session.getAttribute(ATT_SESSION_USER);
-        i.setUser(u);
+        String idCategory = request.getParameter("cat");
         String idSubCategory = request.getParameter("sub");
-        Subcategory subcategory  = s.findById(Integer.parseInt(idSubCategory));
-        i.setSubcategory(subcategory);
-        item.create(i);
-        response.sendRedirect(URL_REDIRECTION);
-
+        
+        //Recherche par titre, category, sous-category
+        items  = item.findNotOver(title, Integer.parseInt(idCategory), Integer.parseInt(idSubCategory));
+        //Recherche par titre
+        //items  = item.findNotOverByTitle(title);
+        request.setAttribute("items", items);
+        this.getServletContext().getRequestDispatcher(URL_REDIRECTION).forward(request, response);
+        
     }
 
 }
