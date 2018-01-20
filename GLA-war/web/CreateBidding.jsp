@@ -14,6 +14,8 @@
         <link type="text/css" rel="stylesheet" href="resources/css/form.css" />
     </head>
     <body>
+        <%@include file="Header.xhtml" %>
+
         <form method="post" action="enchere">
             <fieldset>
                 <legend>Creer une enchere</legend>
@@ -56,5 +58,6 @@
                 <br/>
             </fieldset>
         </form>
+                <%@include file="Footer.xhtml" %>
     </body>
 </html>

@@ -8,6 +8,8 @@
         <link type="text/css" rel="stylesheet" href="resources/css/form.css" />
     </head>
     <body>
+                <%@include file="Header.xhtml" %>
+
         <form method="post" action="connexion">
             <fieldset>
                 <legend>Connexion</legend>
@@ -29,5 +31,7 @@
                 <p class="${empty form.erreurs ? 'succes' : 'erreur'}">${form.resultat}</p>
             </fieldset>
         </form>
+                    <%@include file="Footer.xhtml" %>
+
     </body>
 </html>

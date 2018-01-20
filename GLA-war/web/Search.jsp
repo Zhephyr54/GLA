@@ -15,6 +15,8 @@
         <link type="text/css" rel="stylesheet" href="resources/css/form.css" />
     </head>
     <body>
+                <%@include file="Header.xhtml" %>
+
         <form method="post" action="recherche">
             <fieldset>
                 <legend>Rechercher un article</legend>
@@ -43,5 +45,7 @@
                 <br/>
             </fieldset>
         </form>
+                <%@include file="Footer.xhtml" %>
+
     </body>
 </html>

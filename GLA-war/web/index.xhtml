@@ -7,43 +7,52 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Accueil</title>
+
     </h:head>
     <h:body>
 
-        <a href="recherche">Chercher un article</a>
+        <ui:include src="Header.xhtml" />
+
+        <a  href="enchere">Creer une enchère</a>
+
         <c:if test="${!empty sessionScope.sessionUtilisateur}">
-            <p class="succes">Bonjour : ${sessionScope.sessionUtilisateur.lastname} ${sessionScope.sessionUtilisateur.firstname}</p>
-            <a href="enchere">Creer une enchère</a>
-            <a href="deconnexion">Déconnexion</a>
+
             <p>Les offres du jour sont sur la sous catégories (se met a jour tous les 24h):
                 <ui:repeat var="offer" value= "#{indexBean.getOfferOfDay()}">
                     <li>#{offer.subcategory.title} jusqu 'au #{offer.endOfferDate}</li>
                 </ui:repeat>
-                
-                </p>
-        </c:if>
-        <c:if test="${empty sessionScope.sessionUtilisateur}">
-            <a href="connexion">Connexion</a>
-            <a href="inscription">Inscription</a>
+
+            </p>
         </c:if>
 
         <h2>Liste des enchères en cours</h2>
+                    <div class="row">
         <ui:repeat var="item" value="#{indexBean.getItems()}">
-            <h3>
-                <h:link value="#{item.title}" outcome="item" >
-                    <f:param name="id" value="#{item.id}" />
-                </h:link>
-            </h3>
+                <div class="col-lg-4 col-sm-6 portfolio-item">
+                    <div class="card h-100">
+                        <a href="#"><img class="card-img-top" src="http://www.technique-de-vente.com/wp-content/uploads/2015/11/formation-vendeur-point-de-vente.jpg" alt=""/></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <h:link value="#{item.title}" outcome="item" >
+                                    <f:param name="id" value="#{item.id}" />
+                                </h:link>                            
+                            </h4>
+                            <p class="card-text">           
+                                <div>#{item.getCurrentPrice()} &euro;</div>
 
-            <div>#{item.getCurrentPrice()} &euro;</div>
+                                <div>#{itemUtilsBean.getItemBiddingsNumber(item)} ench&egrave;res</div>
 
-            <div>#{itemUtilsBean.getItemBiddingsNumber(item)} ench&egrave;res</div>
-
-            <div>
-                    Il reste #{itemUtilsBean.getBidRemainingTime(item.endBidDate)}
-                (#{itemUtilsBean.formatEndBidDate(item.endBidDate, "EEEE dd/MM, HH:mm")})
-            </div>
+                                <div>
+                                    Il reste #{itemUtilsBean.getBidRemainingTime(item.endBidDate)}
+                                    (#{itemUtilsBean.formatEndBidDate(item.endBidDate, "EEEE dd/MM, HH:mm")})
+                                </div></p>
+                        </div>
+                    </div>
+                </div>
         </ui:repeat>
+            </div>
+
+        <ui:include src="Footer.xhtml" />
 
     </h:body>
 

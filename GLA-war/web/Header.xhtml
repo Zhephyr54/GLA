@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Header</title>
+        <!-- Bootstrap core CSS -->
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom styles for this template -->
+        <link href="css/modern-business.css" rel="stylesheet"/>
+    </h:head>
+    <h:body>
+        <!-- Navigation -->
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="index.xhtml">GLA - Vente aux ench&egrave;res</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <c:if test="${!empty sessionScope.sessionUtilisateur}">
+
+                            <li class="nav-item">
+                                <a class="nav-link" > Bonjour ${sessionScope.sessionUtilisateur.lastname} ${sessionScope.sessionUtilisateur.firstname}  --- </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="deconnexion">D&eacute;connexion</a>
+                            </li>
+                        </c:if>
+                        <li class="nav-item">
+                            <a class="nav-link" href="recherche">Recherche</a>
+                        </li>
+                        <c:if test="${empty sessionScope.sessionUtilisateur}">
+                            <li class="nav-item">
+                                <a class="nav-link" href="connexion">Connexion</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="inscription">Inscription</a>
+                            </li>
+
+                        </c:if>
+                    </ul> 
+                </div>
+            </div>
+        </nav>    </h:body>
+</html>
+
