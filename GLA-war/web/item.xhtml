@@ -18,7 +18,8 @@
         </f:metadata>
     </h:head>
     <h:body>
-                <ui:include src="Header.xhtml" />
+        <ui:include src="Header.xhtml" />
+
         <c:if test="#{empty itemBean.item}">
             <p>Enchère introuvable</p>
         </c:if>
@@ -27,29 +28,45 @@
             <c:if test="#{sessionScope.sessionUtilisateur.id == itemBean.item.user.id}">
                 <small>(Une de vos enchères)</small>
             </c:if>
+            <div class="row">
 
-            <h1>#{itemBean.item.title}</h1>
+                <!-- Post Content Column -->
+                <div class="col-lg-8">
 
-            <div>#{itemBean.item.getCurrentPrice()} &euro;</div>
+                    <!-- Preview Image -->
+                    <img class="img-fluid rounded" src="http://placehold.it/900x300" alt=""></img>
 
-            <div>#{itemUtilsBean.getItemBiddingsNumber(itemBean.item)} ench&egrave;res</div>
+                    <hr>
+                        <h1>#{itemBean.item.title}</h1>
 
-            <div>
-                <!-- if bidding is over -->
-                <c:if test="#{itemUtilsBean.isBidOver(itemBean.item.endBidDate)}">
-                    Ench&egrave;re termin&eacute;e
-                    (#{itemUtilsBean.formatEndBidDate(itemBean.item.endBidDate, "EEEE dd/MM/YYYY")})
-                </c:if>
-                <!-- else -->
-                <c:if test="#{!itemUtilsBean.isBidOver(itemBean.item.endBidDate)}">
-                    Il reste #{itemUtilsBean.getBidRemainingTime(itemBean.item.endBidDate)}
-                    (#{itemUtilsBean.formatEndBidDate(itemBean.item.endBidDate, "EEEE dd/MM, HH:mm")})
-                </c:if>
-            </div>
+                        <hr>
 
-            <div>
-                <h3>Description</h3>
-                #{itemBean.item.description}
+                            <p class="lead">
+                                <div>#{itemBean.item.getCurrentPrice()} &euro;</div>
+
+                                <div>#{itemUtilsBean.getItemBiddingsNumber(itemBean.item)} ench&egrave;res</div>
+
+                                <div>
+                                    <!-- if bidding is over -->
+                                    <c:if test="#{itemUtilsBean.isBidOver(itemBean.item.endBidDate)}">
+                                        Ench&egrave;re termin&eacute;e
+                                        (#{itemUtilsBean.formatEndBidDate(itemBean.item.endBidDate, "EEEE dd/MM/YYYY")})
+                                    </c:if>
+                                    <!-- else -->
+                                    <c:if test="#{!itemUtilsBean.isBidOver(itemBean.item.endBidDate)}">
+                                        Il reste #{itemUtilsBean.getBidRemainingTime(itemBean.item.endBidDate)}
+                                        (#{itemUtilsBean.formatEndBidDate(itemBean.item.endBidDate, "EEEE dd/MM, HH:mm")})
+                                    </c:if>
+                                </div>
+
+                            </p>
+                            <div>
+                                <h4>Description</h4>
+                                #{itemBean.item.description}
+                            </div>
+                        </hr>
+                    </hr>
+                </div>
             </div>
 
             <!-- if user is logged in and it's not one of his items and the biddings are not over -->
@@ -62,7 +79,9 @@
                         <f:validator validatorId="BidPriceValidator"/>
                     </h:inputText>
                     <h:messages />
-                    <h:commandButton value="Ench&eacute;rir" action="#{itemBean.outbid}"/>
+                    <br></br>
+                    <h:commandButton value="Ench&eacute;rir" class="btn btn-primary" action="#{itemBean.outbid}"/>
+                    <br></br>
                 </h:form>
             </c:if>
             <!-- not logged in -->
@@ -70,7 +89,7 @@
                 <p>Vous devez &ecirc;tre connect&eacute; afin d'ench&eacute;rir</p>
             </c:if>
         </c:if>
-                        <ui:include src="Footer.xhtml" />
+        <ui:include src="Footer.xhtml" />
     </h:body>
 </html>
 

@@ -5,7 +5,6 @@
     <head>
         <meta charset="utf-8" />
         <title>Connexion</title>
-        <link type="text/css" rel="stylesheet" href="resources/css/form.css" />
     </head>
     <body>
                 <%@include file="Header.xhtml" %>
@@ -25,7 +24,7 @@
                 <span class="erreur">${form.erreurs['motdepasse']}</span>
                 <br />
 
-                <input type="submit" value="Connexion" class="sansLabel" />
+                <input type="submit" class="btn btn-primary" value="Connexion" class="sansLabel" />
                 <br />
                 
                 <p class="${empty form.erreurs ? 'succes' : 'erreur'}">${form.resultat}</p>

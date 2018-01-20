@@ -5,9 +5,10 @@
     <head>
         <meta charset="utf-8" />
         <title>Inscription</title>
-        <link type="text/css" rel="stylesheet" href="resources/css/form.css" />
     </head>
     <body>
+                            <%@include file="Header.xhtml" %>
+
         <form method="post" action="inscription">
             <fieldset>
                 <legend>Inscription</legend>
@@ -38,7 +39,7 @@
                 <span class="erreur">${form.erreurs['firstname']}</span>
                 <br />
 
-                <input type="submit" value="Inscription" class="sansLabel" />
+                <input type="submit" class="btn btn-primary" value="Inscription" class="sansLabel" />
                 <br />
                 
                 <p class="${empty form.erreurs ? 'succes' : 'erreur'}">${form.resultat}</p>

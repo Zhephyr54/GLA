@@ -41,7 +41,7 @@
                 </select>
                 <br/>
 
-                <input type="submit" value="Rechercher" />
+                <input type="submit"  class="btn btn-primary" value="Rechercher" />
                 <br/>
             </fieldset>
         </form>
