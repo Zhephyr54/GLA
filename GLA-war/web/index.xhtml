@@ -26,25 +26,26 @@
 
             </p>
         </c:if>
-        
+
         <c:if test="${!empty sessionScope.sessionUtilisateur}">
             <h2>Mes produits</h2>
             <table>
                 <tr>
-                    <th>ID</th>
                     <th>Titre</th>
                     <th>Description</th>
                     <th>Prix</th>
                     <th>Retirer</th>
                 </tr>
                 <ui:repeat var="item" value="#{indexBean.getUserItemsInProgress(sessionScope.sessionUtilisateur.id)}">
-                <tr>
-                    <td>#{item.id}</td>
-                    <td>#{item.title}</td>
-                    <td>#{item.description}</td>
-                    <td>#{item.getCurrentPrice()} &euro;</td>
-                    <td><h:form><h:commandLink value="X" action="#{indexBean.removeUserItem(item.id)}"/></h:form></td>
-                </tr>
+                    <tr>
+                        <td><h:link value="#{item.title}" outcome="item" >
+                            <f:param name="id" value="#{item.id}" />
+                        </h:link> 
+                        </td>
+                        <td>#{item.description}</td>
+                        <td>#{item.getCurrentPrice()} &euro;</td>
+                        <td><h:form><h:commandLink value="X" action="#{indexBean.removeUserItem(item.id)}"/></h:form></td>
+                    </tr>
                 </ui:repeat>
             </table>
         </c:if>
