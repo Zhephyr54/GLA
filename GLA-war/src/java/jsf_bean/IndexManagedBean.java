@@ -53,4 +53,5 @@ public class IndexManagedBean {
     public List<Item> getUserItemsInProgress(long userId) {
         return itemDAO.getUserItemsInProgress(userId);
     }
+    
 }

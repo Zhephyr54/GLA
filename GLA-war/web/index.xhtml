@@ -43,7 +43,7 @@
                     <td>#{item.title}</td>
                     <td>#{item.description}</td>
                     <td>#{item.getCurrentPrice()} &euro;</td>
-                    <td><input type="button" value="X" onclick="#{indexBean.removeUserItem(item.id)}"/></td>
+                    <td><h:form><h:commandLink value="X" action="#{indexBean.removeUserItem(item.id)}"/></h:form></td>
                 </tr>
                 </ui:repeat>
             </table>
