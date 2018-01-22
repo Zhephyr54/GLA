@@ -7,6 +7,7 @@ package db.dao;
 
 import entity.Bidding;
 import entity.Item;
+import entity.User;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -21,23 +22,29 @@ import javax.persistence.TypedQuery;
 @Stateless
 @LocalBean
 public class BiddingDAO extends AbstractDAO<Bidding> {
-    
+
     @PersistenceContext(unitName = "glaPU")
     private EntityManager em;
 
     public BiddingDAO() {
         super(Bidding.class);
     }
-    
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
-    } 
-    
+    }
+
     public List<Bidding> getUserBiddings(Long userId) {
         TypedQuery<Bidding> query = getEntityManager().createNamedQuery("Bidding.getUserBiddings", Bidding.class);
         query.setParameter("userId", userId);
         return query.getResultList();
     }
 
+    public Bidding myMax(long itemId, long userId) {
+        TypedQuery<Bidding> query = getEntityManager().createNamedQuery("Bidding.Winner", Bidding.class);
+        query.setParameter("userId", userId);
+        List<Bidding> b = query.setParameter("itemId", itemId).getResultList();
+        return b.isEmpty() ? null : b.get(0);
+    }
 }

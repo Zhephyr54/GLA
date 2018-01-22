@@ -44,11 +44,14 @@ import javax.persistence.Table;
     @NamedQuery(
             name = "Item.searchByTitle",
             query = "SELECT i FROM Item i WHERE i.title LIKE :title"),
-    @NamedQuery(
+   /* @NamedQuery(
             name = "Item.getCurrentMaxBid",
             query = "SELECT b FROM Bidding b WHERE b.item.id = :itemId AND b.price = (SELECT MAX(b2.price) "
                     + "FROM Bidding b2 "
-                    + "WHERE b2.id = b.id)"),
+                    + "WHERE b2.id = b.id)"),*/
+    @NamedQuery(
+            name = "Item.getCurrentMaxBid",
+            query = "SELECT b FROM Bidding b WHERE b.item.id = :itemId Order BY b.price DESC"),
     @NamedQuery(
             name = "Item.getNumberOfBiddings", 
             query = "SELECT count(b) as nbBiddings FROM Bidding b JOIN b.item i WHERE i.id = :itemId"),

@@ -35,7 +35,6 @@ public class AccountManagedBean {
     }
     
     public void removeUserItem(long itemId) {
-                System.out.println("XXXXXXXXXXXXXXXXXXXXXXX");
         itemDAO.removeById(itemId);
     }
     
@@ -43,8 +42,17 @@ public class AccountManagedBean {
         return itemDAO.getUserItems(userId);
     }
     
+    public Boolean winner(Bidding b){
+     Bidding bidding = biddingDAO.myMax(b.getItem().getId(),b.getUser().getId());
+      if(bidding == null)
+          return false;
+       // System.out.println(itemDAO.getCurrentMaxBid(b.getId()).getPrice() + "aaaaaaaaaaa");
+     /* if(itemDAO.getCurrentMaxBid(b.getId()).getPrice() == bidding.getPrice())
+          return true;*/
+      return false;
+    }
+    
     public List<Bidding> getUserBiddings(long userId) {
-        System.out.println("XXXXXXXXXXXXXXXXXXXXXXX");
         System.out.println(biddingDAO.getUserBiddings(userId).toString());
         return biddingDAO.getUserBiddings(userId);
     }

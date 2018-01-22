@@ -128,6 +128,5 @@ public class ItemDAO extends AbstractDAO<Item> {
         TypedQuery<Item> query = getEntityManager().createNamedQuery("Item.getUserItemsInProgress", Item.class);
         query.setParameter("userId", userId);
         return query.getResultList();
-    }
-    
+    }   
 }

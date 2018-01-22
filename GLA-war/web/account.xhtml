@@ -5,7 +5,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
+
     <h:head>
         <title>Mon Compte</title>
         <ui:include src="/WEB-INF/header.xhtml" />
@@ -21,15 +21,15 @@
                     <th>Retirer</th>
                 </tr>
                 <ui:repeat var="item" value="#{accountBean.getUserItems(sessionScope.sessionUtilisateur.id)}">
-                <tr>
-                    <td><h:link value="#{item.title}" outcome="item" >
-                            <f:param name="id" value="#{item.id}" />
-                        </h:link>
-                    </td>
-                    <td>#{item.description}</td>
-                    <td>#{itemUtilsBean.getCurrentPrice(item)} &euro;</td>
-                    <td><h:form><h:commandButton value="X" action="#{accountBean.removeUserItem(item.id)}"/></h:form></td>
-                </tr>
+                    <tr>
+                        <td><h:link value="#{item.title}" outcome="item" >
+                                <f:param name="id" value="#{item.id}" />
+                            </h:link>
+                        </td>
+                        <td>#{item.description}</td>
+                        <td>#{itemUtilsBean.getCurrentPrice(item)} &euro;</td>
+                        <td><h:form><h:commandButton value="X" action="#{accountBean.removeUserItem(item.id)}"/></h:form></td>
+                    </tr>
                 </ui:repeat>
             </table>
             <h2>Mes encheres</h2>
@@ -43,21 +43,24 @@
                     <th>Retirer</th>
                 </tr>
                 <ui:repeat var="bidding" value="#{accountBean.getUserBiddings(sessionScope.sessionUtilisateur.id)}">
-                <tr>
-                    <td><h:link value="#{bidding.item.title}" outcome="item" >
-                            <f:param name="id" value="#{bidding.item.id}" />
-                        </h:link>
-                    </td>
-                    <td>#{bidding.price}</td>
-                    <td>Fonctionne pas &euro;</td>
-                    <td>#{itemUtilsBean.getBidRemainingTime(bidding.item)}</td>
-                    <td>#{itemUtilsBean.isBidOver(bidding.item)}</td>
-                    <td><h:form><h:commandButton value="X" action="#{accountBean.removeUserBidding(bidding.id)}"/></h:form></td>
-                </tr>
+                    <tr>
+                        <td><h:link value="#{bidding.item.title}" outcome="item" >
+                                <f:param name="id" value="#{bidding.item.id}" />
+                            </h:link>
+                        </td>
+                        <td>#{bidding.price}</td>
+                        <td>#{itemUtilsBean.getCurrentPrice(bidding.item)} &euro;</td>
+                        <td>#{itemUtilsBean.getBidRemainingTime(bidding.item)}</td>
+                        <td>#{itemUtilsBean.isBidOver(bidding.item)}</td>
+                        <td><h:form><h:commandButton value="X" action="#{accountBean.removeUserBidding(bidding.id)}"/></h:form></td>
+                        <td><h:outputText value="Ajouté au panier"  rendered="#{accountBean.winner(bidding) == true}"/></td>
+
+
+                    </tr>
                 </ui:repeat>
             </table>
         </c:if>
-        
+
         <ui:include src="/WEB-INF/footer.xhtml" />
     </h:body>
 </html>
