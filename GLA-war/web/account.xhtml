@@ -28,7 +28,7 @@
                     </td>
                     <td>#{item.description}</td>
                     <td>#{itemUtilsBean.getCurrentPrice(item)} &euro;</td>
-                    <td><h:form><h:commandLink value="X" action="#{accountBean.removeUserItem(item.id)}"/></h:form></td>
+                    <td><h:form><h:commandButton value="X" action="#{accountBean.removeUserItem(item.id)}"/></h:form></td>
                 </tr>
                 </ui:repeat>
             </table>
@@ -49,10 +49,10 @@
                         </h:link>
                     </td>
                     <td>#{bidding.price}</td>
-                    <td>#{itemUtilsBean.currentPrice(bidding.item)} &euro;</td>
+                    <td>Fonctionne pas &euro;</td>
                     <td>#{itemUtilsBean.getBidRemainingTime(bidding.item)}</td>
                     <td>#{itemUtilsBean.isBidOver(bidding.item)}</td>
-                    <td><h:form><h:commandLink value="X" action="#{accountBean.removeUserBidding(bidding.id)}"/></h:form></td>
+                    <td><h:form><h:commandButton value="X" action="#{accountBean.removeUserBidding(bidding.id)}"/></h:form></td>
                 </tr>
                 </ui:repeat>
             </table>

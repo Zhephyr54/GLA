@@ -35,6 +35,7 @@ public class AccountManagedBean {
     }
     
     public void removeUserItem(long itemId) {
+                System.out.println("XXXXXXXXXXXXXXXXXXXXXXX");
         itemDAO.removeById(itemId);
     }
     
