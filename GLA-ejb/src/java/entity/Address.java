@@ -29,14 +29,8 @@ public class Address implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name = "street")
-    private String street;
-    
-    @Column(name = "city")
-    private String city;
-   
-    @Column(name = "code")
-    private String code; 
+    @Column(name = "address")
+    private String adr;
     
     @ManyToOne
     private User user;
@@ -47,37 +41,18 @@ public class Address implements Serializable {
     public Address() {
     }
 
-    public Address(String street, String city, String code) {
-        this.street = street;
-        this.city = city;
-        this.code = code;
+    public Address(String adr) {
+        this.adr = adr;
     }
 
-    public String getStreet() {
-        return street;
+    public String getAdr() {
+        return adr;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setAdr(String adr) {
+        this.adr = adr;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    
     public Long getId() {
         return id;
     }
@@ -125,7 +100,6 @@ public class Address implements Serializable {
 
     @Override
     public String toString() {
-        return "Address{" + "id=" + id + ", street=" + street + ", city=" + city + ", code=" + code + '}';
-    }
-    
+        return "Address{" + "id=" + id + ", address=" + adr + ", user=" + user + ", orders=" + orders + '}';
+    }    
 }

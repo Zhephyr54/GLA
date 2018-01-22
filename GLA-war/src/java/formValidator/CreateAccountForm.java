@@ -1,5 +1,6 @@
 package formValidator;
 
+import entity.Address;
 import entity.User;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +14,9 @@ public final class CreateAccountForm {
     private final String CHAMP_CONF = "confirmation";
     private final String CHAMP_NOM = "lastname";
     private final String CHAMP_PRENOM = "firstname";
+    private final String CHAMP_ADR = "adr";
     private boolean ok, emailexist;
+    private Address address;
 
     private String resultat;
     private Map<String, String> erreurs = new HashMap<String, String>();
@@ -32,6 +35,7 @@ public final class CreateAccountForm {
         String confirmation = getValeurChamp(request, CHAMP_CONF);
         String nom = getValeurChamp(request, CHAMP_NOM);
         String prenom = getValeurChamp(request, CHAMP_PRENOM);
+        String adr = getValeurChamp(request, CHAMP_ADR);
         this.emailexist = emailexist;
 
         User utilisateur = new User();
@@ -50,6 +54,10 @@ public final class CreateAccountForm {
 
         if (erreurs.isEmpty()) {
             resultat = "Succès de l'inscription.";
+            if (!adr.isEmpty()) {
+                this.address = new Address(adr);
+                utilisateur.addAdr(address);
+            }
             ok = true;
         } else {
             resultat = "Échec de l'inscription.";
