@@ -27,6 +27,8 @@ public class AccountManagedBean {
     
     @EJB
     BiddingDAO biddingDAO; 
+    
+    private boolean pair = false;
 
     /**
      * Creates a new instance of AccountManagedBean
@@ -52,4 +54,9 @@ public class AccountManagedBean {
         biddingDAO.removeById(biddingId);
     }
     
+    public boolean getPair(){
+        this.pair = !this.pair;
+        return this.pair;
+    }
+
 }
