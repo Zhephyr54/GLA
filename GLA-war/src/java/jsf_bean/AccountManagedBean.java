@@ -46,9 +46,8 @@ public class AccountManagedBean {
      Bidding bidding = biddingDAO.myMax(b.getItem().getId(),b.getUser().getId());
       if(bidding == null)
           return false;
-       // System.out.println(itemDAO.getCurrentMaxBid(b.getId()).getPrice() + "aaaaaaaaaaa");
-     /* if(itemDAO.getCurrentMaxBid(b.getId()).getPrice() == bidding.getPrice())
-          return true;*/
+      if(itemDAO.getCurrentMaxBid(b.getItem().getId()).getPrice() == bidding.getPrice())
+          return true;
       return false;
     }
     
