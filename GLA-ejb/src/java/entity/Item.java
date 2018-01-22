@@ -45,7 +45,10 @@ import javax.persistence.Table;
             query = "SELECT i FROM Item i WHERE i.title LIKE :title"),
     @NamedQuery(
             name = "Item.getNumberOfBiddings", 
-            query = "SELECT count(b) as nbBiddings FROM Bidding b JOIN b.item i WHERE i.id = :itemId")
+            query = "SELECT count(b) as nbBiddings FROM Bidding b JOIN b.item i WHERE i.id = :itemId"),
+    @NamedQuery(
+            name = "Item.getUserItemsInProgress", 
+            query = "SELECT i FROM Item i WHERE i.user.id = :userId")
 })
 public class Item implements Serializable {
 
@@ -66,7 +69,7 @@ public class Item implements Serializable {
     @Column(name = "end_bid_date")
     private LocalDateTime endBidDate;
         
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="current_max_bid")
     private Bidding currentMaxBid;
     

@@ -43,5 +43,14 @@ public class IndexManagedBean {
         
     public List<Offer> getOfferOfDay(){
         return offer.getOffer();
-    }    
+    } 
+    
+    public void removeUserItem(long itemId) {
+        itemDAO.removeById(itemId);
+        System.out.println("=================== "+itemId);
+    }
+    
+    public List<Item> getUserItemsInProgress(long userId) {
+        return itemDAO.getUserItemsInProgress(userId);
+    }
 }
