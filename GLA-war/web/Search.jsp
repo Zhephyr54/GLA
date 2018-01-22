@@ -13,39 +13,47 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Recherche</title>
         <link type="text/css" rel="stylesheet" href="resources/css/form.css" />
+        <style>
+            .optionGroup {
+                font-weight: bold;
+                font-style: italic;
+            }
+            
+            .optionChild {
+                padding-left: 15px;
+            }
+        </style>
     </head>
     <body>
-                <%@include file="Header.xhtml" %>
+                <%@include file="/WEB-INF/header.xhtml" %>
 
         <form method="post" action="recherche">
             <fieldset>
                 <legend>Rechercher un article</legend>
 
                 <label for="title">Titre</label>
-                <input type="text" id="title" name="title" size="20" maxlength="60" required/>
+                <input type="text" id="title" name="title" size="20" maxlength="60"/>
                 <br/>
 
                 <label for="cat">Choisir une catégorie<span class="requis">*</span></label>
                 <select name="cat" id="cat">
                     <c:forEach items="${category}" var="c">
-                        <option value=${c.id}>${c.title}</option>
+                        <option class="optionGroup" value=${c.title}>${c.title}</option>
+                        
+                        <c:forEach items="${subcategory.get(c.id-1)}" var="s">
+                            <option class="optionChild" value=${s.title}>${s.title}</option>
+                        </c:forEach>
+                        
                     </c:forEach>
                 </select>
                 <br/>
                 
-                <label for="sub">Choisir une sous catégorie<span class="requis">*</span></label>
-                <select name="sub" id="sub">
-                    <c:forEach items="${subcategory}" var="s">
-                        <option value=${s.id}>${s.title}</option>
-                    </c:forEach>
-                </select>
-                <br/>
 
                 <input type="submit"  class="btn btn-primary" value="Rechercher" />
                 <br/>
             </fieldset>
         </form>
-                <%@include file="Footer.xhtml" %>
+                <%@include file="/WEB-INF/footer.xhtml" %>
 
     </body>
 </html>

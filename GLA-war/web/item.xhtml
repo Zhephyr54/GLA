@@ -18,7 +18,7 @@
         </f:metadata>
     </h:head>
     <h:body>
-        <ui:include src="Header.xhtml" />
+        <ui:include src="/WEB-INF/header.xhtml" />
 
         <c:if test="#{empty itemBean.item}">
             <p>Enchère introuvable</p>
@@ -89,7 +89,7 @@
                 <p>Vous devez &ecirc;tre connect&eacute; afin d'ench&eacute;rir</p>
             </c:if>
         </c:if>
-        <ui:include src="Footer.xhtml" />
+        <ui:include src="/WEB-INF/footer.xhtml" />
     </h:body>
 </html>
 

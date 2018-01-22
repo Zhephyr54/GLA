@@ -67,7 +67,6 @@ public class DatabaseSeed {
         s3.setCategory(c2);
         s4.setCategory(c2);
         
-        
         item1.setSubcategory(s1);
         item2.setSubcategory(s1);
         item3.setSubcategory(s1);

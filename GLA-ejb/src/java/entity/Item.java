@@ -39,6 +39,9 @@ import javax.persistence.Table;
             name = "Item.searchNotOver",
             query = "SELECT i FROM Item i WHERE i.title LIKE :title AND i.subcategory.category.id = :cat AND i.subcategory.id = :sub"),
     @NamedQuery(
+            name = "Item.searchByCategory",
+            query = "SELECT i FROM Item i WHERE i.title LIKE :title AND i.subcategory.category.id = :cat"),
+    @NamedQuery(
             name = "Item.searchByTitle",
             query = "SELECT i FROM Item i WHERE i.title LIKE :title"),
     @NamedQuery(

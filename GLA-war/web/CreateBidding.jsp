@@ -14,7 +14,7 @@
         <link type="text/css" rel="stylesheet" href="resources/css/form.css" />
     </head>
     <body>
-        <%@include file="Header.xhtml" %>
+        <%@include file="/WEB-INF/header.xhtml" %>
 
         <form method="post" action="enchere">
             <fieldset>
@@ -58,6 +58,6 @@
                 <br/>
             </fieldset>
         </form>
-                <%@include file="Footer.xhtml" %>
+                <%@include file="/WEB-INF/footer.xhtml" %>
     </body>
 </html>

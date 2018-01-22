@@ -11,10 +11,8 @@ import db.dao.SubcategoryDAO;
 import entity.Category;
 import entity.Item;
 import entity.Subcategory;
-import entity.User;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -22,8 +20,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import static servlets.SignIn.ATT_SESSION_USER;
 
 /**
  *
@@ -35,7 +31,7 @@ public class Search extends HttpServlet {
     public static final String VUE = "/Search.jsp";
     public static final String URL_REDIRECTION = "/SearchResult.jsp";
     private List<Category> category;
-    private List<Subcategory> subcategory;
+    private List<List<Subcategory>> subcategories;
     private List<Item> items;
 
     @EJB
@@ -58,10 +54,15 @@ public class Search extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-        this.subcategory = s.findAll();
+        //this.subcategory = s.findAll();
         this.category = c.findAll();
+        this.subcategories = new ArrayList();
         
-        request.setAttribute("subcategory", subcategory);
+        for(int i=0; i<category.size(); i++){
+            subcategories.add(s.findByCategory(Math.toIntExact(category.get(i).getId())));
+        }
+        
+        request.setAttribute("subcategory", subcategories);
         request.setAttribute("category", category);
         
         
@@ -94,11 +95,19 @@ public class Search extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
         String title = request.getParameter("title");
-        String idCategory = request.getParameter("cat");
-        String idSubCategory = request.getParameter("sub");
+        String cat = request.getParameter("cat");
         
-        //Recherche par titre, category, sous-category
-        items  = item.findNotOver(title, Integer.parseInt(idCategory), Integer.parseInt(idSubCategory));
+        int subcatId = getIdByTitle(cat);
+        boolean isCat = isACategory(cat);
+        
+        if(isCat){
+            items  = item.findNotOverByCategory(title, subcatId);
+        }
+        else {
+            int catId = getCategoryId(cat);
+            items  = item.findNotOver(title, catId, subcatId);
+        }
+        
         //Recherche par titre
         //items  = item.findNotOverByTitle(title);
         request.setAttribute("items", items);
@@ -106,4 +115,39 @@ public class Search extends HttpServlet {
         
     }
 
+    private int getIdByTitle(String title){
+        for(int i=0; i<category.size(); i++){
+            if(category.get(i).getTitle().equals(title))
+                return Math.toIntExact(category.get(i).getId());
+        }
+        for(int i=0; i<subcategories.size(); i++){
+            for(int j=0; j<subcategories.get(i).size(); j++){
+                if(subcategories.get(i).get(j).getTitle().equals(title))
+                    return Math.toIntExact(subcategories.get(i).get(j).getId());
+            }
+        }
+        return 0;
+    }
+    
+    private boolean isACategory(String title){
+        for(int i=0; i<category.size(); i++){
+            if(category.get(i).getTitle().equals(title))
+                return true;
+        }
+        return false;
+    }
+
+    private int getCategoryId(String subcategory) {
+        int pos = 0;
+        for(int i=0; i<subcategories.size(); i++){
+            for(int j=0; j<subcategories.get(i).size(); j++){
+                if(subcategories.get(i).get(j).getTitle().equals(subcategory)){
+                    pos = i;
+                    break;
+                }
+            }
+        }
+        return Math.toIntExact(category.get(pos).getId());
+    }
+    
 }
