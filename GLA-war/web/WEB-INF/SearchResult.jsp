@@ -13,6 +13,9 @@
         <title>Recherche</title>
     </head>
     <body>
+        
+                        <%@include file="/WEB-INF/header.xhtml" %>
+
         <h1>Resultats de la recherche</h1>
         <c:forEach items="${items}" var="c">
             <hr>
@@ -21,5 +24,7 @@
             <div>Subcategory : ${c.subcategory.title}</div>
             <hr>
         </c:forEach>
+       <%@include file="/WEB-INF/footer.xhtml" %>
+
     </body>
 </html>
