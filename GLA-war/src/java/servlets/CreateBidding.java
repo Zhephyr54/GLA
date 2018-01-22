@@ -30,7 +30,7 @@ import static servlets.SignIn.ATT_SESSION_USER;
 @WebServlet(name = "CreateBidding", urlPatterns = {"/enchere"})
 public class CreateBidding extends HttpServlet {
 
-    public static final String VUE = "/CreateBidding.jsp";
+    public static final String VUE = "/WEB-INF/CreateBidding.jsp";
     public static final String URL_REDIRECTION = "/GLA-war";
     private List<Subcategory> subcategory;
 

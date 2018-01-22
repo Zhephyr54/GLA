@@ -20,7 +20,7 @@ public class SignIn extends HttpServlet {
     public static final String ATT_USER = "utilisateur";
     public static final String ATT_FORM = "form";
     public static final String ATT_SESSION_USER = "sessionUtilisateur";
-    public static final String VUE = "/SignIn.jsp";
+    public static final String VUE = "/WEB-INF/SignIn.jsp";
     public static final String URL_REDIRECTION = "/GLA-war";
 
     @Override

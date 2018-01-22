@@ -16,7 +16,7 @@ import formValidator.CreateAccountForm;
 public class CreateAccount extends HttpServlet {
     public static final String ATT_USER = "utilisateur";
     public static final String ATT_FORM = "form";
-    public static final String VUE = "/Register.jsp";
+    public static final String VUE = "/WEB-INF/Register.jsp";
     public static final String URL_REDIRECTION = "connexion";
     
     @EJB
