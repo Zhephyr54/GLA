@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     
     <h:head>
         <title>MOn Compte</title>
@@ -14,7 +15,6 @@
             <h2>Mes produits</h2>
             <table>
                 <tr>
-                    <th>ID</th>
                     <th>Titre</th>
                     <th>Description</th>
                     <th>Prix</th>
@@ -22,8 +22,10 @@
                 </tr>
                 <ui:repeat var="item" value="#{accountBean.getUserItems(sessionScope.sessionUtilisateur.id)}">
                 <tr>
-                    <td>#{item.id}</td>
-                    <td>#{item.title}</td>
+                    <td><h:link value="#{item.title}" outcome="item" >
+                            <f:param name="id" value="#{item.id}" />
+                        </h:link>
+                    </td>
                     <td>#{item.description}</td>
                     <td>#{item.getCurrentPrice()} &euro;</td>
                     <td><h:form><h:commandLink value="X" action="#{accountBean.removeUserItem(item.id)}"/></h:form></td>
@@ -42,7 +44,10 @@
                 </tr>
                 <ui:repeat var="bidding" value="#{accountBean.getUserBiddings(sessionScope.sessionUtilisateur.id)}">
                 <tr>
-                    <td>#{bidding.item.title}</td>
+                    <td><h:link value="#{bidding.item.title}" outcome="item" >
+                            <f:param name="id" value="#{bidding.item.id}" />
+                        </h:link>
+                    </td>
                     <td>#{bidding.price}</td>
                     <td>#{bidding.item.currentPrice} &euro;</td>
                     <td>#{itemUtilsBean.getBidRemainingTime(bidding.item.endBidDate)}</td>
