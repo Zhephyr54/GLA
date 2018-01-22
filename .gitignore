@@ -17,4 +17,3 @@ nb-configuration.xml
 *.jar
 *.war
 *.ear
-*.properties

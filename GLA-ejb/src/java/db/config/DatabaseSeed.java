@@ -47,6 +47,13 @@ public class DatabaseSeed {
         Item item2 = new Item("Iphone périmé", "Périmé depuis 10 ans", BigDecimal.valueOf(1), LocalDateTime.now().minusYears(10));
         item2.setUser(user1);
         
+        Item item3 = new Item("Samsung s8", "neuf bien evidemment !", BigDecimal.valueOf(299.99), LocalDateTime.now().plusDays(5));
+        item3.setUser(user1);
+        Item item4 = new Item("Tv monitor", "belle image!", BigDecimal.valueOf(2099.99), LocalDateTime.now().plusDays(5));
+        item4.setUser(user2);
+        Item item5 = new Item("Tv 4k", "Incroyable du pure 4K", BigDecimal.valueOf(10099.99), LocalDateTime.now().plusDays(5));
+        item5.setUser(user2);
+        
         Category c1 = new Category("Multimedia"); 
         Category c2 = new Category("Loisirs"); 
         
@@ -63,6 +70,9 @@ public class DatabaseSeed {
         
         item1.setSubcategory(s1);
         item2.setSubcategory(s1);
+        item3.setSubcategory(s1);
+        item4.setSubcategory(s1);
+        item5.setSubcategory(s1);
 
         Bidding bidding1 = new Bidding(BigDecimal.valueOf(500), user2, item1);
         item1.setCurrentMaxBid(bidding1);
@@ -77,6 +87,9 @@ public class DatabaseSeed {
         em.persist(user2);
         em.persist(item1);
         em.persist(item2);
+        em.persist(item3);
+        em.persist(item4);
+        em.persist(item5);
         em.persist(bidding1);
         em.persist(c1);
         em.persist(c2);

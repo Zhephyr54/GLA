@@ -105,8 +105,6 @@ public class Search extends HttpServlet {
         int subcatId = getIdByTitle(cat);
         boolean isCat = isACategory(cat);
         
-        System.out.println(isCat+" : "+subcatId);
-        
         if(isCat){
             items  = item.findNotOverByCategory(title, subcatId);
         }
@@ -138,7 +136,6 @@ public class Search extends HttpServlet {
     
     private boolean isACategory(String title){
         for(int i=0; i<category.size(); i++){
-            System.out.println("compare "+category.get(i).getTitle()+" à "+title);
             if(category.get(i).getTitle().equals(title))
                 return true;
         }

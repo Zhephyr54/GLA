@@ -16,7 +16,7 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.validation.constraints.Digits;
+//import javax.validation.constraints.Digits;
 
 /**
  *
@@ -36,7 +36,7 @@ public class ItemManagedBean implements Serializable {
     
     private Item item;
         
-    @Digits(integer = 7, fraction = 2, message = "Prix invalide. Exemple : 12.55")
+    //@Digits(integer = 7, fraction = 2, message = "Prix invalide. Exemple : 12.55")
     private BigDecimal bid;
     
     /**

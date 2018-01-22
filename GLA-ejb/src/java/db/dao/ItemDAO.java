@@ -95,4 +95,10 @@ public class ItemDAO extends AbstractDAO<Item> {
         return query.getSingleResult();
     }
     
+    public List<Item> getUserItemsInProgress(Long userId) {
+        TypedQuery<Item> query = getEntityManager().createNamedQuery("Item.getUserItemsInProgress", Item.class);
+        query.setParameter("userId", userId);
+        return query.getResultList();
+    }
+    
 }
