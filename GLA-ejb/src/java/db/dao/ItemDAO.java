@@ -60,11 +60,20 @@ public class ItemDAO extends AbstractDAO<Item> {
      */
     public List<Item> findNotOver(String title, int idCategory, int idSubCategory) {
         TypedQuery<Item> query = getEntityManager().createNamedQuery("Item.searchNotOver", Item.class);
-        query.setParameter("title", title);
+        query.setParameter("title", "%"+title+"%");
         query.setParameter("cat", idCategory);
         query.setParameter("sub", idSubCategory);
         return query.getResultList();
     }
+    
+    public List<Item> findNotOverByCategory(String title, int idCategory) {
+        TypedQuery<Item> query = getEntityManager().createNamedQuery("Item.searchByCategory", Item.class);
+        query.setParameter("title", "%"+title+"%");
+        query.setParameter("cat", idCategory);
+        return query.getResultList();
+    }
+    
+    
     
     public List<Item> findNotOverByTitle(String title) {
         TypedQuery<Item> query = getEntityManager().createNamedQuery("Item.searchByTitle", Item.class);
