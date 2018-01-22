@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <h:head>
+        <title>MOn Compte</title>
+        <ui:include src="Header.xhtml" />
+    </h:head>
+    <h:body>
+        <c:if test="${!empty sessionScope.sessionUtilisateur}">
+            <h2>Mes produits</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Prix</th>
+                    <th>Retirer</th>
+                </tr>
+                <ui:repeat var="item" value="#{accountBean.getUserItems(sessionScope.sessionUtilisateur.id)}">
+                <tr>
+                    <td>#{item.id}</td>
+                    <td>#{item.title}</td>
+                    <td>#{item.description}</td>
+                    <td>#{item.getCurrentPrice()} &euro;</td>
+                    <td><h:form><h:commandLink value="X" action="#{accountBean.removeUserItem(item.id)}"/></h:form></td>
+                </tr>
+                </ui:repeat>
+            </table>
+            <h2>Mes encheres</h2>
+            <table>
+                <tr>
+                    <th>Titre</th>
+                    <th>Mon Prix</th>
+                    <th>Prix actuel</th>
+                    <th>Temps restant</th>
+                    <th>Retirer</th>
+                    <th>Etat</th>
+                </tr>
+                <ui:repeat var="bidding" value="#{accountBean.getUserBiddings(sessionScope.sessionUtilisateur.id)}">
+                <tr>
+                    <td>#{bidding.item.title}</td>
+                    <td>#{bidding.price}</td>
+                    <td>#{bidding.item.currentPrice} &euro;</td>
+                    <td>#{itemUtilsBean.getBidRemainingTime(bidding.item.endBidDate)}</td>
+                    <td><h:form><h:commandLink value="X" action="#{accountBean.removeUserBidding(bidding.id)}"/></h:form></td>
+                    <td>#{itemUtilsBean.isBidOver(bidding.item.endBidDate)}</td>
+                </tr>
+                </ui:repeat>
+            </table>
+        </c:if>
+        
+        <ui:include src="Footer.xhtml" />
+    </h:body>
+</html>
+

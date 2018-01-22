@@ -14,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -22,6 +24,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Biddings")
+@NamedQueries({
+    @NamedQuery(
+            name = "Bidding.getUserBiddings", 
+            query = "SELECT b FROM Bidding b WHERE b.user.id = :userId ORDER BY b.item.id")
+})
 public class Bidding implements Serializable {
 
     private static final long serialVersionUID = 1L;

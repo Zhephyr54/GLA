@@ -18,7 +18,6 @@ public class CreateAccount extends HttpServlet {
     public static final String ATT_FORM = "form";
     public static final String VUE = "/Register.jsp";
     public static final String URL_REDIRECTION = "connexion";
-
     
     @EJB
     UserDAO ud;

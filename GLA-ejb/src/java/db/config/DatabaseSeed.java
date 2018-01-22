@@ -74,7 +74,7 @@ public class DatabaseSeed {
         item4.setSubcategory(s1);
         item5.setSubcategory(s1);
 
-        Bidding bidding1 = new Bidding(BigDecimal.valueOf(500), user2, item1);
+        Bidding bidding1 = new Bidding(BigDecimal.valueOf(500), user1, item1);
         item1.setCurrentMaxBid(bidding1);
         
         LocalTime midnight = LocalTime.MIDNIGHT;
