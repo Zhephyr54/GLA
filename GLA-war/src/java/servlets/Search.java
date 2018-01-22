@@ -11,10 +11,7 @@ import db.dao.SubcategoryDAO;
 import entity.Category;
 import entity.Item;
 import entity.Subcategory;
-import entity.User;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -23,8 +20,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import static servlets.SignIn.ATT_SESSION_USER;
 
 /**
  *

@@ -37,8 +37,8 @@
                     <th>Mon Prix</th>
                     <th>Prix actuel</th>
                     <th>Temps restant</th>
-                    <th>Retirer</th>
                     <th>Etat</th>
+                    <th>Retirer</th>
                 </tr>
                 <ui:repeat var="bidding" value="#{accountBean.getUserBiddings(sessionScope.sessionUtilisateur.id)}">
                 <tr>
@@ -46,8 +46,8 @@
                     <td>#{bidding.price}</td>
                     <td>#{bidding.item.currentPrice} &euro;</td>
                     <td>#{itemUtilsBean.getBidRemainingTime(bidding.item.endBidDate)}</td>
-                    <td><h:form><h:commandLink value="X" action="#{accountBean.removeUserBidding(bidding.id)}"/></h:form></td>
                     <td>#{itemUtilsBean.isBidOver(bidding.item.endBidDate)}</td>
+                    <td><h:form><h:commandLink value="X" action="#{accountBean.removeUserBidding(bidding.id)}"/></h:form></td>
                 </tr>
                 </ui:repeat>
             </table>
