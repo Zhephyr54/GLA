@@ -16,12 +16,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -43,6 +41,11 @@ import javax.persistence.Table;
     @NamedQuery(
             name = "Item.searchByTitle",
             query = "SELECT i FROM Item i WHERE i.title LIKE :title"),
+    @NamedQuery(
+            name = "Item.getCurrentMaxBid",
+            query = "SELECT b FROM Bidding b WHERE b.item.id = :itemId AND b.price = (SELECT MAX(b2.price) "
+                    + "FROM Bidding b2 "
+                    + "WHERE b2.id = b.id)"),
     @NamedQuery(
             name = "Item.getNumberOfBiddings", 
             query = "SELECT count(b) as nbBiddings FROM Bidding b JOIN b.item i WHERE i.id = :itemId"),
@@ -68,17 +71,12 @@ public class Item implements Serializable {
     
     @Column(name = "end_bid_date")
     private LocalDateTime endBidDate;
-        
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="current_max_bid")
-    private Bidding currentMaxBid;
-    
+            
     @ManyToOne
     private User user;
     
     @ManyToOne
     private Subcategory subcategory;
-
     
     @OneToMany(mappedBy="item", cascade = CascadeType.ALL)
     private List<Bidding> biddings = new ArrayList<>(); 
@@ -127,14 +125,6 @@ public class Item implements Serializable {
     public void setEndBidDate(LocalDateTime endBidDate) {
         this.endBidDate = endBidDate;
     }
-
-    public Bidding getCurrentMaxBid() {
-        return currentMaxBid;
-    }
-
-    public void setCurrentMaxBid(Bidding currentMaxBid) {
-        this.currentMaxBid = currentMaxBid;
-    }
     
     public Long getId() {
         return id;
@@ -177,29 +167,6 @@ public class Item implements Serializable {
         this.subcategory = subcategory;
     }
     
-    /**
-     * Return the max bid value if this item has any biddings
-     * or the starting bid value otherwise.
-     * 
-     * @return the current price for this item.
-     */
-    public BigDecimal getCurrentPrice() {
-        if (currentMaxBid != null) {
-            return currentMaxBid.getPrice();
-        }
-        return startingBid;
-    }
-    
-    /**
-     * Return true if this item has at least one bidding
-     * or false otherwise.
-     * 
-     * @return boolean
-     */
-    public boolean hasBid() {
-        return currentMaxBid != null;
-    }
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -222,6 +189,7 @@ public class Item implements Serializable {
 
     @Override
     public String toString() {
-        return "Item{" + "id=" + id + ", title=" + title + ", description=" + description + ", startingBid=" + startingBid + ", endBidDate=" + endBidDate + ", currentMaxBid=" + currentMaxBid + '}';
-    } 
+        return "Item{" + "id=" + id + ", title=" + title + ", description=" + description + ", startingBid=" + startingBid + ", endBidDate=" + endBidDate + ", user=" + user + ", subcategory=" + subcategory + ", biddings=" + biddings + ", order=" + order + '}';
+    }
+
 }

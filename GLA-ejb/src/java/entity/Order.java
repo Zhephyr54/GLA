@@ -58,15 +58,12 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(User user, Address address, CreditCard creditCard, List<Item> items) {
+    public Order(User user, Address address, CreditCard creditCard, List<Item> items, BigDecimal totalPrice) {
         this.user = user;
         this.address = address;
         this.creditCard = creditCard;
         this.items = items;
-        this.totalPrice = BigDecimal.ZERO;
-        for(Item item : items) {
-            this.totalPrice.add(item.getCurrentPrice());
-        }
+        this.totalPrice = totalPrice;
     }
     
     public Long getId() {

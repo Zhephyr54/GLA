@@ -5,7 +5,9 @@
  */
 package db.dao;
 
+import entity.Bidding;
 import entity.Item;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -72,6 +74,33 @@ public class ItemDAO extends AbstractDAO<Item> {
         return query.getResultList();
     }
     
+    /**
+     * Return the max bid value if this item has any biddings
+     * or the starting bid value otherwise.
+     * 
+     * @param itemId the item id
+     * @return the current price for this item.
+     */
+    public BigDecimal getCurrentPrice(Long itemId) {
+        Bidding currentMaxBid = getCurrentMaxBid(itemId);
+        if (currentMaxBid != null) {
+            return currentMaxBid.getPrice();
+        }
+        return findById(itemId).getStartingBid();
+    }
+    
+    /**
+     * Return the current max bidding for this item.
+     * 
+     * @param itemId the item id
+     * @return Bidding
+     */
+    public Bidding getCurrentMaxBid(Long itemId) {
+        TypedQuery<Bidding> query = getEntityManager().createNamedQuery("Item.getCurrentMaxBid", Bidding.class);
+        query.setParameter("itemId", itemId);
+        List<Bidding> result = query.getResultList();
+        return result.isEmpty() ? null : result.get(0);
+    }
     
     /**
      * Return the number of biggings for this item using

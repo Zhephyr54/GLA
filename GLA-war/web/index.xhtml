@@ -43,7 +43,7 @@
                         </h:link> 
                         </td>
                         <td>#{item.description}</td>
-                        <td>#{item.getCurrentPrice()} &euro;</td>
+                        <td>#{itemUtilsBean.getCurrentPrice(item)} &euro;</td>
                         <td><h:form><h:commandLink value="X" action="#{indexBean.removeUserItem(item.id)}"/></h:form></td>
                     </tr>
                 </ui:repeat>
@@ -63,13 +63,13 @@
                                 </h:link>                            
                             </h4>
                             <p class="card-text">           
-                                <div>#{item.getCurrentPrice()} &euro;</div>
+                                <div>#{itemUtilsBean.getCurrentPrice(item)} &euro;</div>
 
                                 <div>#{itemUtilsBean.getItemBiddingsNumber(item)} ench&egrave;res</div>
 
                                 <div>
-                                    Il reste #{itemUtilsBean.getBidRemainingTime(item.endBidDate)}
-                                    (#{itemUtilsBean.formatEndBidDate(item.endBidDate, "EEEE dd/MM, HH:mm")})
+                                    Il reste #{itemUtilsBean.getBidRemainingTime(item)}
+                                    (#{itemUtilsBean.formatEndBidDate(item, "EEEE dd/MM, HH:mm")})
                                 </div></p>
                         </div>
                     </div>

@@ -5,13 +5,16 @@
  */
 package managed_bean;
 
+import db.dao.ItemDAO;
 import entity.Address;
 import entity.CreditCard;
 import entity.Item;
 import entity.Order;
 import entity.User;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 
 /**
@@ -19,6 +22,9 @@ import javax.faces.context.FacesContext;
  * @author alexis
  */
 public class CartManagedBean {
+    
+    @EJB
+    ItemDAO itemDAO;
     
     public List<Item> listItems;
     
@@ -42,6 +48,10 @@ public class CartManagedBean {
         if (user == null)
             return;
         
-        Order order = new Order(user, address, creditCard, listItems);
+        BigDecimal totalPrice = BigDecimal.ZERO;
+        for (Item item : listItems) {
+            totalPrice.add(itemDAO.getCurrentMaxBid(item.getId()).getPrice());
+        }
+        Order order = new Order(user, address, creditCard, listItems, totalPrice);
     }
 }

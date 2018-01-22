@@ -66,7 +66,7 @@ public class ItemManagedBean implements Serializable {
     }
     
     public void onload() {
-        this.item = itemDAO.getById(itemId);
+        this.item = itemDAO.findById(itemId);
     }
     
     /**
@@ -76,7 +76,6 @@ public class ItemManagedBean implements Serializable {
         User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUtilisateur");
         Bidding bidding = new Bidding(bid, user, item);
         biddingDAO.create(bidding);
-        item.setCurrentMaxBid(bidding);
         itemDAO.edit(item);
     }
     
