@@ -25,23 +25,23 @@ import javax.persistence.TypedQuery;
 @Stateless
 @LocalBean
 public class OfferDAO extends AbstractDAO<Offer> {
-    
+
     @PersistenceContext(unitName = "glaPU")
     private EntityManager em;
-    
+
     @EJB
     SubcategoryDAO s;
 
     public OfferDAO() {
         super(Offer.class);
     }
-    
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     } 
     
-     @Schedule(hour = "*", minute = "*", persistent = false)
+     @Schedule(hour = "*", minute = "*")
      public void getOfferOfDay() {
          List<Subcategory> list = s.findAll();
          int tmp = ThreadLocalRandom.current().nextInt(1, list.size() + 1);
@@ -55,6 +55,14 @@ public class OfferDAO extends AbstractDAO<Offer> {
         TypedQuery<Offer> query = getEntityManager().createNamedQuery("Offer.findOffer", Offer.class);
         List<Offer> o = query.setParameter("currentDate", LocalDateTime.now()).getResultList();
         return o;
-     }
+    }
+    
+    public List<Offer> findOfferBySubcategory(Long subcategoryId) {
+        TypedQuery<Offer> query = getEntityManager().createNamedQuery("Offer.findOfferBySubcategory", Offer.class);
+        query.setParameter("subcategoryId", subcategoryId);
+        query.setParameter("currentDate", LocalDateTime.now());
+        List<Offer> o = query.getResultList();
+        return o;
+    }
 
 }

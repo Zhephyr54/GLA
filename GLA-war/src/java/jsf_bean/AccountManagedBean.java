@@ -7,9 +7,12 @@ package jsf_bean;
 
 import db.dao.BiddingDAO;
 import db.dao.ItemDAO;
+import db.dao.OrderDAO;
 import entity.Bidding;
 import entity.Item;
+import entity.Order;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -28,6 +31,9 @@ public class AccountManagedBean {
 
     @EJB
     BiddingDAO biddingDAO; 
+
+    @EJB
+    OrderDAO orderDAO;
     
     private boolean pair = false;
     
@@ -78,4 +84,25 @@ public class AccountManagedBean {
         return this.pair;
     }
 
+    public boolean isItemOrdered(Item item) {
+        return false;   
+        //return !orderDAO.findOrderByItemId(item.getId()).isEmpty();
+    }
+    
+    public List<Order> getUserOrders(long userId) {
+        return orderDAO.findOrderByUserId(userId);
+    }
+    
+    public String formatOrderDate(Order order, String pattern) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        return order.getOrderDate().format(formatter);
+    }
+    
+    public boolean isOrderSent(Order order) {
+        return Order.OrderState.SENT.equals(order.getOrderState());
+    }
+    
+    public boolean isOrderInProcess(Order order) {
+        return Order.OrderState.IN_PROCESS.equals(order.getOrderState());
+    }
 }

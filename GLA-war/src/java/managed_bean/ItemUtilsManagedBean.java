@@ -6,8 +6,10 @@
 package managed_bean;
 
 import db.dao.ItemDAO;
+import db.dao.OfferDAO;
 import entity.Item;
 import entity.User;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -23,10 +25,13 @@ import javax.inject.Named;
  */
 @Named(value = "itemUtilsBean")
 @RequestScoped
-public class ItemUtilsManagedBean {
+public class ItemUtilsManagedBean implements Serializable {
 
     @EJB
     ItemDAO itemDAO;
+    
+    @EJB
+    OfferDAO offerDAO;
     
     /**
      * Creates a new instance of ItemUtilsManagedBean
@@ -35,10 +40,10 @@ public class ItemUtilsManagedBean {
     }
     
     public boolean hasBid(Item item) {
-        return !getItemBiddingsNumber(item).equals(0);
+        return getItemBiddingsNumber(item) != 0l;
     }
     
-    public Long getItemBiddingsNumber(Item item) {
+    public long getItemBiddingsNumber(Item item) {
         return itemDAO.getNumberOfBiddingsById(item.getId());
     }
     
@@ -67,7 +72,6 @@ public class ItemUtilsManagedBean {
      */
     public String getBidRemainingTime(Item item) {
         LocalDateTime endBidDate = item.getEndBidDate();
-        System.out.println("DATE : "+endBidDate);
         long days = ChronoUnit.DAYS.between(LocalDateTime.now(), endBidDate);
         endBidDate = endBidDate.minusDays(days);
         long hours = ChronoUnit.HOURS.between(LocalDateTime.now(), endBidDate);
@@ -80,7 +84,6 @@ public class ItemUtilsManagedBean {
         result += hours > 0 ? hours + "h " : "";
         result += days <= 0 && minutes > 0 ? minutes + "m " : "";
         result += days <= 0 && hours <= 0 && seconds > 0 ? seconds + "s " : "";
-        System.out.println("RESULT = "+result);
         return result;
     }
     

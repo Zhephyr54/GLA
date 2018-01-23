@@ -134,7 +134,7 @@ public class ItemDAO extends AbstractDAO<Item> {
      * @param itemId the item id
      * @return The number of biddings for this item
      */
-    public Long getNumberOfBiddingsById(Long itemId) {
+    public long getNumberOfBiddingsById(Long itemId) {
         TypedQuery<Long> query = getEntityManager().createNamedQuery("Item.getNumberOfBiddings", Long.class);
         query.setParameter("itemId", itemId);
         return query.getSingleResult();

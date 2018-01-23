@@ -5,6 +5,7 @@
  */
 package db.config;
 
+import entity.Address;
 import entity.Bidding;
 import entity.Category;
 import entity.Item;
@@ -50,7 +51,7 @@ public class DatabaseSeed {
 
         Item item3 = new Item("Samsung s8", "neuf bien evidemment !", BigDecimal.valueOf(299.99), LocalDateTime.now().plusDays(5));
         item3.setUser(user1);
-        Item item4 = new Item("Tv monitor", "belle image!", BigDecimal.valueOf(2099.99), LocalDateTime.now().plusDays(5));
+        Item item4 = new Item("Tv monitor", "belle image!", BigDecimal.valueOf(2099.99), LocalDateTime.now().plusMinutes(1));
         item4.setUser(user2);
         Item item5 = new Item("Tv 4k", "Incroyable du pure 4K", BigDecimal.valueOf(10099.99), LocalDateTime.now());
         item5.setUser(user2);
@@ -74,6 +75,12 @@ public class DatabaseSeed {
         item4.setSubcategory(s1);
         item5.setSubcategory(s1);
 
+        Address adr = new Address("10 rue des aaa");
+        adr.setUser(user1);
+        Address adr2 = new Address("11 rue des aaa");
+        adr2.setUser(user1);
+
+        
         Bidding bidding1 = new Bidding(BigDecimal.valueOf(500), user2, item1);
         Bidding bidding2 = new Bidding(BigDecimal.valueOf(10100), user3, item5);
         Bidding bidding3 = new Bidding(BigDecimal.valueOf(10101), user1, item5);
@@ -103,6 +110,8 @@ public class DatabaseSeed {
         em.persist(s2);
         em.persist(s3);
         em.persist(s4);
+        em.persist(adr);
+        em.persist(adr2);
         em.persist(o);
     }
 

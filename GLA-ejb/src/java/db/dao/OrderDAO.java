@@ -6,10 +6,12 @@
 package db.dao;
 
 import entity.Order;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -31,4 +33,15 @@ public class OrderDAO extends AbstractDAO<Order> {
         return em;
     } 
 
+    public List<Order> findOrderByUserId(Long userId) {
+        TypedQuery<Order> query = getEntityManager().createNamedQuery("Order.findOrderByUserId", Order.class);
+        query.setParameter("userId", userId);
+        return query.getResultList();
+    }
+    
+    public List<Order> findOrderByItemId(Long itemId) {
+        TypedQuery<Order> query = getEntityManager().createNamedQuery("Order.findOrderByUserId", Order.class);
+        query.setParameter("itemId", itemId);
+        return query.getResultList();
+    }
 }

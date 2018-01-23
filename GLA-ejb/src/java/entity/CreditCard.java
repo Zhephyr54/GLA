@@ -13,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,6 +24,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "CreditCards")
+@NamedQueries({
+    @NamedQuery(
+            name = "CreditCard.getUserCB", 
+            query = "SELECT c FROM CreditCard c WHERE c.user.id = :userId ")
+})
 public class CreditCard implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,6 +53,12 @@ public class CreditCard implements Serializable {
     
     public CreditCard() {
     } 
+
+    public CreditCard(Long number, Long cvv, String name) {
+        this.number = number;
+        this.cvv = cvv;
+        this.name = name;
+    }
     
     public Long getId() {
         return id;
@@ -110,10 +123,7 @@ public class CreditCard implements Serializable {
             return false;
         }
         CreditCard other = (CreditCard) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
