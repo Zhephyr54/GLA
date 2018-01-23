@@ -5,6 +5,7 @@
  */
 package managed_bean;
 
+import db.dao.BiddingDAO;
 import db.dao.ItemDAO;
 import entity.Address;
 import entity.CreditCard;
@@ -30,8 +31,18 @@ public class CartManagedBean {
     @EJB
     ItemDAO itemDAO;
     
+    @EJB
+    BiddingDAO biddingDAO;
+    
     private List<Item> listItems;
 
+    private boolean winner(Item item) {
+        User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUtilisateur");
+        // if bidding is over and the user won this item biddings
+        return item.getEndBidDate().isBefore(LocalDateTime.now()) && user != null
+                && itemDAO.getCurrentMaxBid(item.getId()).getUser().getId().equals(user.getId());
+    }
+    
     public List<Item> getListItems() {
         return listItems;
     }
@@ -45,8 +56,8 @@ public class CartManagedBean {
     }
     
     public void addItem(Item item) {
-        // if bidding is over and the user won this item biddings
-        if (item.getEndBidDate().isBefore(LocalDateTime.now())) {
+        // if the user won this item biddings
+        if (winner(item)) {
             listItems.add(item);
         }
     }
