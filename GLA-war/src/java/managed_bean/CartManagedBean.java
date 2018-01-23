@@ -48,6 +48,15 @@ public class CartManagedBean implements Serializable {
     public List<Item> getListItems() {
         return listItems;
     }
+    
+    public BigDecimal getTotalPrice(){
+        BigDecimal b = new BigDecimal(0);
+                System.out.println(b + "aaaa");
+
+        for(int i=0;i<listItems.size();i++)
+           b =  b.add((BigDecimal)itemDAO.getCurrentPrice(listItems.get(i).getId()));
+        return b;
+    }
 
     public void setListItems(List<Item> listItems) {
         this.listItems = listItems;

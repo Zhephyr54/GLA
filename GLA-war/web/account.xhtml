@@ -8,9 +8,10 @@
 
     <h:head>
         <title>Mon Compte</title>
-        <ui:include src="/WEB-INF/header.xhtml" />
     </h:head>
     <h:body>
+        <ui:include src="/WEB-INF/header.xhtml" />
+
         <c:if test="${!empty sessionScope.sessionUtilisateur}">
             <h2>Mes produits</h2>
             <table>
@@ -62,7 +63,7 @@
                                                  action="#{cartBean.removeItem(bidding.item)}"/>
                             </h:form>
                         </td>
-    
+
                     </tr>
                 </ui:repeat>
             </table>
