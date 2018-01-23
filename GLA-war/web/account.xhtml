@@ -10,31 +10,41 @@
         <title>Mon Compte</title>
     </h:head>
     <h:body>
-        <ui:include src="/WEB-INF/header.xhtml" />
+        <div class="main">
+            <ui:include src="/WEB-INF/header.xhtml" />
 
-        <c:if test="${!empty sessionScope.sessionUtilisateur}">
-            <h2>Mes produits</h2>
-            <table>
-                <tr>
-                    <th>Titre</th>
-                    <th>Prix de départ</th>
-                    <th>Nombre d'enchères</th>
-                    <th>Meilleure enchère</th>
-                    <th>Annuler</th>
-                </tr>
-                <ui:repeat var="item" value="#{accountBean.getUserItems(sessionScope.sessionUtilisateur.id)}">
+            <c:if test="${!empty sessionScope.sessionUtilisateur}">
+                <h2>Mes produits</h2>
+                <table>
                     <tr>
-                        <td><h:link value="#{item.title}" outcome="item" >
-                                <f:param name="id" value="#{item.id}" />
-                            </h:link>
-                        </td>
-                        <td>#{item.startingBid} &euro;</td>
-                        <td>#{itemUtilsBean.getItemBiddingsNumber(item)}</td>
-                        <td>#{itemUtilsBean.getCurrentPrice(item)} &euro;</td>
-                        <td><h:form><h:commandButton value="X" action="#{accountBean.removeUserItem(item.id)}"/></h:form></td>
+                        <th>Titre</th>
+                        <th>Prix de départ</th>
+                        <th>Nombre d'enchères</th>
+                        <th>Meilleure enchère</th>
+                        <th>Annuler</th>
                     </tr>
-                </ui:repeat>
-            </table>
+                    <ui:repeat var="item" value="#{accountBean.getUserItems(sessionScope.sessionUtilisateur.id)}">
+                        <tr class="#{accountBean.pair ? 'pair' : 'impair'}">
+                            <td>
+                                <h:link value="#{item.title}" outcome="item" >
+                                    <f:param name="id" value="#{item.id}" />
+                                </h:link>
+                            </td>
+                            <td>#{item.startingBid} &euro;</td>
+                            <td>#{itemUtilsBean.getItemBiddingsNumber(item)}</td>
+                            <td>#{itemUtilsBean.getCurrentPrice(item)} &euro;</td>
+                            <td class="action">
+                                <h:form>
+                                    <h:commandButton action="#{accountBean.removeUserItem(item.id)}">
+                                        <h:graphicImage value="res/img/supprimer.png" alt="supprimer" />
+                                    </h:commandButton>
+                                </h:form>
+                            </td>
+                        </tr>
+                    </ui:repeat>
+                </table>
+            </c:if>
+
             <h2>Mes encheres</h2>
             <table>
                 <tr>
@@ -43,10 +53,10 @@
                     <th>Meilleure enchère</th>
                     <th>Temps restant</th>
                     <th>Etat</th>
-                    <th>Annuler</th>
+                    <th class="action">Annuler</th>
                 </tr>
                 <ui:repeat var="bidding" value="#{accountBean.getUserBiddings(sessionScope.sessionUtilisateur.id)}">
-                    <tr>
+                    <tr class="#{accountBean.pair ? 'pair' : 'impair'}">
                         <td><h:link value="#{bidding.item.title}" outcome="item" >
                                 <f:param name="id" value="#{bidding.item.id}" />
                             </h:link>
@@ -77,8 +87,13 @@
                                 Perdue
                             </ui:fragment>
                         </td>
-                        <td><h:form><h:commandButton value="X" action="#{accountBean.removeUserBidding(bidding.id)}"/></h:form></td>
-                        <!-- if item is already in cart -->
+                        <td class="action">
+                            <h:form>
+                                <h:commandButton action="#{accountBean.removeUserBidding(bidding.id)}">
+                                    <h:graphicImage value="res/img/supprimer.png" alt="supprimer" />
+                                </h:commandButton>
+                            </h:form>
+                        </td>
                         <td>
                             <h:form>
                                 <h:commandButton value="Ajouter au panier" rendered="#{accountBean.winner(bidding) and !cartBean.isInCart(bidding.item)}"
@@ -87,13 +102,12 @@
                                                  action="#{cartBean.removeItem(bidding.item)}"/>
                             </h:form>
                         </td>
-
                     </tr>
                 </ui:repeat>
             </table>
-        </c:if>
-
-        <ui:include src="/WEB-INF/footer.xhtml" />
+            
+            <ui:include src="/WEB-INF/footer.xhtml" />
+        </div>
     </h:body>
 </html>
 

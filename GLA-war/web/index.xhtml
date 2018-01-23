@@ -7,10 +7,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Accueil</title>
-
+        <link href="res/css/modern-business.css" rel="stylesheet"/>
     </h:head>
     <h:body>
-
+        <div id="main">
         <ui:include src="/WEB-INF/header.xhtml" />
 
         <c:if test="${!empty sessionScope.sessionUtilisateur}">
@@ -54,7 +54,7 @@
         </div>
 
         <ui:include src="/WEB-INF/footer.xhtml" />
-
+        </div>
     </h:body>
 
 </html>

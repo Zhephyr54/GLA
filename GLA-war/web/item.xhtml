@@ -16,8 +16,21 @@
             <f:viewParam name="id" value="#{itemBean.itemId}"/>
             <f:viewAction action="#{itemBean.onload}"/>
         </f:metadata>
+        <style>
+            body,html{
+                height: 100%;
+            }
+
+            #main{
+                min-height: 100%;
+                margin: 0 auto;
+                position: relative;
+            }
+
+        </style>
     </h:head>
     <h:body>
+        <div id="main">
         <ui:include src="/WEB-INF/header.xhtml" />
 
         <c:if test="#{empty itemBean.item}">
@@ -90,7 +103,7 @@
                 <p>Vous devez &ecirc;tre connect&eacute; afin d'ench&eacute;rir</p>
             </c:if>
         </c:if>
-        <ui:include src="/WEB-INF/footer.xhtml" />
+        </div>
     </h:body>
 </html>
 

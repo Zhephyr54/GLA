@@ -27,7 +27,9 @@ public class AccountManagedBean {
     ItemDAO itemDAO;
 
     @EJB
-    BiddingDAO biddingDAO;
+    BiddingDAO biddingDAO; 
+    
+    private boolean pair = false;
 
     /**
      * Creates a new instance of AccountManagedBean
@@ -55,12 +57,16 @@ public class AccountManagedBean {
     }
 
     public List<Bidding> getUserBiddings(long userId) {
-        System.out.println(biddingDAO.getUserBiddings(userId).toString());
         return biddingDAO.getUserBiddings(userId);
     }
 
     public void removeUserBidding(long biddingId) {
         biddingDAO.removeById(biddingId);
+    }
+    
+    public boolean getPair(){
+        this.pair = !this.pair;
+        return this.pair;
     }
 
 }
