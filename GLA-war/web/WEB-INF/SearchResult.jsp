@@ -16,7 +16,7 @@
         
                         <%@include file="/WEB-INF/header.xhtml" %>
 
-        <h1>Resultats de la recherche</h1>
+        <h1>Résultats de la recherche</h1>
         <c:forEach items="${items}" var="c">
             <hr>
             <a href="item.xhtml?id=${c.id}">${c.title}</a>
