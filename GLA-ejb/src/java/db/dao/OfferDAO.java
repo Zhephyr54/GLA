@@ -39,19 +39,19 @@ public class OfferDAO extends AbstractDAO<Offer> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
-    }
-
-    @Schedule(hour = "*", minute = "*", persistent = false)
-    public void getOfferOfDay() {
-        List<Subcategory> list = s.findAll();
-        int tmp = ThreadLocalRandom.current().nextInt(1, list.size() + 1);
-        Subcategory suboffer = list.get(tmp - 1);
-        System.out.println("Promo sur la categorie !" + suboffer.getTitle());
-        Offer o = new Offer(LocalDateTime.now().plusDays(1), suboffer);
-        this.create(o);
-    }
-
-    public List<Offer> getOffer() {
+    } 
+    
+     @Schedule(hour = "*", minute = "*")
+     public void getOfferOfDay() {
+         List<Subcategory> list = s.findAll();
+         int tmp = ThreadLocalRandom.current().nextInt(1, list.size() + 1);
+         Subcategory suboffer = list.get(tmp-1);
+         System.out.println("Promo sur la categorie !" + suboffer.getTitle());
+         Offer o = new Offer(LocalDateTime.now().plusDays(1),suboffer);
+         this.create(o);
+     }
+     
+     public List<Offer> getOffer(){
         TypedQuery<Offer> query = getEntityManager().createNamedQuery("Offer.findOffer", Offer.class);
         List<Offer> o = query.setParameter("currentDate", LocalDateTime.now()).getResultList();
         return o;

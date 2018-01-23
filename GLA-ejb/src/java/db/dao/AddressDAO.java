@@ -6,10 +6,13 @@
 package db.dao;
 
 import entity.Address;
+import entity.Item;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -30,5 +33,11 @@ public class AddressDAO extends AbstractDAO<Address> {
     protected EntityManager getEntityManager() {
         return em;
     } 
+    
+    public List<Address> getUserAddress(Long userId) {
+        TypedQuery<Address> query = getEntityManager().createNamedQuery("Address.getUserAddress", Address.class);
+        query.setParameter("userId", userId);
+        return query.getResultList();
+    }  
 
 }

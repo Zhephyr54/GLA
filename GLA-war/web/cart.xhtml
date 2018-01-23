@@ -32,12 +32,21 @@
                         <td>#{cartBean.calculatePriceWithOffer(item)} &euro;</td>
                     </tr>
                 </ui:repeat>
-                <tr>
-                    <th colspan="3">Prix total</th>
+
+                <tr>                    
+                    <th colspan="2">Prix total</th>
                     <td align="right">#{cartBean.calculateTotalPrice()} &euro;</td>
                 </tr>
             </table>
 
+            <label for="adr">Choisir une adresse<span class="requis">*</span></label>
+            <select name="adr" id="adr">
+                <ui:repeat var="adr" value="#{accountBean.getAddress(sessionScope.sessionUtilisateur.id)}">
+                    <option class="optionGroup" value="${adr.id}">${adr.adr}</option>
+                </ui:repeat>
+            </select>
+            <br/>
+            
             <h:form>
                 <h:messages />
                 <h:commandButton value="Valider la commande" class="btn btn-primary" action="#{cartBean.validateCommand(null, null)}"/>
