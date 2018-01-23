@@ -35,6 +35,7 @@
         </style>
     </head>
     <body>
+<<<<<<< HEAD
         <div id="main">
             <%@include file="/WEB-INF/header.xhtml" %>
 
@@ -59,6 +60,39 @@
                     </select>
                     <br/>
 
+=======
+                <%@include file="/WEB-INF/header.xhtml" %>
+
+        <form method="post" action="recherche">
+            <fieldset>
+                <legend>Rechercher un article</legend>
+
+                <label for="title">Titre</label>
+                <input type="text" id="title" name="title" size="20" maxlength="60"/>
+                <br/>
+
+                <label for="cat">Choisir une catégorie<span class="requis">*</span></label>
+                <select name="cat" id="cat">
+                    <option class="optionGroup" value="all">All categories</option>
+                    <option disabled>──────────</option>
+                    <c:forEach items="${category}" var="c">
+                        <option class="optionGroup" value=${c.title}>${c.title}</option>
+                        
+                        <c:forEach items="${subcategory.get(c.id-1)}" var="s">
+                            <option class="optionChild" value=${s.title}>${s.title}</option>
+                        </c:forEach>
+                        <option disabled>──────────</option>
+                    </c:forEach>
+                </select>
+                <br/>
+                
+
+                <input type="submit"  class="btn btn-primary" value="Rechercher" />
+                <br/>
+            </fieldset>
+        </form>
+                <%@include file="/WEB-INF/footer.xhtml" %>
+>>>>>>> 75a1277221aeb19a94e640d63c65a78dd4f97133
 
                     <input type="submit"  class="btn btn-primary" value="Rechercher" />
                     <br/>

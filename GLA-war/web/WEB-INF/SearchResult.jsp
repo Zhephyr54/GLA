@@ -16,10 +16,10 @@
         
                         <%@include file="/WEB-INF/header.xhtml" %>
 
-        <h1>Resultats de la recherche</h1>
+        <h1>Résultats de la recherche</h1>
         <c:forEach items="${items}" var="c">
             <hr>
-            <a href="faces/item.xhtml?id=${c.id}">${c.title}</a>
+            <a href="item.xhtml?id=${c.id}">${c.title}</a>
             <div>Description : ${c.description}</div>
             <div>Subcategory : ${c.subcategory.title}</div>
             <hr>

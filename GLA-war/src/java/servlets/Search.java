@@ -100,14 +100,18 @@ public class Search extends HttpServlet {
         int subcatId = getIdByTitle(cat);
         boolean isCat = isACategory(cat);
         
-        if(isCat){
-            items  = item.findNotOverByCategory(title, subcatId);
+        if(cat.equals("all")){
+            items = item.findByTitle(title);
         }
         else {
-            int catId = getCategoryId(cat);
-            items  = item.findNotOver(title, catId, subcatId);
+            if(isCat){
+                items = item.findByTitleAndCategory(title, new Long(subcatId));
+            }
+            else {
+                //int catId = getCategoryId(cat);
+                items = item.findByTitleAndSubcategory(title, new Long(subcatId));
+            }
         }
-        
         //Recherche par titre
         //items  = item.findNotOverByTitle(title);
         request.setAttribute("items", items);

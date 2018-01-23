@@ -51,37 +51,53 @@ public class ItemDAO extends AbstractDAO<Item> {
         return query.getResultList();
     }
     
-    
     /**
-     * Return searched items for which the biddings aren't over.
+     * Return searched items corresponding to this title
+     * for which the biddings aren't over.
      * 
-     * @param title
-     * @param idCategory
-     * @param idSubCategory
+     * @param title the title
      * @return List of items
      */
-    public List<Item> findNotOver(String title, int idCategory, int idSubCategory) {
-        TypedQuery<Item> query = getEntityManager().createNamedQuery("Item.searchNotOver", Item.class);
-        query.setParameter("title", "%"+title+"%");
-        query.setParameter("cat", idCategory);
-        query.setParameter("sub", idSubCategory);
+    public List<Item> findByTitle(String title) {
+        TypedQuery<Item> query = getEntityManager().createNamedQuery("Item.findByTitle", Item.class);
+        query.setParameter("title", "%" + title + "%");
+        query.setParameter("currentDate", LocalDateTime.now());
         return query.getResultList();
     }
     
-    public List<Item> findNotOverByCategory(String title, int idCategory) {
-        TypedQuery<Item> query = getEntityManager().createNamedQuery("Item.searchByCategory", Item.class);
-        query.setParameter("title", "%"+title+"%");
-        query.setParameter("cat", idCategory);
+    /**
+     * Return searched items corresponding to this subcategory and this title
+     * for which the biddings aren't over.
+     * 
+     * @param title the title
+     * @param subcategoryId the subcategory id
+     * @return List of items
+     */
+    public List<Item> findByTitleAndSubcategory(String title, Long subcategoryId) {
+        TypedQuery<Item> query = getEntityManager().createNamedQuery("Item.findByTitleAndSubcategory", Item.class);
+        query.setParameter("title", "%" + title + "%");
+        query.setParameter("subcategoryId", subcategoryId);
+        query.setParameter("currentDate", LocalDateTime.now());
+        return query.getResultList();
+    }
+    
+    /**
+     * Return searched items corresponding to this category and this title
+     * for which the biddings aren't over.
+     * 
+     * @param title the title
+     * @param categoryId the category id
+     * @return List of items
+     */
+    public List<Item> findByTitleAndCategory(String title, Long categoryId) {
+        TypedQuery<Item> query = getEntityManager().createNamedQuery("Item.findByTitleAndCategory", Item.class);
+        query.setParameter("title", "%" + title + "%");
+        query.setParameter("categoryId", categoryId);
+        query.setParameter("currentDate", LocalDateTime.now());
         return query.getResultList();
     }
     
     
-    
-    public List<Item> findNotOverByTitle(String title) {
-        TypedQuery<Item> query = getEntityManager().createNamedQuery("Item.searchByTitle", Item.class);
-        query.setParameter("title", title);
-        return query.getResultList();
-    }
     
     /**
      * Return the max bid value if this item has any biddings
@@ -128,6 +144,5 @@ public class ItemDAO extends AbstractDAO<Item> {
         TypedQuery<Item> query = getEntityManager().createNamedQuery("Item.getUserItemsInProgress", Item.class);
         query.setParameter("userId", userId);
         return query.getResultList();
-    }
-    
+    }   
 }

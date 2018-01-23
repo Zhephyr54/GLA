@@ -5,7 +5,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
+
     <h:head>
         <title>Mon Compte</title>
         <ui:include src="/WEB-INF/header.xhtml" />
@@ -64,6 +64,14 @@
                                 <h:commandLink action="#{accountBean.removeUserBidding(bidding.id)}">
                                     <h:graphicImage value="res/img/supprimer.png" alt="supprimer" />
                                 </h:commandLink>
+                            </h:form>
+                        </td>
+                        <td>
+                            <h:form>
+                                <h:commandButton value="Ajouter au panier" rendered="#{accountBean.winner(bidding) and !cartBean.isInCart(bidding.item)}"
+                                                 action="#{cartBean.addItem(bidding.item)}"/>
+                                <h:commandButton value="Retirer du panier" rendered="#{accountBean.winner(bidding) and cartBean.isInCart(bidding.item)}"
+                                                 action="#{cartBean.removeItem(bidding.item)}"/>
                             </h:form>
                         </td>
                     </tr>

@@ -36,19 +36,25 @@ import javax.persistence.Table;
             name = "Item.findAllNotOver",
             query = "SELECT i FROM Item i WHERE i.endBidDate > :currentDate"),
     @NamedQuery(
-            name = "Item.searchNotOver",
-            query = "SELECT i FROM Item i WHERE i.title LIKE :title AND i.subcategory.category.id = :cat AND i.subcategory.id = :sub"),
+            name = "Item.findByTitle",
+            query = "SELECT i FROM Item i WHERE LOWER(i.title) LIKE LOWER(:title) "
+                    + "AND i.endBidDate > :currentDate"),
     @NamedQuery(
-            name = "Item.searchByCategory",
-            query = "SELECT i FROM Item i WHERE i.title LIKE :title AND i.subcategory.category.id = :cat"),
+            name = "Item.findByTitleAndCategory",
+            query = "SELECT i FROM Item i WHERE LOWER(i.title) LIKE LOWER(:title) AND i.subcategory.category.id = :categoryId "
+                    + "AND i.endBidDate > :currentDate"),
     @NamedQuery(
-            name = "Item.searchByTitle",
-            query = "SELECT i FROM Item i WHERE i.title LIKE :title"),
-    @NamedQuery(
+            name = "Item.findByTitleAndSubcategory",
+            query = "SELECT i FROM Item i WHERE LOWER(i.title) LIKE LOWER(:title) AND i.subcategory.id = :subcategoryId "
+                    + "AND i.endBidDate > :currentDate"),
+   /* @NamedQuery(
             name = "Item.getCurrentMaxBid",
             query = "SELECT b FROM Bidding b WHERE b.item.id = :itemId AND b.price = (SELECT MAX(b2.price) "
                     + "FROM Bidding b2 "
-                    + "WHERE b2.id = b.id)"),
+                    + "WHERE b2.id = b.id)"),*/
+    @NamedQuery(
+            name = "Item.getCurrentMaxBid",
+            query = "SELECT b FROM Bidding b WHERE b.item.id = :itemId Order BY b.price DESC"),
     @NamedQuery(
             name = "Item.getNumberOfBiddings", 
             query = "SELECT count(b) as nbBiddings FROM Bidding b JOIN b.item i WHERE i.id = :itemId"),
