@@ -54,11 +54,13 @@
                                 </ui:fragment>
                             </td>                            
                             <td class="action">
-                                <h:form>
-                                    <h:commandButton action="#{accountBean.removeUserItem(item.id)}">
-                                        <h:graphicImage value="res/img/supprimer.png" alt="supprimer" />
-                                    </h:commandButton>
-                                </h:form>
+                                <ui:fragment rendered="#{accountBean.isItemOrdered(item)}">
+                                    <h:form>
+                                        <h:commandButton action="#{accountBean.removeUserItem(item.id)}">
+                                            <h:graphicImage value="res/img/supprimer.png" alt="supprimer" />
+                                        </h:commandButton>
+                                    </h:form>
+                                </ui:fragment>
                             </td>
                         </tr>
                     </ui:repeat>
@@ -126,7 +128,28 @@
                 </ui:repeat>
             </table>
 
-            <ui:include src="/WEB-INF/footer.xhtml" />
+            <h2>Mes commandes</h2>
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Prix total</th>
+                    <th>Livraison</th>
+                </tr>
+                <ui:repeat var="order" value="#{accountBean.getUserOrders(sessionScope.sessionUtilisateur.id)}">
+                    <td>#{accountBean.formatOrderDate(order, "dd/MM/YYYY")}</td>
+                    <td>#{order.totalPrice}</td>
+                    <td>
+                        <ui:fragment rendered="#{accountBean.isOrderInProcess(order)}">
+                            En attente
+                        </ui:fragment>
+                        <ui:fragment rendered="#{accountBean.isOrderSent(order)}">
+                            Envoyée
+                        </ui:fragment>
+                    </td>
+                </ui:repeat>
+            </table>
+            
+                <ui:include src="/WEB-INF/footer.xhtml" />
         </div>
     </h:body>
 </html>
