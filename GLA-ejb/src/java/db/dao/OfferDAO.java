@@ -41,7 +41,7 @@ public class OfferDAO extends AbstractDAO<Offer> {
         return em;
     } 
     
-     @Schedule(hour = "*", minute = "*", persistent = false)
+     @Schedule(hour = "*", minute = "*")
      public void getOfferOfDay() {
          List<Subcategory> list = s.findAll();
          int tmp = ThreadLocalRandom.current().nextInt(1, list.size() + 1);

@@ -27,10 +27,19 @@
                         <td>#{item.description}</td>
                         <td>#{itemUtilsBean.getCurrentPrice(item)} &euro;</td>
                     </tr>
-            </ui:repeat>
+                </ui:repeat>
                 <tr>                    <th colspan="2">Prix total</th>
                     <td align="right">#{cartBean.getTotalPrice()} &euro;</td></tr>
             </table>
+
+            <label for="adr">Choisir une adresse<span class="requis">*</span></label>
+            <select name="adr" id="adr">
+                <ui:repeat var="adr" value="#{accountBean.getAddress(sessionScope.sessionUtilisateur.id)}">
+                    <option class="optionGroup" value="${adr.id}">${adr.adr}</option>
+                </ui:repeat>
+
+            </select>
+            <br/>
 
         </c:if>
 
