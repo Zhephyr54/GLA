@@ -52,7 +52,7 @@ public class DatabaseSeed {
         item3.setUser(user1);
         Item item4 = new Item("Tv monitor", "belle image!", BigDecimal.valueOf(2099.99), LocalDateTime.now().plusDays(5));
         item4.setUser(user2);
-        Item item5 = new Item("Tv 4k", "Incroyable du pure 4K", BigDecimal.valueOf(10099.99), LocalDateTime.now().plusDays(5));
+        Item item5 = new Item("Tv 4k", "Incroyable du pure 4K", BigDecimal.valueOf(10099.99), LocalDateTime.now());
         item5.setUser(user2);
 
         Category c1 = new Category("Multimedia");
@@ -75,7 +75,9 @@ public class DatabaseSeed {
         item5.setSubcategory(s1);
 
         Bidding bidding1 = new Bidding(BigDecimal.valueOf(500), user2, item1);
-        Bidding bidding2 = new Bidding(BigDecimal.valueOf(10100), user1, item5);
+        Bidding bidding2 = new Bidding(BigDecimal.valueOf(10100), user3, item5);
+        Bidding bidding3 = new Bidding(BigDecimal.valueOf(10101), user1, item5);
+        Bidding bidding4 = new Bidding(BigDecimal.valueOf(10102), user1, item5);
 
         LocalTime midnight = LocalTime.MIDNIGHT;
         LocalDate today = LocalDate.now().plusDays(1);
@@ -93,6 +95,8 @@ public class DatabaseSeed {
         em.persist(item5);
         em.persist(bidding1);
         em.persist(bidding2);
+        em.persist(bidding3);
+        em.persist(bidding4);
         em.persist(c1);
         em.persist(c2);
         em.persist(s1);

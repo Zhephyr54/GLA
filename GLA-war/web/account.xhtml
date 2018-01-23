@@ -53,7 +53,7 @@
                         <td>#{itemUtilsBean.getBidRemainingTime(bidding.item)}</td>
                         <td>#{itemUtilsBean.isBidOver(bidding.item)}</td>
                         <td><h:form><h:commandButton value="X" action="#{accountBean.removeUserBidding(bidding.id)}"/></h:form></td>
-                        <td><h:outputText value="Ajouté au panier"  rendered="#{accountBean.winner(bidding) == true}"/></td>
+                        <td><h:commandButton value="Ajouté au panier"  rendered="#{accountBean.winner(bidding) == true}"/></td>
 
 
                     </tr>
