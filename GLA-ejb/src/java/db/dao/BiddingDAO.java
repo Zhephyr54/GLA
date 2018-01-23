@@ -40,4 +40,11 @@ public class BiddingDAO extends AbstractDAO<Bidding> {
         query.setParameter("userId", userId);
         return query.getResultList();
     }
+    
+    public List<Bidding> getItemBiddings(Long itemId) {
+        TypedQuery<Bidding> query = getEntityManager().createNamedQuery("Bidding.getItemBiddings", Bidding.class);
+        query.setParameter("itemId", itemId);
+        return query.getResultList();
+    }
+
 }

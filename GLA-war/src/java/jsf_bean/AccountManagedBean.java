@@ -36,6 +36,10 @@ public class AccountManagedBean {
     }
 
     public void removeUserItem(long itemId) {
+        // remove all biddings for this item
+        for (Bidding bidding : biddingDAO.getItemBiddings(itemId)) {
+            biddingDAO.removeById(bidding.getId());
+        }
         itemDAO.removeById(itemId);
     }
 
