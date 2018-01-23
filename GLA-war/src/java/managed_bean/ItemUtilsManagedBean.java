@@ -33,7 +33,7 @@ public class ItemUtilsManagedBean {
     }
     
     public boolean hasBid(Item item) {
-        return itemDAO.getNumberOfBiddingsById(item.getId()) == 0;
+        return !getItemBiddingsNumber(item).equals(0);
     }
     
     public Long getItemBiddingsNumber(Item item) {

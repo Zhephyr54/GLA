@@ -78,6 +78,7 @@
                         <f:attribute name="isFirstBid" value="#{!itemUtilsBean.hasBid(itemBean.item)}"/>
                         <f:validator validatorId="BidPriceValidator"/>
                     </h:inputText>
+                    <span> &euro;</span>
                     <h:messages />
                     <br></br>
                     <h:commandButton value="Ench&eacute;rir" class="btn btn-primary" action="#{itemBean.outbid}"/>
