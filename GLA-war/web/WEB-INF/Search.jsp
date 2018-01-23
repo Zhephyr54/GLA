@@ -37,13 +37,15 @@
 
                 <label for="cat">Choisir une catégorie<span class="requis">*</span></label>
                 <select name="cat" id="cat">
+                    <option class="optionGroup" value="all">All categories</option>
+                    <option disabled>──────────</option>
                     <c:forEach items="${category}" var="c">
                         <option class="optionGroup" value=${c.title}>${c.title}</option>
                         
                         <c:forEach items="${subcategory.get(c.id-1)}" var="s">
                             <option class="optionChild" value=${s.title}>${s.title}</option>
                         </c:forEach>
-                        
+                        <option disabled>──────────</option>
                     </c:forEach>
                 </select>
                 <br/>
