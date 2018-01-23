@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Update Bidding</title>
+        <f:metadata>
+            <f:viewParam name="id" value="#{updateBiddingBean.itemId}"/>
+            <f:viewAction action="#{updateBiddingBean.onload()}"/>
+        </f:metadata>
+    </h:head>
+    <h:body>
+        <ui:include src="/WEB-INF/header.xhtml" />
+        <br/>
+        <h:form>
+            <fieldset>
+                <legend>Relancer une enchere</legend>
+
+                <label for="title">Titre <span class="requis">*</span></label>
+                <h:inputText value="#{updateBiddingBean.item.title}" id="title" size="20" maxlength="60" required="true"/>
+                <br/>
+
+                <label for="desc">Description <span class="requis">*</span></label>
+                <h:inputText value="#{updateBiddingBean.item.description}" id="desc" size="20" required="true"/>
+                <br/>
+
+                <label for="price">Prix de départ <span class="requis">*</span></label>
+                <h:inputText value="#{updateBiddingBean.item.startingBid}" id="price" size="20" maxlength="60" required="true"/> €
+                <br/>
+
+                <label for="time">Choisir la durée de l'enchère<span class="requis">*</span></label>
+                <h:selectOneMenu value = "#{updateBiddingBean.time}">
+                    <f:selectItem itemValue = "1" itemLabel = "1 jour" />
+                    <f:selectItem itemValue = "2" itemLabel = "2 jours" />
+                    <f:selectItem itemValue = "3" itemLabel = "3 jours" />
+                    <f:selectItem itemValue = "4" itemLabel = "4 jours" />
+                    <f:selectItem itemValue = "5" itemLabel = "5 jours" />
+                    <f:selectItem itemValue = "6" itemLabel = "6 jours" />
+                    <f:selectItem itemValue = "7" itemLabel = "Une semaine" />
+                </h:selectOneMenu>
+                <br/>
+
+                
+                <label for="SubCategory">Choisir la sous categorie<span class="requis">*</span></label>
+                
+                <h:selectOneMenu value = "#{updateBiddingBean.subId}">
+                    <c:forEach items="#{updateBiddingBean.subcategory}" var="cat">
+                        <f:selectItem itemValue="#{cat.id}" itemLabel="#{cat.title}" />
+                    </c:forEach>
+                </h:selectOneMenu>
+                
+                <br/>
+                <h:commandButton value="Relancer l'enchère" action="#{updateBiddingBean.update()}" />
+                <br/>
+            </fieldset>
+        </h:form>
+        <ui:include src="/WEB-INF/footer.xhtml"/>
+    </h:body>
+</html>
+

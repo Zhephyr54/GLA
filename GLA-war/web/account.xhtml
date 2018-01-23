@@ -40,6 +40,11 @@
                                     </h:commandButton>
                                 </h:form>
                             </td>
+                            <td>
+                                <h:link value="Relancer l'enchère" rendered="#{accountBean.canRestart(item)}" outcome="UpdateBidding">
+                                        <f:param name="id" value="#{item.id}"/>
+                                </h:link>
+                            </td>
                         </tr>
                     </ui:repeat>
                 </table>

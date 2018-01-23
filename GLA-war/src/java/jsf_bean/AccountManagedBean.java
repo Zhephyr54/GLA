@@ -30,7 +30,8 @@ public class AccountManagedBean {
     BiddingDAO biddingDAO; 
     
     private boolean pair = false;
-
+    
+    
     /**
      * Creates a new instance of AccountManagedBean
      */
@@ -45,6 +46,14 @@ public class AccountManagedBean {
         itemDAO.removeById(itemId);
     }
 
+    public boolean canRestart(Item i) {
+        if (i.getBiddings().isEmpty() && i.getEndBidDate().isBefore(LocalDateTime.now()) ) {
+            return true;
+        }
+        return false;
+    }
+    
+    
     public List<Item> getUserItems(long userId) {
         return itemDAO.getUserItems(userId);
     }
@@ -53,7 +62,7 @@ public class AccountManagedBean {
         if (!b.getItem().getEndBidDate().isBefore(LocalDateTime.now())) {
             return false;
         }
-     return b.getPrice() == itemDAO.getCurrentMaxBid(b.getItem().getId()).getPrice();
+        return b.getPrice() == itemDAO.getCurrentMaxBid(b.getItem().getId()).getPrice();
     }
 
     public List<Bidding> getUserBiddings(long userId) {
