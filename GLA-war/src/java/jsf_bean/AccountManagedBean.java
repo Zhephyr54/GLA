@@ -85,7 +85,7 @@ public class AccountManagedBean {
     }
 
     public boolean isItemOrdered(Item item) {
-        return false;
+        return false;   
         //return !orderDAO.findOrderByItemId(item.getId()).isEmpty();
     }
     
