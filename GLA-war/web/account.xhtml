@@ -23,7 +23,7 @@
                         <th class="action">Retirer</th>
                     </tr>
                     <ui:repeat var="item" value="#{accountBean.getUserItems(sessionScope.sessionUtilisateur.id)}">
-                    <tr>
+                    <tr class="#{accountBean.pair ? 'pair' : 'impair'}">
                         <td><h:link value="#{item.title}" outcome="item" >
                                 <f:param name="id" value="#{item.id}" />
                             </h:link>
@@ -51,7 +51,7 @@
                         <th class="action">Retirer</th>
                     </tr>
                     <ui:repeat var="bidding" value="#{accountBean.getUserBiddings(sessionScope.sessionUtilisateur.id)}">
-                    <tr class="impair">
+                    <tr class="#{accountBean.pair ? 'pair' : 'impair'}">
                         <td><h:link value="#{bidding.item.title}" outcome="item" >
                                 <f:param name="id" value="#{bidding.item.id}" />
                             </h:link>
