@@ -5,22 +5,44 @@
  */
 package managed_bean;
 
+import db.dao.ItemDAO;
 import entity.Address;
 import entity.CreditCard;
 import entity.Item;
 import entity.Order;
 import entity.User;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 
 /**
  *
  * @author alexis
  */
+@Named(value = "cartBean")
+@RequestScoped
 public class CartManagedBean {
     
-    public List<Item> listItems;
+    @EJB
+    ItemDAO itemDAO;
+    
+    private List<Item> listItems;
+
+    public List<Item> getListItems() {
+        return listItems;
+    }
+
+    public void setListItems(List<Item> listItems) {
+        this.listItems = listItems;
+    }
+    
+    public int countItem() {
+        return listItems.size();
+    }
     
     public void addItem(Item item) {
         // if bidding is over and the user won this item biddings
@@ -42,6 +64,10 @@ public class CartManagedBean {
         if (user == null)
             return;
         
-        Order order = new Order(user, address, creditCard, listItems);
+        BigDecimal totalPrice = BigDecimal.ZERO;
+        for (Item item : listItems) {
+            totalPrice.add(itemDAO.getCurrentMaxBid(item.getId()).getPrice());
+        }
+        Order order = new Order(user, address, creditCard, listItems, totalPrice);
     }
 }

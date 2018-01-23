@@ -7,7 +7,7 @@
         <title>Inscription</title>
     </head>
     <body>
-                            <%@include file="Header.xhtml" %>
+                            <%@include file="/WEB-INF/header.xhtml" %>
 
         <form method="post" action="inscription">
             <fieldset>
@@ -49,6 +49,6 @@
                 <p class="${empty form.erreurs ? 'succes' : 'erreur'}">${form.resultat}</p>
             </fieldset>
         </form>
-                    <%@include file="Footer.xhtml" %>
+                    <%@include file="/WEB-INF/footer.xhtml" %>
     </body>
 </html>

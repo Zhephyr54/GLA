@@ -38,13 +38,13 @@ public abstract class AbstractDAO<T> {
     }
     
     public void removeById(Object id) {
-        T entity = getById(id);
+        T entity = findById(id);
         if (entity != null) {
             remove(entity);
         }
     }
 
-    public T getById(Object id) {
+    public T findById(Object id) {
         return getEntityManager().find(entityClass, id);
     }
     

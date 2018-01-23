@@ -16,9 +16,22 @@
             <f:viewParam name="id" value="#{itemBean.itemId}"/>
             <f:viewAction action="#{itemBean.onload}"/>
         </f:metadata>
+        <style>
+            body,html{
+                height: 100%;
+            }
+
+            #main{
+                min-height: 100%;
+                margin: 0 auto;
+                position: relative;
+            }
+
+        </style>
     </h:head>
     <h:body>
-        <ui:include src="Header.xhtml" />
+        <div id="main">
+        <ui:include src="/WEB-INF/header.xhtml" />
 
         <c:if test="#{empty itemBean.item}">
             <p>Enchère introuvable</p>
@@ -42,20 +55,20 @@
                         <hr>
 
                             <p class="lead">
-                                <div>#{itemBean.item.getCurrentPrice()} &euro;</div>
+                                <div>#{itemUtilsBean.getCurrentPrice(itemBean.item)} &euro;</div>
 
                                 <div>#{itemUtilsBean.getItemBiddingsNumber(itemBean.item)} ench&egrave;res</div>
 
                                 <div>
                                     <!-- if bidding is over -->
-                                    <c:if test="#{itemUtilsBean.isBidOver(itemBean.item.endBidDate)}">
+                                    <c:if test="#{itemUtilsBean.isBidOver(itemBean.item)}">
                                         Ench&egrave;re termin&eacute;e
-                                        (#{itemUtilsBean.formatEndBidDate(itemBean.item.endBidDate, "EEEE dd/MM/YYYY")})
+                                        (#{itemUtilsBean.formatEndBidDate(itemBean.item, "EEEE dd/MM/YYYY")})
                                     </c:if>
                                     <!-- else -->
-                                    <c:if test="#{!itemUtilsBean.isBidOver(itemBean.item.endBidDate)}">
-                                        Il reste #{itemUtilsBean.getBidRemainingTime(itemBean.item.endBidDate)}
-                                        (#{itemUtilsBean.formatEndBidDate(itemBean.item.endBidDate, "EEEE dd/MM, HH:mm")})
+                                    <c:if test="#{!itemUtilsBean.isBidOver(itemBean.item)}">
+                                        Il reste #{itemUtilsBean.getBidRemainingTime(itemBean.item)}
+                                        (#{itemUtilsBean.formatEndBidDate(itemBean.item, "EEEE dd/MM, HH:mm")})
                                     </c:if>
                                 </div>
 
@@ -71,11 +84,11 @@
 
             <!-- if user is logged in and it's not one of his items and the biddings are not over -->
             <c:if test="#{(!empty sessionScope.sessionUtilisateur) and (sessionScope.sessionUtilisateur.id != itemBean.item.user.id)
-                          and (!itemUtilsBean.isBidOver(itemBean.item.endBidDate))}">
+                          and (!itemUtilsBean.isBidOver(itemBean.item))}">
                 <h:form>
                     <h:inputText value="#{itemBean.bid}" required="true" requiredMessage="Vous devez indiquer un montant afin de pouvoir enchérir">
-                        <f:attribute name="minPrice" value="#{itemBean.item.getCurrentPrice()}"/>
-                        <f:attribute name="isFirstBid" value="#{!itemBean.item.hasBid()}"/>
+                        <f:attribute name="minPrice" value="#{itemUtilsBean.getCurrentPrice(itemBean.item)}"/>
+                        <f:attribute name="isFirstBid" value="#{!itemUtilsBean.hasBid(itemBean.item)}"/>
                         <f:validator validatorId="BidPriceValidator"/>
                     </h:inputText>
                     <h:messages />
@@ -89,7 +102,7 @@
                 <p>Vous devez &ecirc;tre connect&eacute; afin d'ench&eacute;rir</p>
             </c:if>
         </c:if>
-        <ui:include src="Footer.xhtml" />
+        </div>
     </h:body>
 </html>
 

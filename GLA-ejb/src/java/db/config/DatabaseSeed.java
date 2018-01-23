@@ -67,15 +67,13 @@ public class DatabaseSeed {
         s3.setCategory(c2);
         s4.setCategory(c2);
         
-        
         item1.setSubcategory(s1);
         item2.setSubcategory(s1);
         item3.setSubcategory(s1);
         item4.setSubcategory(s1);
         item5.setSubcategory(s1);
 
-        Bidding bidding1 = new Bidding(BigDecimal.valueOf(500), user1, item1);
-        item1.setCurrentMaxBid(bidding1);
+        Bidding bidding1 = new Bidding(BigDecimal.valueOf(500), user2, item1);
         
         LocalTime midnight = LocalTime.MIDNIGHT;
         LocalDate today = LocalDate.now().plusDays(1);

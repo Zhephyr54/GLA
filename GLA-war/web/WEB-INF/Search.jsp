@@ -22,7 +22,7 @@
             .optionChild {
                 padding-left: 15px;
             }
-                body,html{
+            body,html{
                 height: 100%;
             }
 
@@ -36,7 +36,7 @@
     </head>
     <body>
         <div id="main">
-            <%@include file="Header.xhtml" %>
+            <%@include file="/WEB-INF/header.xhtml" %>
 
             <form method="post" action="recherche">
                 <fieldset>
@@ -64,7 +64,7 @@
                     <br/>
                 </fieldset>
             </form>
-            <%@include file="Footer.xhtml" %>
+        <%@include file="/WEB-INF/footer.xhtml" %>
         </div>       
     </body>
 </html>

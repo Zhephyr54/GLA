@@ -24,16 +24,16 @@
                         <c:if test="${!empty sessionScope.sessionUtilisateur}">
 
                             <li class="nav-item">
-                                <a class="nav-link" > Bonjour ${sessionScope.sessionUtilisateur.lastname} ${sessionScope.sessionUtilisateur.firstname}  --- </a>
+                                <p class="nav-link"> Bonjour ${sessionScope.sessionUtilisateur.lastname} ${sessionScope.sessionUtilisateur.firstname}  --- </p>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="Account.xhtml">Mon Compte</a>
+                                <h:link class="nav-link" outcome="account" value="Mon Compte"/>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="deconnexion">D&eacute;connexion</a>
+                                <a class="nav-link" href="deconnexion">Déconnexion</a>
                             </li>
-                                <li class="nav-item">
-                                <a class="nav-link" href="Cart.xhtml">Panier</a>
+                            <li class="nav-item">
+                                <h:link class="nav-link" outcome="cart" value="Panier"/>
                             </li>
                         </c:if>
                         <li class="nav-item">

@@ -36,17 +36,17 @@ public class AccountManagedBean {
     public AccountManagedBean() {
     }
     
-    public void removeUserItem(long itemId) {
-        itemDAO.removeById(itemId);
+    public void removeUserItemS(long itemId) {
+        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        //itemDAO.removeById(itemId);
     }
     
     public List<Item> getUserItems(long userId) {
+        System.out.println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
         return itemDAO.getUserItems(userId);
     }
     
     public List<Bidding> getUserBiddings(long userId) {
-        System.out.println("XXXXXXXXXXXXXXXXXXXXXXX");
-        System.out.println(biddingDAO.getUserBiddings(userId).toString());
         return biddingDAO.getUserBiddings(userId);
     }
     

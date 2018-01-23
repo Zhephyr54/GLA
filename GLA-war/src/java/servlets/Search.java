@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "Search", urlPatterns = {"/recherche"})
 public class Search extends HttpServlet {
 
-    public static final String VUE = "/Search.jsp";
-    public static final String URL_REDIRECTION = "/SearchResult.jsp";
+    public static final String VUE = "/WEB-INF/Search.jsp";
+    public static final String URL_REDIRECTION = "/WEB-INF/SearchResult.jsp";
     private List<Category> category;
     private List<List<Subcategory>> subcategories;
     private List<Item> items;
