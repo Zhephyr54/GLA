@@ -101,11 +101,11 @@ public class Search extends HttpServlet {
         boolean isCat = isACategory(cat);
         
         if(isCat){
-            items  = item.findNotOverByCategory(title, subcatId);
+            items = item.findByTitleAndCategory(title, new Long(subcatId));
         }
         else {
-            int catId = getCategoryId(cat);
-            items  = item.findNotOver(title, catId, subcatId);
+            //int catId = getCategoryId(cat);
+            items = item.findByTitleAndSubcategory(title, new Long(subcatId));
         }
         
         //Recherche par titre
