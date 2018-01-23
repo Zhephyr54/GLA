@@ -47,13 +47,7 @@ public class AccountManagedBean {
         if (!b.getItem().getEndBidDate().isBefore(LocalDateTime.now())) {
             return false;
         }
-        if(b.getPrice() != itemDAO.getCurrentMaxBid(b.getItem().getId()).getPrice())
-            return false;
-        Bidding bidding = biddingDAO.myMax(b.getItem().getId(), b.getUser().getId());
-        if (bidding == null) {
-            return false;
-        }
-        return itemDAO.getCurrentMaxBid(b.getItem().getId()).getPrice() == bidding.getPrice();
+     return b.getPrice() == itemDAO.getCurrentMaxBid(b.getItem().getId()).getPrice();
     }
 
     public List<Bidding> getUserBiddings(long userId) {
