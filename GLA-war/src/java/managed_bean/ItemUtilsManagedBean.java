@@ -7,12 +7,14 @@ package managed_bean;
 
 import db.dao.ItemDAO;
 import entity.Item;
+import entity.User;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 /**
@@ -65,6 +67,7 @@ public class ItemUtilsManagedBean {
      */
     public String getBidRemainingTime(Item item) {
         LocalDateTime endBidDate = item.getEndBidDate();
+        System.out.println("DATE : "+endBidDate);
         long days = ChronoUnit.DAYS.between(LocalDateTime.now(), endBidDate);
         endBidDate = endBidDate.minusDays(days);
         long hours = ChronoUnit.HOURS.between(LocalDateTime.now(), endBidDate);
@@ -77,6 +80,7 @@ public class ItemUtilsManagedBean {
         result += hours > 0 ? hours + "h " : "";
         result += days <= 0 && minutes > 0 ? minutes + "m " : "";
         result += days <= 0 && hours <= 0 && seconds > 0 ? seconds + "s " : "";
+        System.out.println("RESULT = "+result);
         return result;
     }
     
@@ -91,6 +95,13 @@ public class ItemUtilsManagedBean {
     public String formatEndBidDate(Item item, String pattern) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
         return item.getEndBidDate().format(formatter);
+    }
+    
+    public boolean winner(Item item) {
+        User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUtilisateur");
+        // if bidding is over and the user won this item biddings
+        return item.getEndBidDate().isBefore(LocalDateTime.now()) && user != null
+                && itemDAO.getCurrentMaxBid(item.getId()).getUser().getId().equals(user.getId());
     }
     
 }
