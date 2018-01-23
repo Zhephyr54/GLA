@@ -16,6 +16,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,6 +25,15 @@ import javax.persistence.Table;
  *
  * @author yasar
  */
+@NamedQueries({
+    @NamedQuery(
+            name = "Order.findOrderByUserId", 
+            query = "SELECT o FROM Order o WHERE o.user.id = :userId ORDER BY o.orderDate DESC"),
+    /*@NamedQuery(
+            name = "Order.findOrderByItemId",
+            query = "SELECT o FROM Order o WHERE o.items.id = :itemId"
+    )*/
+})
 @Entity
 @Table(name = "Orders")
 public class Order implements Serializable {
