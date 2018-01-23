@@ -8,7 +8,6 @@
 
     <h:head>
         <title>Mon Compte</title>
-<<<<<<< HEAD
         <ui:include src="/WEB-INF/header.xhtml" />
         <link href="res/css/modern-business.css" rel="stylesheet"/>
     </h:head>
@@ -33,9 +32,9 @@
                         <td>#{itemUtilsBean.getCurrentPrice(item)} &euro;</td>
                         <td class="action">
                             <h:form>
-                                <h:commandLink action="#{accountBean.removeUserItemS(item.id)}">
+                                <h:commandButton action="#{accountBean.removeUserItem(item.id)}">
                                     <h:graphicImage value="res/img/supprimer.png" alt="supprimer" />
-                                </h:commandLink>
+                                </h:commandButton>
                             </h:form>
                         </td>
                     </tr>
@@ -52,7 +51,7 @@
                         <th class="action">Retirer</th>
                     </tr>
                     <ui:repeat var="bidding" value="#{accountBean.getUserBiddings(sessionScope.sessionUtilisateur.id)}">
-                    <tr>
+                    <tr class="impair">
                         <td><h:link value="#{bidding.item.title}" outcome="item" >
                                 <f:param name="id" value="#{bidding.item.id}" />
                             </h:link>
@@ -62,9 +61,9 @@
                         <td>#{itemUtilsBean.getBidRemainingTime(bidding.item)}</td>
                         <td>#{itemUtilsBean.isBidOver(bidding.item)}</td>
                         <td class="action"><h:form>
-                                <h:commandLink action="#{accountBean.removeUserBidding(bidding.id)}">
+                                <h:commandButton action="#{accountBean.removeUserBidding(bidding.id)}">
                                     <h:graphicImage value="res/img/supprimer.png" alt="supprimer" />
-                                </h:commandLink>
+                                </h:commandButton>
                             </h:form>
                         </td>
                         <td>
