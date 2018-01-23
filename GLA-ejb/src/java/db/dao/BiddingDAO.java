@@ -40,11 +40,4 @@ public class BiddingDAO extends AbstractDAO<Bidding> {
         query.setParameter("userId", userId);
         return query.getResultList();
     }
-
-    public Bidding myMax(long itemId, long userId) {
-        TypedQuery<Bidding> query = getEntityManager().createNamedQuery("Bidding.Winner", Bidding.class);
-        query.setParameter("userId", userId);
-        List<Bidding> b = query.setParameter("itemId", itemId).getResultList();
-        return b.isEmpty() ? null : b.get(0);
-    }
 }

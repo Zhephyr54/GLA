@@ -27,10 +27,7 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(
             name = "Bidding.getUserBiddings", 
-            query = "SELECT b FROM Bidding b WHERE b.user.id = :userId ORDER BY b.item.id"),
-     @NamedQuery(
-            name = "Bidding.Winner", 
-            query = "SELECT b FROM Bidding b WHERE b.user.id = :userId AND b.item.id = :itemId ORDER BY b.price DESC")    
+            query = "SELECT b FROM Bidding b WHERE b.user.id = :userId ORDER BY b.item.id")
 })
 public class Bidding implements Serializable {
 
