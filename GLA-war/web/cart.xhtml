@@ -15,8 +15,10 @@
             <table border="1">
                 <tr>
                     <th>Titre</th>
-                    <th>Description</th>
-                    <th>Prix</th>
+                    <th>Prix de votre enchère</th>
+                    <th>Catégorie</th>
+                    <th>Réduction</th>
+                    <th>Prix final</th>
                 </tr>
                 <ui:repeat var="item" value="#{cartBean.getListItems()}">
                     <tr>
@@ -24,16 +26,24 @@
                                 <f:param name="id" value="#{item.id}" />
                             </h:link>
                         </td>
-                        <td>#{item.description}</td>
                         <td>#{itemUtilsBean.getCurrentPrice(item)} &euro;</td>
+                        <td>#{item.subcategory.title}</td>
+                        <td>#{cartBean.getItemReduction(item)}%</td>
+                        <td>#{cartBean.calculatePriceWithOffer(item)} &euro;</td>
                     </tr>
-            </ui:repeat>
-                <tr>                    <th colspan="2">Prix total</th>
-                    <td align="right">#{cartBean.getTotalPrice()} &euro;</td></tr>
+                </ui:repeat>
+                <tr>
+                    <th colspan="3">Prix total</th>
+                    <td align="right">#{cartBean.calculateTotalPrice()} &euro;</td>
+                </tr>
             </table>
 
-        </c:if>
+            <h:form>
+                <h:messages />
+                <h:commandButton value="Valider la commande" class="btn btn-primary" action="#{cartBean.validateCommand(null, null)}"/>
+            </h:form>
 
+        </c:if>
 
         <ui:include src="/WEB-INF/footer.xhtml" />
     </h:body>

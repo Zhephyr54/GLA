@@ -26,7 +26,11 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(
             name = "Offer.findOffer",
-            query = "SELECT o FROM Offer o WHERE o.endOfferDate > :currentDate")
+            query = "SELECT o FROM Offer o WHERE o.endOfferDate > :currentDate"),
+    @NamedQuery(
+            name = "Offer.findOfferBySubcategory",
+            query = "SELECT o FROM Offer o WHERE o.subcategory.id = :subcategoryId AND "
+                    + " o.endOfferDate > :currentDate")
 })
 public class Offer implements Serializable {
     
@@ -40,6 +44,8 @@ public class Offer implements Serializable {
     
     @ManyToOne
     private Subcategory subcategory;
+    
+    public transient static final int PERCENT_REDUCTION = 5;
     
     public Offer() {
     }

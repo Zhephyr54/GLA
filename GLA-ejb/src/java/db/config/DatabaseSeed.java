@@ -50,7 +50,7 @@ public class DatabaseSeed {
 
         Item item3 = new Item("Samsung s8", "neuf bien evidemment !", BigDecimal.valueOf(299.99), LocalDateTime.now().plusDays(5));
         item3.setUser(user1);
-        Item item4 = new Item("Tv monitor", "belle image!", BigDecimal.valueOf(2099.99), LocalDateTime.now().plusDays(5));
+        Item item4 = new Item("Tv monitor", "belle image!", BigDecimal.valueOf(2099.99), LocalDateTime.now().plusMinutes(1));
         item4.setUser(user2);
         Item item5 = new Item("Tv 4k", "Incroyable du pure 4K", BigDecimal.valueOf(10099.99), LocalDateTime.now());
         item5.setUser(user2);
