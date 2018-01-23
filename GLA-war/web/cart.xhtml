@@ -1,12 +1,41 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Panier</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <ui:include src="/WEB-INF/header.xhtml" />
+        <c:if test="${!empty sessionScope.sessionUtilisateur}">
+            <h2>Mon panier</h2>
+            <table border="1">
+                <tr>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Prix</th>
+                </tr>
+                <ui:repeat var="item" value="#{cartBean.getListItems()}">
+                    <tr>
+                        <td><h:link value="#{item.title}" outcome="item" >
+                                <f:param name="id" value="#{item.id}" />
+                            </h:link>
+                        </td>
+                        <td>#{item.description}</td>
+                        <td>#{itemUtilsBean.getCurrentPrice(item)} &euro;</td>
+                    </tr>
+            </ui:repeat>
+                <tr>                    <th colspan="2">Prix total</th>
+                    <td align="right">#{cartBean.getTotalPrice()} &euro;</td></tr>
+            </table>
+
+        </c:if>
+
+
+        <ui:include src="/WEB-INF/footer.xhtml" />
     </h:body>
 </html>
 
