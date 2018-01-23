@@ -53,9 +53,16 @@
                         <td>#{itemUtilsBean.getBidRemainingTime(bidding.item)}</td>
                         <td>#{itemUtilsBean.isBidOver(bidding.item)}</td>
                         <td><h:form><h:commandButton value="X" action="#{accountBean.removeUserBidding(bidding.id)}"/></h:form></td>
-                        <td><h:form><h:commandButton value="Ajouté au panier"  rendered="#{accountBean.winner(bidding) == true}"/></h:form></td>
-
-
+                        <!-- if item is already in cart -->
+                        <td>
+                            <h:form>
+                                <h:commandButton value="Ajouter au panier" rendered="#{accountBean.winner(bidding) and !cartBean.isInCart(bidding.item)}"
+                                                 action="#{cartBean.addItem(bidding.item)}"/>
+                                <h:commandButton value="Retirer du panier" rendered="#{accountBean.winner(bidding) and cartBean.isInCart(bidding.item)}"
+                                                 action="#{cartBean.removeItem(bidding.item)}"/>
+                            </h:form>
+                        </td>
+    
                     </tr>
                 </ui:repeat>
             </table>

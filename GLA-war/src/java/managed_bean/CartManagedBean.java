@@ -12,11 +12,13 @@ import entity.CreditCard;
 import entity.Item;
 import entity.Order;
 import entity.User;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
@@ -25,8 +27,8 @@ import javax.inject.Named;
  * @author alexis
  */
 @Named(value = "cartBean")
-@RequestScoped
-public class CartManagedBean {
+@SessionScoped
+public class CartManagedBean implements Serializable {
     
     @EJB
     ItemDAO itemDAO;
@@ -34,7 +36,7 @@ public class CartManagedBean {
     @EJB
     BiddingDAO biddingDAO;
     
-    private List<Item> listItems;
+    private List<Item> listItems = new ArrayList<>();
 
     private boolean winner(Item item) {
         User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUtilisateur");
@@ -67,6 +69,7 @@ public class CartManagedBean {
     }
     
     public boolean isInCart(Item item) {
+        System.out.println("is in cart");
         return listItems.contains(item);
     }
     
