@@ -47,6 +47,10 @@
             </select>
             <br/>
             
+            <label for="adr">Adresse</label>
+                <input type="text" id="adr" name="adr" size="20" maxlength="20" />
+                <br />
+            
             <h:form>
                 <h:messages />
                 <h:commandButton value="Valider la commande" class="btn btn-primary" action="#{cartBean.validateCommand(null, null)}"/>

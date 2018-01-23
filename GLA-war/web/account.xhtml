@@ -33,7 +33,14 @@
                             </td>
                             <td>#{item.startingBid} &euro;</td>
                             <td>#{itemUtilsBean.getItemBiddingsNumber(item)}</td>
-                            <td>#{itemUtilsBean.getCurrentPrice(item)} &euro;</td>
+                            <td>
+                                <ui:fragment rendered="#{itemUtilsBean.hasBid(item)}">
+                                    #{itemUtilsBean.getCurrentPrice(item)} &euro;
+                                </ui:fragment>
+                                <ui:fragment rendered="#{not itemUtilsBean.hasBid(item)}">
+                                    Aucune
+                                </ui:fragment>
+                            </td>
                             <td>
                                 <!-- if bidding is over -->
                                 <ui:fragment rendered="#{itemUtilsBean.isBidOver(item)}">

@@ -40,10 +40,10 @@ public class ItemUtilsManagedBean implements Serializable {
     }
     
     public boolean hasBid(Item item) {
-        return !getItemBiddingsNumber(item).equals(0);
+        return getItemBiddingsNumber(item) != 0l;
     }
     
-    public Long getItemBiddingsNumber(Item item) {
+    public long getItemBiddingsNumber(Item item) {
         return itemDAO.getNumberOfBiddingsById(item.getId());
     }
     

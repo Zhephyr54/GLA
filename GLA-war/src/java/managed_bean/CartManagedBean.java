@@ -14,7 +14,6 @@ import entity.CreditCard;
 import entity.Item;
 import entity.Offer;
 import entity.Order;
-import entity.Subcategory;
 import entity.User;
 import java.io.Serializable;
 import java.math.BigDecimal;
