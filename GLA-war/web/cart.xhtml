@@ -12,6 +12,9 @@
         <ui:include src="/WEB-INF/header.xhtml" />
         <c:if test="${!empty sessionScope.sessionUtilisateur}">
             <h2>Mon panier</h2>
+                    <c:if test="#{not empty cartBean.getListItems()}">
+
+
             <table border="1">
                 <tr>
                     <th>Titre</th>
@@ -40,24 +43,59 @@
             </table>
 
             <label for="adr">Choisir une adresse<span class="requis">*</span></label>
-            <select name="adr" id="adr">
-                <ui:repeat var="adr" value="#{accountBean.getAddress(sessionScope.sessionUtilisateur.id)}">
+            <select name="adr" id="adr" >
+                <ui:repeat var="adr" value="#{cartBean.getAddress(sessionScope.sessionUtilisateur.id)}">
                     <option class="optionGroup" value="${adr.id}">${adr.adr}</option>
                 </ui:repeat>
             </select>
             <br/>
-            
-            <label for="adr">Adresse</label>
-                <input type="text" id="adr" name="adr" size="20" maxlength="20" />
-                <br />
-            
+
+            <h:form>
+                <h:inputText id="address" value="#{cartBean.address}" size="20" maxlength="20" required="true"/>
+                <h:commandButton value="Ajouter cette Adresse" action="#{cartBean.addAdr()}" styleClass="sansLabel" />
+            </h:form>
+            <br />
+
+            <label for="cb">Choisir une carte bancaire<span class="requis">*</span></label>
+            <select name="cb" id="cb">
+                <f:selectItems value="#{cartBean.cbID}"/>
+                <ui:repeat var="cb" value="#{cartBean.getCB(sessionScope.sessionUtilisateur.id)}">
+                    <option class="optionGroup" value="${cb.id}">${cb.name} - ${cb.number} - ${cb.cvv} </option>
+                </ui:repeat>
+            </select>
+            <br/>
+
+
+            <h:form>
+                CVV <h:inputText id="cvv" value="#{cartBean.cvv}" size="3" required="true" >
+                    <f:validateLength minimum="3" maximum="3" />
+                </h:inputText>
+
+                Numero <h:inputText id="number" value="#{cartBean.number}" size="16" required="true">
+                    <f:validateLength minimum="16" maximum="16" />
+                </h:inputText>
+
+                <br/>
+
+                Nom <h:inputText id="name" value="#{cartBean.name}" size="20" required="true">
+                    <f:validateLength minimum="3" maximum="20" />
+                </h:inputText>
+
+                <h:commandButton value="Ajouter cette CB" action="#{cartBean.addCB()}" styleClass="sansLabel" />
+            </h:form>
+            <br />
+
             <h:form>
                 <h:messages />
-                <h:commandButton value="Valider la commande" class="btn btn-primary" action="#{cartBean.validateCommand(null, null)}"/>
-            </h:form>
 
+                <h:commandButton value="Valider la commande" class="btn btn-primary" action="#{cartBean.validateCommand}"/>
+            </h:form>
+        </c:if>
+                    <c:if test="#{empty cartBean.getListItems()}">
+                        Votre panier est vide
         </c:if>
 
+        </c:if>
         <ui:include src="/WEB-INF/footer.xhtml" />
     </h:body>
 </html>

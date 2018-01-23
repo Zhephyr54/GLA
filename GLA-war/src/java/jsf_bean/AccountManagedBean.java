@@ -5,10 +5,8 @@
  */
 package jsf_bean;
 
-import db.dao.AddressDAO;
 import db.dao.BiddingDAO;
 import db.dao.ItemDAO;
-import entity.Address;
 import entity.Bidding;
 import entity.Item;
 import java.time.LocalDateTime;
@@ -30,10 +28,7 @@ public class AccountManagedBean {
 
     @EJB
     BiddingDAO biddingDAO; 
-    
-    @EJB
-    AddressDAO addressDAO; 
-    
+
     private boolean pair = false;
 
     /**
@@ -61,10 +56,6 @@ public class AccountManagedBean {
      return b.getPrice() == itemDAO.getCurrentMaxBid(b.getItem().getId()).getPrice();
     }
 
-    public List<Address> getAddress(long userId){
-        return addressDAO.getUserAddress(userId);
-    }
-    
     public List<Bidding> getUserBiddings(long userId) {
         return biddingDAO.getUserBiddings(userId);
     }
