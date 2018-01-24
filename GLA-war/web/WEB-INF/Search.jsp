@@ -47,7 +47,7 @@
 
                 <label for="cat">Choisir une catégorie<span class="requis">*</span></label>
                 <select name="cat" id="cat">
-                    <option class="optionGroup" value="all">All categories</option>
+                    <option class="optionGroup" value="all">Toutes les catégories</option>
                     <option disabled>──────────</option>
                     <c:forEach items="${category}" var="c">
                         <option class="optionGroup" value=${c.title}>${c.title}</option>

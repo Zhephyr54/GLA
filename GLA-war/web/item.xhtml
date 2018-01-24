@@ -36,38 +36,66 @@
                 <div class="col-lg-8">
 
                     <!-- Preview Image -->
-                    <img class="img-fluid rounded" src="http://placehold.it/900x300" alt=""></img>
+                    <table width="100%">
+                        <tr>
+                            <td>
+                                <img class="img-fluid rounded" src="http://www.technique-de-vente.com/wp-content/uploads/2015/11/formation-vendeur-point-de-vente.jpg" alt=""></img>
+                            </td>
+                            <td valign="top">
+                                <h1>#{itemBean.item.title}</h1>
+                                <hr/>
+                                <p class="lead">
+                                    <div>#{itemUtilsBean.getCurrentPrice(itemBean.item)} &euro;</div>
 
-                    <hr>
-                        <h1>#{itemBean.item.title}</h1>
+                                    <div>#{itemUtilsBean.getItemBiddingsNumber(itemBean.item)} ench&egrave;res</div>
 
-                        <hr>
+                                    <div>
+                                        <!-- if bidding is over -->
+                                        <c:if test="#{itemUtilsBean.isBidOver(itemBean.item)}">
+                                            Ench&egrave;re termin&eacute;e
+                                            (#{itemUtilsBean.formatEndBidDate(itemBean.item, "EEEE dd/MM/YYYY")})
+                                        </c:if>
+                                        <!-- else -->
+                                        <c:if test="#{!itemUtilsBean.isBidOver(itemBean.item)}">
+                                            Il reste #{itemUtilsBean.getBidRemainingTime(itemBean.item)}
+                                            (#{itemUtilsBean.formatEndBidDate(itemBean.item, "EEEE dd/MM, HH:mm")})
+                                        </c:if>
+                                    </div>
 
-                            <p class="lead">
-                                <div>#{itemUtilsBean.getCurrentPrice(itemBean.item)} &euro;</div>
-
-                                <div>#{itemUtilsBean.getItemBiddingsNumber(itemBean.item)} ench&egrave;res</div>
-
+                                </p>
                                 <div>
-                                    <!-- if bidding is over -->
-                                    <c:if test="#{itemUtilsBean.isBidOver(itemBean.item)}">
-                                        Ench&egrave;re termin&eacute;e
-                                        (#{itemUtilsBean.formatEndBidDate(itemBean.item, "EEEE dd/MM/YYYY")})
-                                    </c:if>
-                                    <!-- else -->
-                                    <c:if test="#{!itemUtilsBean.isBidOver(itemBean.item)}">
-                                        Il reste #{itemUtilsBean.getBidRemainingTime(itemBean.item)}
-                                        (#{itemUtilsBean.formatEndBidDate(itemBean.item, "EEEE dd/MM, HH:mm")})
-                                    </c:if>
+                                    <h4>Description</h4>
+                                    #{itemBean.item.description}
                                 </div>
+                                <hr/>
+                                <!-- not logged in -->
+                                <c:if test="#{empty sessionScope.sessionUtilisateur}">
+                                    <p>Vous devez &ecirc;tre connect&eacute; afin d'ench&eacute;rir</p>
+                                </c:if>
+                            </td>
 
-                            </p>
-                            <div>
-                                <h4>Description</h4>
-                                #{itemBean.item.description}
-                            </div>
-                        </hr>
-                    </hr>
+
+                            <!-- if user is logged in and it's not one of his items and the biddings are not over -->
+                            <c:if test="#{(!empty sessionScope.sessionUtilisateur) and (sessionScope.sessionUtilisateur.id != itemBean.item.user.id)
+                                          and (!itemUtilsBean.isBidOver(itemBean.item))}">
+                                <td valign="top">
+                                    <label>Enchérir :</label>
+                                    <h:form>
+                                        <h:inputText value="#{itemBean.bid}" required="true" requiredMessage="Vous devez indiquer un montant afin de pouvoir enchérir">
+                                            <f:attribute name="minPrice" value="#{itemUtilsBean.getCurrentPrice(itemBean.item)}"/>
+                                            <f:attribute name="isFirstBid" value="#{!itemUtilsBean.hasBid(itemBean.item)}"/>
+                                            <f:validator validatorId="BidPriceValidator"/>
+                                        </h:inputText>
+                                        <span> &euro;</span>
+                                        <h:messages/>
+                                        <br></br>
+                                        <h:commandButton value="Ench&eacute;rir" class="btn btn-primary" action="#{itemBean.outbid}"/>
+                                        <br></br>
+                                    </h:form>
+                                </td> 
+                            </c:if>
+                        </tr>
+                    </table>
                 </div>
             </div>
             <!-- if user is not allowed to outbid -->
@@ -98,6 +126,7 @@
                 <p>Vous devez &ecirc;tre connect&eacute; afin d'ench&eacute;rir</p>
             </c:if>
         </c:if>
+        <ui:include src="/WEB-INF/footer.xhtml" />
     </h:body>
 </html>
 
