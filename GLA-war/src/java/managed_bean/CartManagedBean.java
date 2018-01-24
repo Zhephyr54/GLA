@@ -41,6 +41,7 @@ public class CartManagedBean implements Serializable {
     private Long number;
     private String name;
     private Long addressId;
+    private Long address2Id;
     private Long cbID;
 
     @EJB
@@ -57,7 +58,7 @@ public class CartManagedBean implements Serializable {
 
     @EJB
     AddressDAO adrDAO;
-    
+
     @EJB
     CreditCardDAO cbDAO;
 
@@ -129,12 +130,15 @@ public class CartManagedBean implements Serializable {
                 && itemDAO.getCurrentMaxBid(item.getId()).getUser().getId().equals(user.getId());
     }
 
-    public void validateCommand() {
+    public String validateCommand() {
         User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUtilisateur");
         Address a = adrDAO.findById(addressId);
+        Address a2 = adrDAO.findById(address2Id);
         CreditCard cb = cbDAO.findById(cbID);
-        Order order = new Order(user, a, cb, listItems, calculateTotalPrice());
+        Order order = new Order(user, a, a2, cb, listItems, calculateTotalPrice());
+        listItems.clear();
         orderDAO.create(order);
+        return "account.xhtml";
     }
 
     public String getAddress() {
@@ -178,7 +182,7 @@ public class CartManagedBean implements Serializable {
     }
 
     public void addCB() {
-        CreditCard cb = new CreditCard(number,cvv,name);
+        CreditCard cb = new CreditCard(number, cvv, name);
         User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUtilisateur");
         cb.setUser(user);
         cbDAO.create(cb);
@@ -202,14 +206,20 @@ public class CartManagedBean implements Serializable {
     public void setCbID(Long cbID) {
         this.cbID = cbID;
     }
-    
-    
-    
-    public List<Address> getAddress(long userId){
+
+    public List<Address> getAddress(long userId) {
         return adrDAO.getUserAddress(userId);
     }
-    
-    public List<CreditCard> getCB(long userId){
+
+    public List<CreditCard> getCB(long userId) {
         return cbDAO.getUserCB(userId);
     }
-  }
+
+    public Long getAddress2Id() {
+        return address2Id;
+    }
+
+    public void setAddress2Id(Long address2Id) {
+        this.address2Id = address2Id;
+    }
+}

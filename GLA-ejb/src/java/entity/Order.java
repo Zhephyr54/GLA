@@ -61,6 +61,9 @@ public class Order implements Serializable {
     private Address address;
     
     @ManyToOne
+    private Address billingAddress;
+    
+    @ManyToOne
     private CreditCard creditCard;
     
     @OneToMany(mappedBy="order", cascade = CascadeType.ALL)
@@ -69,11 +72,12 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(User user, Address address, CreditCard creditCard, List<Item> items, BigDecimal totalPrice) {
+    public Order(User user, Address address, Address billingAddress, CreditCard creditCard, List<Item> items, BigDecimal totalPrice) {
         this.user = user;
         this.address = address;
         this.creditCard = creditCard;
         this.items = items;
+        this.billingAddress = billingAddress;
         for (Item item : items) {
             item.setOrder(this);
         }
@@ -127,6 +131,16 @@ public class Order implements Serializable {
     public void setAddress(Address address) {
         this.address = address;
     }
+
+    public Address getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(Address billingAddress) {
+        this.billingAddress = billingAddress;
+    }
+    
+    
 
     public CreditCard getCreditCard() {
         return creditCard;

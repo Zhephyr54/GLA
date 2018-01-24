@@ -70,8 +70,18 @@
 
                 <h:form>
                     <c:if test="#{!empty cartBean.getAddress(sessionScope.sessionUtilisateur.id)}">
-                        <label for="adr">Choisir une adresse<span class="requis">*</span></label>
+                        <label for="adr">Choisir une adresse de livraison<span class="requis">*</span></label>
                         <h:selectOneMenu value="#{cartBean.addressId}">
+                            <c:forEach items="#{cartBean.getAddress(sessionScope.sessionUtilisateur.id)}" var="adr">
+                                <f:selectItem itemValue="#{adr.id}" itemLabel="#{adr.adr}" />
+                            </c:forEach>
+                        </h:selectOneMenu>
+                    </c:if>
+                    <br/>
+
+                    <c:if test="#{!empty cartBean.getAddress(sessionScope.sessionUtilisateur.id)}">
+                        <label for="adr2">Choisir une adresse de facturation<span class="requis">*</span></label>
+                        <h:selectOneMenu value="#{cartBean.address2Id}">
                             <c:forEach items="#{cartBean.getAddress(sessionScope.sessionUtilisateur.id)}" var="adr">
                                 <f:selectItem itemValue="#{adr.id}" itemLabel="#{adr.adr}" />
                             </c:forEach>
