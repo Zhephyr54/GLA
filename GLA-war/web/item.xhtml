@@ -7,7 +7,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <c:if test="#{empty itemBean.item}">
-            <title>#{itemBean.item.title}</title>
+            <title>Item introuvable</title>
         </c:if>
         <c:if test="#{not empty itemBean.item}">
             <title>#{itemBean.item.title}</title>
@@ -16,21 +16,9 @@
             <f:viewParam name="id" value="#{itemBean.itemId}"/>
             <f:viewAction action="#{itemBean.onload}"/>
         </f:metadata>
-        <style>
-            body,html{
-                height: 100%;
-            }
-
-            #main{
-                min-height: 100%;
-                margin: 0 auto;
-                position: relative;
-            }
-
-        </style>
+ 
     </h:head>
     <h:body>
-        <div id="main">
         <ui:include src="/WEB-INF/header.xhtml" />
 
         <c:if test="#{empty itemBean.item}">
@@ -103,7 +91,6 @@
                 <p>Vous devez &ecirc;tre connect&eacute; afin d'ench&eacute;rir</p>
             </c:if>
         </c:if>
-        </div>
     </h:body>
 </html>
 
