@@ -10,49 +10,51 @@
     </h:head>
     <h:body>
         <div id="main">
-        <ui:include src="/WEB-INF/header.xhtml" />
+            <ui:include src="/WEB-INF/header.xhtml" />
 
-        <c:if test="${!empty sessionScope.sessionUtilisateur}">
-            <br></br>
-            <div class="col-md-4">
-                <a class="btn btn-lg btn-secondary btn-block" href="enchere">Creer une enchère</a>
-            </div>
+            <c:if test="${!empty sessionScope.sessionUtilisateur}">
+                <br></br>
+                <div class="col-md-4">
+                    <a class="btn btn-lg btn-secondary btn-block" href="enchere">Creer une enchère</a>
+                </div>
+            </c:if>    
+
             <p>
-                <h2 class="mt-4 mb-3"> Les offres du jour sont sur la sous catégories </h2>
+                <h2 class="mt-4 mb-3">Offres du jour</h2>
                 <ui:repeat var="offer" value= "#{indexBean.getOfferOfDay()}">
-                    <li>#{offer.subcategory.title} jusqu 'au #{offer.endOfferDate}</li>
+                    <li>-#{accountBean.MAX_CANCELLED_BIDS}% sur les enchères de la catégorie #{offer.subcategory.title} jusqu'au #{indexBean.formatOrderDate(offer, "EEEE dd/MM à HH:mm")}</li>
                 </ui:repeat>
             </p>
-        </c:if>    
 
-        <h2>Liste des enchères en cours</h2>
-        <div class="row">
-            <ui:repeat var="item" value="#{indexBean.getItems()}">
-                <div class="col-lg-4 col-sm-6 portfolio-item">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="http://www.technique-de-vente.com/wp-content/uploads/2015/11/formation-vendeur-point-de-vente.jpg" alt=""/>
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <h:link value="#{item.title}" outcome="item" >
-                                    <f:param name="id" value="#{item.id}" />
-                                </h:link>                            
-                            </h4>
-                            <p class="card-text">           
-                                <div>#{itemUtilsBean.getCurrentPrice(item)} &euro;</div>
 
-                                <div>#{itemUtilsBean.getItemBiddingsNumber(item)} ench&egrave;res</div>
+            <h2>Liste des enchères en cours</h2>
+            <div class="row">
+                <ui:repeat var="item" value="#{indexBean.getItems()}">
+                    <div class="col-lg-4 col-sm-6 portfolio-item">
+                        <div class="card h-100">
+                            <img class="card-img-top" src="http://www.technique-de-vente.com/wp-content/uploads/2015/11/formation-vendeur-point-de-vente.jpg" alt=""/>
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <h:link value="#{item.title}" outcome="item" >
+                                        <f:param name="id" value="#{item.id}" />
+                                    </h:link>                            
+                                </h4>
+                                <p class="card-text">           
+                                    <div>#{itemUtilsBean.getCurrentPrice(item)} &euro;</div>
 
-                                <div>
-                                    Il reste #{itemUtilsBean.getBidRemainingTime(item)}
-                                    (#{itemUtilsBean.formatEndBidDate(item, "EEEE dd/MM, HH:mm")})
-                                </div></p>
+                                    <div>#{itemUtilsBean.getItemBiddingsNumber(item)} ench&egrave;res</div>
+
+                                    <div>
+                                        Il reste #{itemUtilsBean.getBidRemainingTime(item)}
+                                        (#{itemUtilsBean.formatEndBidDate(item, "EEEE dd/MM, HH:mm")})
+                                    </div></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </ui:repeat>
-        </div>
+                </ui:repeat>
+            </div>
 
-        <ui:include src="/WEB-INF/footer.xhtml" />
+            <ui:include src="/WEB-INF/footer.xhtml" />
         </div>
     </h:body>
 

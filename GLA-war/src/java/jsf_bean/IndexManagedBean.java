@@ -10,6 +10,8 @@ import db.dao.ItemDAO;
 import db.dao.OfferDAO;
 import entity.Item;
 import entity.Offer;
+import entity.Order;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -43,4 +45,8 @@ public class IndexManagedBean {
         return offer.getOffer();
     } 
     
+    public String formatOrderDate(Offer offer, String pattern) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        return offer.getEndOfferDate().format(formatter);
+    }
 }

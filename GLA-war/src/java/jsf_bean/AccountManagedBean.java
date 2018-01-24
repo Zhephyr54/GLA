@@ -66,10 +66,8 @@ public class AccountManagedBean {
     }
 
     public boolean canRestart(Item i) {
-        if (i.getBiddings().isEmpty() && i.getEndBidDate().isBefore(LocalDateTime.now()) ) {
-            return true;
-        }
-        return false;
+        return i.getBiddings().isEmpty() && i.getEndBidDate().isBefore(LocalDateTime.now())
+                && i.getOrder() == null;
     }
     
     

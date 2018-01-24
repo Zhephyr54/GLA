@@ -70,9 +70,8 @@
                     </hr>
                 </div>
             </div>
-
             <!-- if user is not allowed to outbid -->
-            <c:if test="#{(!empty sessionScope.sessionUtilisateur) and sessionScope.sessionUtilisation.cancelledBids ge accountBean.MAX_CANCELLED_BIDS}">
+            <c:if test="#{(!empty sessionScope.sessionUtilisateur) and sessionScope.sessionUtilisateur.cancelledBids ge accountBean.MAX_CANCELLED_BIDS}">
                 <p>
                     Vous avez reçu #{accountBean.MAX_CANCELLED_BIDS} avertissements ou plus suite à l'annulation de certaines de vos enchères.<br/>
                     Vous n'avez donc plus le droit de liciter.
@@ -80,7 +79,7 @@
             </c:if>
             <!-- if user is logged in and it's not one of his items and the biddings are not over and he is allowed to outbid -->
             <c:if test="#{(!empty sessionScope.sessionUtilisateur) and (sessionScope.sessionUtilisateur.id != itemBean.item.user.id)
-                          and (!itemUtilsBean.isBidOver(itemBean.item)) and sessionScope.sessionUtilisation.cancelledBids le accountBean.MAX_CANCELLED_BIDS}">
+                          and (!itemUtilsBean.isBidOver(itemBean.item)) and sessionScope.sessionUtilisateur.cancelledBids lt accountBean.MAX_CANCELLED_BIDS}">
                 <h:form>
                     <h:inputText value="#{itemBean.bid}" required="true" requiredMessage="Vous devez indiquer un montant afin de pouvoir enchérir">
                         <f:attribute name="minPrice" value="#{itemUtilsBean.getCurrentPrice(itemBean.item)}"/>

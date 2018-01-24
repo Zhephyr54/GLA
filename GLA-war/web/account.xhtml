@@ -15,7 +15,7 @@
 
             <c:if test="#{!empty sessionScope.sessionUtilisateur}">
 
-                <c:if test="#{sessionScope.sessionUtilisateur.cancelledBids ne 0 and sessionScope.sessionUtilisateur.cancelledBids le accountBean.MAX_CANCELLED_BIDS}">
+                <c:if test="#{sessionScope.sessionUtilisateur.cancelledBids ne 0 and sessionScope.sessionUtilisateur.cancelledBids lt accountBean.MAX_CANCELLED_BIDS}">
                     <p>
                         Attention : suite à l'annulation de certaines de vos enchères, vous avez reçu 
                         #{sessionScope.sessionUtilisateur.cancelledBids} avertissements.<br/>
@@ -73,14 +73,14 @@
                                     </ui:fragment>
                                 </td>                            
                                 <td class="action">
-                                    <ui:fragment rendered="#{itemUtilsBean.isItemOrdered(item)}">
-                                        <h:form>
-                                            <h:commandButton action="#{accountBean.removeUserItem(item.id)}" image="res/img/supprimer.png">
-                                            </h:commandButton>
-                                        </h:form>
-                                    </ui:fragment>
+                                    <!-- only if item is not ordered yet -->
+                                    <h:form>
+                                        <h:commandButton action="#{accountBean.removeUserItem(item.id)}" rendered="#{not itemUtilsBean.isItemOrdered(item)}" image="res/img/supprimer.png">
+                                        </h:commandButton>
+                                    </h:form>
                                 </td>
                                 <td>
+                                    <!-- only  -->
                                     <h:link value="Relancer l'enchère" rendered="#{accountBean.canRestart(item)}" outcome="UpdateBidding">
                                         <f:param name="id" value="#{item.id}"/>
                                     </h:link>
@@ -129,20 +129,21 @@
                                     <ui:fragment rendered="#{!itemUtilsBean.isBidOver(bidding.item)}">
                                         En cours
                                     </ui:fragment>
-                                    <ui:fragment rendered="#{itemUtilsBean.winner(bidding.item)}">
-                                        Gagnée
+                                    <ui:fragment rendered="#{itemUtilsBean.winner(bidding.item) and !itemUtilsBean.isItemOrdered(bidding.item)}">
+                                        Gagné
                                     </ui:fragment>
                                     <ui:fragment rendered="#{itemUtilsBean.isBidOver(bidding.item) and !itemUtilsBean.winner(bidding.item)}">
-                                        Perdue
+                                        Perdu
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{itemUtilsBean.isItemOrdered(bidding.item)}">
+                                        Commandé
                                     </ui:fragment>
                                 </td>
                                 <td class="action">
-                                    <ui:fragment rendered="#{not cartBean.isInCart(bidding.item)}">
-                                        <h:form>
-                                            <h:commandButton action="#{accountBean.removeUserBidding(bidding)}" image="res/img/supprimer.png">
-                                            </h:commandButton>
-                                        </h:form>
-                                    </ui:fragment>
+                                    <h:form rendered="#{not cartBean.isInCart(bidding.item)}">
+                                        <h:commandButton action="#{accountBean.removeUserBidding(bidding)}" image="res/img/supprimer.png">
+                                        </h:commandButton>
+                                    </h:form>
                                 </td>
                                 <td>
                                     <ui:fragment rendered="#{not itemUtilsBean.isItemOrdered(bidding.item)}">
@@ -173,7 +174,7 @@
                         <ui:repeat var="order" value="#{accountBean.getUserOrders(sessionScope.sessionUtilisateur.id)}">
                             <tr>
                                 <td>#{accountBean.formatOrderDate(order, "dd/MM/YYYY")}</td>
-                                <td>#{order.totalPrice}</td>
+                                <td>#{order.totalPrice} &euro;</td>
                                 <td>
                                     <ui:fragment rendered="#{accountBean.isOrderInProcess(order)}">
                                         En attente
