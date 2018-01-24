@@ -14,7 +14,6 @@
             <h2>Mon panier</h2>
             <c:if test="#{not empty cartBean.getListItems()}">
 
-
                 <table border="1">
                     <tr>
                         <th>Titre</th>
@@ -42,34 +41,15 @@
                     </tr>
                 </table>
 
-                <label for="adr">Votre adresse<span class="requis">*</span></label>
-                <c:if test="#{!empty cartBean.getAddress(sessionScope.sessionUtilisateur.id)}">
-                    <select name="adr" id="adr" >
-                        <ui:repeat var="adr" value="#{cartBean.getAddress(sessionScope.sessionUtilisateur.id)}">
-                            <option class="optionGroup" value="${adr.id}">${adr.adr}</option>
-                        </ui:repeat>
-                    </select>
-                </c:if>
-                <br/>
-
                 <h:form>
+                    Ajouter une adresse
                     <h:inputText id="address" value="#{cartBean.address}" size="20" maxlength="20" required="true"/>
                     <h:commandButton value="Ajouter cette Adresse" action="#{cartBean.addAdr()}" styleClass="sansLabel" />
                 </h:form>
                 <br />
 
-                <label for="cb">Votre carte bancaire<span class="requis">*</span></label>
-                <c:if test="#{!empty cartBean.getCB(sessionScope.sessionUtilisateur.id)}">
-                <select name="cb" id="cb">
-                    <ui:repeat var="cb" value="#{cartBean.getCB(sessionScope.sessionUtilisateur.id)}">
-                        <option class="optionGroup" value="${cb.id}">${cb.name} - ${cb.number} - ${cb.cvv} </option>
-                    </ui:repeat>
-                </select>
-                </c:if>   
-                <br/>
-
-
                 <h:form>
+                    Ajouter une carte bancaire
                     CVV <h:inputText id="cvv" value="#{cartBean.cvv}" size="3" required="true" >
                         <f:validateLength minimum="3" maximum="3" />
                     </h:inputText>
@@ -89,18 +69,42 @@
                 <br />
 
                 <h:form>
+                    <c:if test="#{!empty cartBean.getAddress(sessionScope.sessionUtilisateur.id)}">
+                        <label for="adr">Choisir une adresse<span class="requis">*</span></label>
+                        <h:selectOneMenu value="#{cartBean.addressId}">
+                            <c:forEach items="#{cartBean.getAddress(sessionScope.sessionUtilisateur.id)}" var="adr">
+                                <f:selectItem itemValue="#{adr.id}" itemLabel="#{adr.adr}" />
+                            </c:forEach>
+                        </h:selectOneMenu>
+                    </c:if>
+                    <br/>
+
+                    <c:if test="#{!empty cartBean.getCB(sessionScope.sessionUtilisateur.id)}">
+                        <label for="cb">Choisir une carte bancaire<span class="requis">*</span></label>
+                        <h:selectOneMenu value="#{cartBean.cbID}">
+                            <c:forEach items="#{cartBean.getCB(sessionScope.sessionUtilisateur.id)}" var="cb">
+                                <f:selectItem itemValue="#{cb.id}" itemLabel="#{cb.name} - #{cb.number} - #{cb.cvv}" />
+                            </c:forEach>
+                        </h:selectOneMenu>
+
+                    </c:if>   
+                    <br/>
+
                     <h:messages />
                     <c:if test="#{!empty cartBean.getCB(sessionScope.sessionUtilisateur.id) and !empty cartBean.getAddress(sessionScope.sessionUtilisateur.id)}">
                         <h:commandButton value="Valider la commande" class="btn btn-primary" action="#{cartBean.validateCommand}"/>
                     </c:if>
-                    <c:if test="#{empty cartBean.getAddress(sessionScope.sessionUtilisateur.id)}">
-                        Vous devez ajouté une adresse
-                    </c:if>
-                    <c:if test="#{empty cartBean.getCB(sessionScope.sessionUtilisateur.id)}">
-                        Vous devez ajouté une cb
-                    </c:if>
                 </h:form>
+
+
+                <c:if test="#{empty cartBean.getAddress(sessionScope.sessionUtilisateur.id)}">
+                    Vous devez ajouter une adresse
+                </c:if>
+                <c:if test="#{empty cartBean.getCB(sessionScope.sessionUtilisateur.id)}">
+                    Vous devez ajouter une cb
+                </c:if>
             </c:if>
+
             <c:if test="#{empty cartBean.getListItems()}">
                 Votre panier est vide
             </c:if>

@@ -74,6 +74,9 @@ public class Order implements Serializable {
         this.address = address;
         this.creditCard = creditCard;
         this.items = items;
+        for (Item item : items) {
+            item.setOrder(this);
+        }
         this.totalPrice = totalPrice;
     }
     

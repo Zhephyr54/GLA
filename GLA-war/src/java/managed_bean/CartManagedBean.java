@@ -130,12 +130,11 @@ public class CartManagedBean implements Serializable {
     }
 
     public void validateCommand() {
-        System.out.println(addressId + "aaaaaaaaaaaaaaaaaaa");
-        /*User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUtilisateur");
+        User user = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("sessionUtilisateur");
         Address a = adrDAO.findById(addressId);
         CreditCard cb = cbDAO.findById(cbID);
         Order order = new Order(user, a, cb, listItems, calculateTotalPrice());
-        orderDAO.create(order);*/
+        orderDAO.create(order);
     }
 
     public String getAddress() {
