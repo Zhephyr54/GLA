@@ -7,7 +7,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <c:if test="#{empty itemBean.item}">
-            <title>#{itemBean.item.title}</title>
+            <title>Item introuvable</title>
         </c:if>
         <c:if test="#{not empty itemBean.item}">
             <title>#{itemBean.item.title}</title>
@@ -16,101 +16,89 @@
             <f:viewParam name="id" value="#{itemBean.itemId}"/>
             <f:viewAction action="#{itemBean.onload}"/>
         </f:metadata>
-        <style>
-            body,html{
-                height: 100%;
-            }
 
-            #main{
-                min-height: 100%;
-                margin: 0 auto;
-                position: relative;
-            }
-
-        </style>
     </h:head>
     <h:body>
-        <div id="main">
-            <ui:include src="/WEB-INF/header.xhtml" />
 
-            <c:if test="#{empty itemBean.item}">
-                <p>Enchère introuvable</p>
+        <ui:include src="/WEB-INF/header.xhtml" />
+
+        <c:if test="#{empty itemBean.item}">
+            <p>Enchère introuvable</p>
+        </c:if>
+        <c:if test="#{not empty itemBean.item}">
+            <!-- this item is sold by this user -->
+            <c:if test="#{sessionScope.sessionUtilisateur.id == itemBean.item.user.id}">
+                <small>(Une de vos enchères)</small>
             </c:if>
-            <c:if test="#{not empty itemBean.item}">
-                <!-- this item is sold by this user -->
-                <c:if test="#{sessionScope.sessionUtilisateur.id == itemBean.item.user.id}">
-                    <small>(Une de vos enchères)</small>
-                </c:if>
-                <div class="row">
+            <div class="row">
 
-                    <!-- Post Content Column -->
-                    <div class="col-lg-8">
+                <!-- Post Content Column -->
+                <div class="col-lg-8">
 
-                        <!-- Preview Image -->
-                        <img class="img-fluid rounded" src="http://placehold.it/900x300" alt=""></img>
+                    <!-- Preview Image -->
+                    <img class="img-fluid rounded" src="http://placehold.it/900x300" alt=""></img>
+
+                    <hr>
+                        <h1>#{itemBean.item.title}</h1>
 
                         <hr>
-                            <h1>#{itemBean.item.title}</h1>
 
-                            <hr>
+                            <p class="lead">
+                                <div>#{itemUtilsBean.getCurrentPrice(itemBean.item)} &euro;</div>
 
-                                <p class="lead">
-                                    <div>#{itemUtilsBean.getCurrentPrice(itemBean.item)} &euro;</div>
+                                <div>#{itemUtilsBean.getItemBiddingsNumber(itemBean.item)} ench&egrave;res</div>
 
-                                    <div>#{itemUtilsBean.getItemBiddingsNumber(itemBean.item)} ench&egrave;res</div>
-
-                                    <div>
-                                        <!-- if bidding is over -->
-                                        <c:if test="#{itemUtilsBean.isBidOver(itemBean.item)}">
-                                            Ench&egrave;re termin&eacute;e
-                                            (#{itemUtilsBean.formatEndBidDate(itemBean.item, "EEEE dd/MM/YYYY")})
-                                        </c:if>
-                                        <!-- else -->
-                                        <c:if test="#{!itemUtilsBean.isBidOver(itemBean.item)}">
-                                            Il reste #{itemUtilsBean.getBidRemainingTime(itemBean.item)}
-                                            (#{itemUtilsBean.formatEndBidDate(itemBean.item, "EEEE dd/MM, HH:mm")})
-                                        </c:if>
-                                    </div>
-
-                                </p>
                                 <div>
-                                    <h4>Description</h4>
-                                    #{itemBean.item.description}
+                                    <!-- if bidding is over -->
+                                    <c:if test="#{itemUtilsBean.isBidOver(itemBean.item)}">
+                                        Ench&egrave;re termin&eacute;e
+                                        (#{itemUtilsBean.formatEndBidDate(itemBean.item, "EEEE dd/MM/YYYY")})
+                                    </c:if>
+                                    <!-- else -->
+                                    <c:if test="#{!itemUtilsBean.isBidOver(itemBean.item)}">
+                                        Il reste #{itemUtilsBean.getBidRemainingTime(itemBean.item)}
+                                        (#{itemUtilsBean.formatEndBidDate(itemBean.item, "EEEE dd/MM, HH:mm")})
+                                    </c:if>
                                 </div>
-                            </hr>
-                        </hr>
-                    </div>
-                </div>
 
-                <!-- if user is not allowed to outbid -->
-                <c:if test="#{(!empty sessionScope.sessionUtilisateur) and sessionScope.sessionUtilisation.cancelledBids ge accountBean.MAX_CANCELLED_BIDS}">
-                    <p>
-                        Vous avez reçu #{accountBean.MAX_CANCELLED_BIDS} avertissements ou plus suite à l'annulation de certaines de vos enchères.<br/>
-                        Vous n'avez donc plus le droit de liciter.
-                    </p>
-                </c:if>
-                <!-- if user is logged in and it's not one of his items and the biddings are not over and he is allowed to outbid -->
-                <c:if test="#{(!empty sessionScope.sessionUtilisateur) and (sessionScope.sessionUtilisateur.id != itemBean.item.user.id)
-                              and (!itemUtilsBean.isBidOver(itemBean.item)) and sessionScope.sessionUtilisation.cancelledBids le accountBean.MAX_CANCELLED_BIDS}">
-                    <h:form>
-                        <h:inputText value="#{itemBean.bid}" required="true" requiredMessage="Vous devez indiquer un montant afin de pouvoir enchérir">
-                            <f:attribute name="minPrice" value="#{itemUtilsBean.getCurrentPrice(itemBean.item)}"/>
-                            <f:attribute name="isFirstBid" value="#{!itemUtilsBean.hasBid(itemBean.item)}"/>
-                            <f:validator validatorId="BidPriceValidator"/>
-                        </h:inputText>
-                        <span> &euro;</span>
-                        <h:messages />
-                        <br></br>
-                        <h:commandButton value="Ench&eacute;rir" class="btn btn-primary" action="#{itemBean.outbid}"/>
-                        <br></br>
-                    </h:form>
-                </c:if>
-                <!-- not logged in -->
-                <c:if test="#{empty sessionScope.sessionUtilisateur}">
-                    <p>Vous devez &ecirc;tre connect&eacute; afin d'ench&eacute;rir</p>
-                </c:if>
+                            </p>
+                            <div>
+                                <h4>Description</h4>
+                                #{itemBean.item.description}
+                            </div>
+                        </hr>
+                    </hr>
+                </div>
+            </div>
+
+            <!-- if user is not allowed to outbid -->
+            <c:if test="#{(!empty sessionScope.sessionUtilisateur) and sessionScope.sessionUtilisation.cancelledBids ge accountBean.MAX_CANCELLED_BIDS}">
+                <p>
+                    Vous avez reçu #{accountBean.MAX_CANCELLED_BIDS} avertissements ou plus suite à l'annulation de certaines de vos enchères.<br/>
+                    Vous n'avez donc plus le droit de liciter.
+                </p>
             </c:if>
-        </div>
+            <!-- if user is logged in and it's not one of his items and the biddings are not over and he is allowed to outbid -->
+            <c:if test="#{(!empty sessionScope.sessionUtilisateur) and (sessionScope.sessionUtilisateur.id != itemBean.item.user.id)
+                          and (!itemUtilsBean.isBidOver(itemBean.item)) and sessionScope.sessionUtilisation.cancelledBids le accountBean.MAX_CANCELLED_BIDS}">
+                <h:form>
+                    <h:inputText value="#{itemBean.bid}" required="true" requiredMessage="Vous devez indiquer un montant afin de pouvoir enchérir">
+                        <f:attribute name="minPrice" value="#{itemUtilsBean.getCurrentPrice(itemBean.item)}"/>
+                        <f:attribute name="isFirstBid" value="#{!itemUtilsBean.hasBid(itemBean.item)}"/>
+                        <f:validator validatorId="BidPriceValidator"/>
+                    </h:inputText>
+                    <span> &euro;</span>
+                    <h:messages />
+                    <br></br>
+                    <h:commandButton value="Ench&eacute;rir" class="btn btn-primary" action="#{itemBean.outbid}"/>
+                    <br></br>
+                </h:form>
+            </c:if>
+            <!-- not logged in -->
+            <c:if test="#{empty sessionScope.sessionUtilisateur}">
+                <p>Vous devez &ecirc;tre connect&eacute; afin d'ench&eacute;rir</p>
+            </c:if>
+        </c:if>
     </h:body>
 </html>
 

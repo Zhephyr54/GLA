@@ -112,7 +112,7 @@ public class ItemUtilsManagedBean implements Serializable {
     }
     
     public boolean isItemOrdered(Item item) {
-        return !orderDAO.findOrderByItemId(item.getId()).isEmpty();
+        return item.getOrder() != null; 
     }
     
 }

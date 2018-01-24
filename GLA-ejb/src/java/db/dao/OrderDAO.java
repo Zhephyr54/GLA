@@ -39,9 +39,4 @@ public class OrderDAO extends AbstractDAO<Order> {
         return query.getResultList();
     }
     
-    public List<Order> findOrderByItemId(Long itemId) {
-        TypedQuery<Order> query = getEntityManager().createNamedQuery("Order.findOrderByItemId", Order.class);
-        query.setParameter("itemId", itemId);
-        return query.getResultList();
-    }
 }

@@ -22,6 +22,7 @@
         <url-pattern>/deconnexion</url-pattern>
         <url-pattern>/enchere</url-pattern>
         <url-pattern>/cart.xhtml</url-pattern>
+        <url-pattern>/UpdateBidding.xhtml</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>

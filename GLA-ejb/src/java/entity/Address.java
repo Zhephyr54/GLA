@@ -45,6 +45,10 @@ public class Address implements Serializable {
     @OneToMany(mappedBy="address")
     private List<Order> orders;
     
+    @OneToMany(mappedBy="billingAddress")
+    private List<Order> orders2;
+    
+    
     public Address() {
     }
 
@@ -75,6 +79,15 @@ public class Address implements Serializable {
     public void addOrder(Order order) {
         order.setAddress(this);
         this.orders.add(order);
+    }
+
+    public List<Order> getOrders2() {
+        return orders2;
+    }
+
+    public void addOrder2(Order order2) {
+        order2.setBillingAddress(this);
+        this.orders2.add(order2);
     }
 
     public User getUser() {
