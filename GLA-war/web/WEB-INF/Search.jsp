@@ -35,7 +35,7 @@
         </style>
     </head>
     <body>
-                <%@include file="/WEB-INF/header.xhtml" %>
+        <%@include file="/WEB-INF/header.xhtml" %>
 
         <form method="post" action="recherche">
             <fieldset>
@@ -65,13 +65,6 @@
                 <br/>
             </fieldset>
         </form>
-                <%@include file="/WEB-INF/footer.xhtml" %>
-
-
-                    <input type="submit"  class="btn btn-primary" value="Rechercher" />
-                    <br/>
-                </fieldset>
-            </form>
         <%@include file="/WEB-INF/footer.xhtml" %>
         </div>       
     </body>

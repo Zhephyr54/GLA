@@ -13,10 +13,10 @@
         <title>Recherche</title>
     </head>
     <body>
-        
-                        <%@include file="/WEB-INF/header.xhtml" %>
+        <%@include file="/WEB-INF/header.xhtml" %>
 
         <h1>Résultats de la recherche</h1>
+        <c:if test="${empty items}">Aucun élement trouvé !</c:if>
         <c:forEach items="${items}" var="c">
             <hr>
             <a href="item.xhtml?id=${c.id}">${c.title}</a>
