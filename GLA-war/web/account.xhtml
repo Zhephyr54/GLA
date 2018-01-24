@@ -150,16 +150,18 @@
                     <th>Livraison</th>
                 </tr>
                 <ui:repeat var="order" value="#{accountBean.getUserOrders(sessionScope.sessionUtilisateur.id)}">
-                    <td>#{accountBean.formatOrderDate(order, "dd/MM/YYYY")}</td>
-                    <td>#{order.totalPrice}</td>
-                    <td>
-                        <ui:fragment rendered="#{accountBean.isOrderInProcess(order)}">
-                            En attente
-                        </ui:fragment>
-                        <ui:fragment rendered="#{accountBean.isOrderSent(order)}">
-                            Envoyée
-                        </ui:fragment>
-                    </td>
+                    <tr>
+                        <td>#{accountBean.formatOrderDate(order, "dd/MM/YYYY")}</td>
+                        <td>#{order.totalPrice}</td>
+                        <td>
+                            <ui:fragment rendered="#{accountBean.isOrderInProcess(order)}">
+                                En attente
+                            </ui:fragment>
+                            <ui:fragment rendered="#{accountBean.isOrderSent(order)}">
+                                Envoyée
+                            </ui:fragment>
+                        </td>
+                    </tr>
                 </ui:repeat>
             </table>
             </c:if>

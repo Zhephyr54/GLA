@@ -29,10 +29,10 @@ import javax.persistence.Table;
     @NamedQuery(
             name = "Order.findOrderByUserId", 
             query = "SELECT o FROM Order o WHERE o.user.id = :userId ORDER BY o.orderDate DESC"),
-    /*@NamedQuery(
+    @NamedQuery(
             name = "Order.findOrderByItemId",
-            query = "SELECT o FROM Order o WHERE o.items.id = :itemId"
-    )*/
+            query = "SELECT i.order FROM Item i WHERE  i.id = :itemId"
+    )
 })
 @Entity
 @Table(name = "Orders")
