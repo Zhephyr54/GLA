@@ -85,6 +85,9 @@ public class DatabaseSeed {
         Bidding bidding2 = new Bidding(BigDecimal.valueOf(10100), user3, item5);
         Bidding bidding3 = new Bidding(BigDecimal.valueOf(10101), user1, item5);
         Bidding bidding4 = new Bidding(BigDecimal.valueOf(10102), user1, item5);
+        Bidding bidding5 = new Bidding(BigDecimal.valueOf(10103), user1, item5);
+        Bidding bidding6 = new Bidding(BigDecimal.valueOf(10104), user1, item5);
+        Bidding bidding7 = new Bidding(BigDecimal.valueOf(10105), user1, item5);
 
         LocalTime midnight = LocalTime.MIDNIGHT;
         LocalDate today = LocalDate.now().plusDays(1);
@@ -104,6 +107,9 @@ public class DatabaseSeed {
         em.persist(bidding2);
         em.persist(bidding3);
         em.persist(bidding4);
+        em.persist(bidding5);
+        em.persist(bidding6);
+        em.persist(bidding7);
         em.persist(c1);
         em.persist(c2);
         em.persist(s1);

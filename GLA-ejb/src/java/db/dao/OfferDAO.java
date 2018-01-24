@@ -46,8 +46,7 @@ public class OfferDAO extends AbstractDAO<Offer> {
          List<Subcategory> list = s.findAll();
          int tmp = ThreadLocalRandom.current().nextInt(1, list.size() + 1);
          Subcategory suboffer = list.get(tmp-1);
-         System.out.println("Promo sur la categorie !" + suboffer.getTitle());
-         Offer o = new Offer(LocalDateTime.now().plusDays(1),suboffer);
+         Offer o = new Offer(LocalDateTime.now().plusDays(1), suboffer);
          this.create(o);
      }
      

@@ -7,6 +7,7 @@ package managed_bean;
 
 import db.dao.ItemDAO;
 import db.dao.OfferDAO;
+import db.dao.OrderDAO;
 import entity.Item;
 import entity.User;
 import java.io.Serializable;
@@ -33,6 +34,9 @@ public class ItemUtilsManagedBean implements Serializable {
     @EJB
     OfferDAO offerDAO;
     
+    @EJB
+    OrderDAO orderDAO;
+
     /**
      * Creates a new instance of ItemUtilsManagedBean
      */
@@ -105,6 +109,10 @@ public class ItemUtilsManagedBean implements Serializable {
         // if bidding is over and the user won this item biddings
         return item.getEndBidDate().isBefore(LocalDateTime.now()) && user != null
                 && itemDAO.getCurrentMaxBid(item.getId()).getUser().getId().equals(user.getId());
+    }
+    
+    public boolean isItemOrdered(Item item) {
+        return item.getOrder() != null; 
     }
     
 }

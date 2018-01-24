@@ -7,7 +7,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <c:if test="#{empty itemBean.item}">
-            <title>#{itemBean.item.title}</title>
+            <title>Item introuvable</title>
         </c:if>
         <c:if test="#{not empty itemBean.item}">
             <title>#{itemBean.item.title}</title>
@@ -16,21 +16,10 @@
             <f:viewParam name="id" value="#{itemBean.itemId}"/>
             <f:viewAction action="#{itemBean.onload}"/>
         </f:metadata>
-        <style>
-            body,html{
-                height: 100%;
-            }
 
-            #main{
-                min-height: 100%;
-                margin: 0 auto;
-                position: relative;
-            }
-
-        </style>
     </h:head>
     <h:body>
-        <div id="main">
+
         <ui:include src="/WEB-INF/header.xhtml" />
 
         <c:if test="#{empty itemBean.item}">
@@ -84,11 +73,13 @@
                             <p>Vous devez &ecirc;tre connect&eacute; afin d'ench&eacute;rir</p>
                         </c:if>
                     </td>
-                    <td valign="top">
-                        <label>Enchérir :</label>
+                    
+                        
                         <!-- if user is logged in and it's not one of his items and the biddings are not over -->
                         <c:if test="#{(!empty sessionScope.sessionUtilisateur) and (sessionScope.sessionUtilisateur.id != itemBean.item.user.id)
                                       and (!itemUtilsBean.isBidOver(itemBean.item))}">
+                            <td valign="top">
+                            <label>Enchérir :</label>
                             <h:form>
                                 <h:inputText value="#{itemBean.bid}" required="true" requiredMessage="Vous devez indiquer un montant afin de pouvoir enchérir">
                                     <f:attribute name="minPrice" value="#{itemUtilsBean.getCurrentPrice(itemBean.item)}"/>
@@ -101,14 +92,13 @@
                                 <h:commandButton value="Ench&eacute;rir" class="btn btn-primary" action="#{itemBean.outbid}"/>
                                 <br></br>
                             </h:form>
+                            </td> 
                         </c:if>
-                    </td>    
                     </tr>
                     </table>
                 </div>
             </div>
         </c:if>
-        </div>
         <ui:include src="/WEB-INF/footer.xhtml" />
     </h:body>
 </html>

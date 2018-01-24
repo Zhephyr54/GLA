@@ -8,15 +8,20 @@ package jsf_bean;
 import db.dao.BiddingDAO;
 import db.dao.ItemDAO;
 import db.dao.OrderDAO;
+import db.dao.UserDAO;
 import entity.Bidding;
 import entity.Item;
 import entity.Order;
+import entity.User;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import static servlets.SignIn.ATT_SESSION_USER;
 
 /**
  *
@@ -35,13 +40,21 @@ public class AccountManagedBean {
     @EJB
     OrderDAO orderDAO;
     
+    @EJB
+    UserDAO userDAO;
+    
     private boolean pair = false;
     
+    private final int MAX_CANCELLED_BIDS = User.MAX_CANCELLED_BIDS;
     
     /**
      * Creates a new instance of AccountManagedBean
      */
     public AccountManagedBean() {
+    }
+
+    public int getMAX_CANCELLED_BIDS() {
+        return MAX_CANCELLED_BIDS;
     }
 
     public void removeUserItem(long itemId) {
@@ -75,8 +88,17 @@ public class AccountManagedBean {
         return biddingDAO.getUserBiddings(userId);
     }
 
-    public void removeUserBidding(long biddingId) {
-        biddingDAO.removeById(biddingId);
+    public void removeUserBidding(Bidding bidding) {
+        // if the user won this item biddings
+        if (winner(bidding)) {
+            // increment user cancelled bids counter
+            User user = bidding.getUser();
+            user.setCancelledBids(bidding.getUser().getCancelledBids()+1);
+            userDAO.edit(user);
+            HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+            session.setAttribute(ATT_SESSION_USER, user);
+        }
+        biddingDAO.removeById(bidding.getId());
     }
     
     public boolean getPair(){
@@ -84,10 +106,6 @@ public class AccountManagedBean {
         return this.pair;
     }
 
-    public boolean isItemOrdered(Item item) {
-        return !orderDAO.findOrderByItemId(item.getId()).isEmpty();
-    }
-    
     public List<Order> getUserOrders(long userId) {
         return orderDAO.findOrderByUserId(userId);
     }

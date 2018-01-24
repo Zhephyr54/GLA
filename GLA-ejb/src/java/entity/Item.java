@@ -47,11 +47,6 @@ import javax.persistence.Table;
             name = "Item.findByTitleAndSubcategory",
             query = "SELECT i FROM Item i WHERE LOWER(i.title) LIKE LOWER(:title) AND i.subcategory.id = :subcategoryId "
                     + "AND i.endBidDate > :currentDate"),
-   /* @NamedQuery(
-            name = "Item.getCurrentMaxBid",
-            query = "SELECT b FROM Bidding b WHERE b.item.id = :itemId AND b.price = (SELECT MAX(b2.price) "
-                    + "FROM Bidding b2 "
-                    + "WHERE b2.id = b.id)"),*/
     @NamedQuery(
             name = "Item.getCurrentMaxBid",
             query = "SELECT b FROM Bidding b WHERE b.item.id = :itemId Order BY b.price DESC"),

@@ -13,165 +13,186 @@
         <div class="main">
             <ui:include src="/WEB-INF/header.xhtml" />
 
-            <c:if test="${!empty sessionScope.sessionUtilisateur}">
+            <c:if test="#{!empty sessionScope.sessionUtilisateur}">
+
+                <c:if test="#{sessionScope.sessionUtilisateur.cancelledBids ne 0 and sessionScope.sessionUtilisateur.cancelledBids le accountBean.MAX_CANCELLED_BIDS}">
+                    <p>
+                        Attention : suite à l'annulation de certaines de vos enchères, vous avez reçu 
+                        #{sessionScope.sessionUtilisateur.cancelledBids} avertissements.<br/>
+                        Au bout de #{accountBean.MAX_CANCELLED_BIDS} avertissements, vous n'aurez plus le droit de liciter.     
+                    </p>
+                    <br/>
+                </c:if>
+                <c:if test="#{sessionScope.sessionUtilisateur.cancelledBids ge accountBean.MAX_CANCELLED_BIDS}">
+                    <p>
+                        Attention : vous avez reçu #{accountBean.MAX_CANCELLED_BIDS} avertissements ou plus suite à l'annulation de certaines de vos enchères.<br/>
+                        Vous n'avez donc plus le droit de liciter.
+                    </p>
+                    <br/>
+                </c:if>
+
                 <h2>Mes produits</h2>
-                            <c:if test="${!empty sessionScope.sessionUtilisateur}">
+                <c:if test="${!empty accountBean.getUserItems(sessionScope.sessionUtilisateur.id)}">
 
-                <table>
-                    <tr>
-                        <th>Titre</th>
-                        <th>Prix de départ</th>
-                        <th>Nombre d'enchères</th>
-                        <th>Meilleure enchère</th>
-                        <th>Temps restant</th>
-                        <th>Annuler</th>
-                    </tr>
-                    <ui:repeat var="item" value="#{accountBean.getUserItems(sessionScope.sessionUtilisateur.id)}">
-                        <tr class="#{accountBean.pair ? 'pair' : 'impair'}">
-                            <td>
-                                <h:link value="#{item.title}" outcome="item" >
-                                    <f:param name="id" value="#{item.id}" />
-                                </h:link>
-                            </td>
-                            <td>#{item.startingBid} &euro;</td>
-                            <td>#{itemUtilsBean.getItemBiddingsNumber(item)}</td>
-                            <td>
-                                <ui:fragment rendered="#{itemUtilsBean.hasBid(item)}">
-                                    #{itemUtilsBean.getCurrentPrice(item)} &euro;
-                                </ui:fragment>
-                                <ui:fragment rendered="#{not itemUtilsBean.hasBid(item)}">
-                                    Aucune
-                                </ui:fragment>
-                            </td>
-                            <td>
-                                <!-- if bidding is over -->
-                                <ui:fragment rendered="#{itemUtilsBean.isBidOver(item)}">
-                                    Ench&egrave;re termin&eacute;e
-                                    (#{itemUtilsBean.formatEndBidDate(item, "EEEE dd/MM/YYYY")})
-                                </ui:fragment>
-                                <!-- else -->
-                                <ui:fragment rendered="#{!itemUtilsBean.isBidOver(item)}">
-                                    #{itemUtilsBean.getBidRemainingTime(item)}
-                                    (#{itemUtilsBean.formatEndBidDate(item, "EEEE dd/MM, HH:mm")})
-                                </ui:fragment>
-                            </td>                            
-                            <td class="action">
-                                <ui:fragment rendered="#{accountBean.isItemOrdered(item)}">
-                                    <h:form>
-                                        <h:commandButton action="#{accountBean.removeUserItem(item.id)}" image="res/img/supprimer.png">
-                                        </h:commandButton>
-                                    </h:form>
-                                </ui:fragment>
-                            </td>
-                            <td>
-                                <h:link value="Relancer l'enchère" rendered="#{accountBean.canRestart(item)}" outcome="UpdateBidding">
-                                        <f:param name="id" value="#{item.id}"/>
-                                </h:link>
-                            </td>
+                    <table>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Prix de départ</th>
+                            <th>Nombre d'enchères</th>
+                            <th>Meilleure enchère</th>
+                            <th>Temps restant</th>
+                            <th>Annuler</th>
                         </tr>
-                    </ui:repeat>
-                </table>
-</c:if>
+                        <ui:repeat var="item" value="#{accountBean.getUserItems(sessionScope.sessionUtilisateur.id)}">
+                            <tr class="#{accountBean.pair ? 'pair' : 'impair'}">
+                                <td>
+                                    <h:link value="#{item.title}" outcome="item" >
+                                        <f:param name="id" value="#{item.id}" />
+                                    </h:link>
+                                </td>
+                                <td>#{item.startingBid} &euro;</td>
+                                <td>#{itemUtilsBean.getItemBiddingsNumber(item)}</td>
+                                <td>
+                                    <ui:fragment rendered="#{itemUtilsBean.hasBid(item)}">
+                                        #{itemUtilsBean.getCurrentPrice(item)} &euro;
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{not itemUtilsBean.hasBid(item)}">
+                                        Aucune
+                                    </ui:fragment>
+                                </td>
+                                <td>
+                                    <!-- if bidding is over -->
+                                    <ui:fragment rendered="#{itemUtilsBean.isBidOver(item)}">
+                                        Ench&egrave;re termin&eacute;e
+                                        (#{itemUtilsBean.formatEndBidDate(item, "EEEE dd/MM/YYYY")})
+                                    </ui:fragment>
+                                    <!-- else -->
+                                    <ui:fragment rendered="#{!itemUtilsBean.isBidOver(item)}">
+                                        #{itemUtilsBean.getBidRemainingTime(item)}
+                                        (#{itemUtilsBean.formatEndBidDate(item, "EEEE dd/MM, HH:mm")})
+                                    </ui:fragment>
+                                </td>                            
+                                <td class="action">
+                                    <ui:fragment rendered="#{itemUtilsBean.isItemOrdered(item)}">
+                                        <h:form>
+                                            <h:commandButton action="#{accountBean.removeUserItem(item.id)}" image="res/img/supprimer.png">
+                                            </h:commandButton>
+                                        </h:form>
+                                    </ui:fragment>
+                                </td>
+                                <td>
+                                    <h:link value="Relancer l'enchère" rendered="#{accountBean.canRestart(item)}" outcome="UpdateBidding">
+                                        <f:param name="id" value="#{item.id}"/>
+                                    </h:link>
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                    </table>
+                </c:if>
                 <c:if test="#{empty accountBean.getUserItems(sessionScope.sessionUtilisateur.id)}">
-                    Vous n'avez aucun produit
+                    Vous n'avez aucun produit en vente
                 </c:if>
-            <h2>Mes enchères</h2>
-                            <c:if test="#{!empty accountBean.getUserBiddings(sessionScope.sessionUtilisateur.id)}">
+                <h2>Mes enchères</h2>
+                <c:if test="#{!empty accountBean.getUserBiddings(sessionScope.sessionUtilisateur.id)}">
 
-            <table>
-                <tr>
-                    <th>Titre</th>
-                    <th>Mon enchère</th>
-                    <th>Meilleure enchère</th>
-                    <th>Temps restant</th>
-                    <th>Etat</th>
-                    <th class="action">Annuler</th>
-                </tr>
-                <ui:repeat var="bidding" value="#{accountBean.getUserBiddings(sessionScope.sessionUtilisateur.id)}">
-                    <tr class="#{accountBean.pair ? 'pair' : 'impair'}">
-                        <td><h:link value="#{bidding.item.title}" outcome="item" >
-                                <f:param name="id" value="#{bidding.item.id}" />
-                            </h:link>
-                        </td>
-                        <td>#{bidding.price} &euro;</td>
-                        <td>#{itemUtilsBean.getCurrentPrice(bidding.item)} &euro;</td>
-                        <td>
-                            <!-- if bidding is over -->
-                            <ui:fragment rendered="#{itemUtilsBean.isBidOver(bidding.item)}">
-                                Ench&egrave;re termin&eacute;e
-                                (#{itemUtilsBean.formatEndBidDate(bidding.item, "EEEE dd/MM/YYYY")})
-                            </ui:fragment>
-                            <!-- else -->
-                            <ui:fragment rendered="#{!itemUtilsBean.isBidOver(bidding.item)}">
-                                #{itemUtilsBean.getBidRemainingTime(bidding.item)}
-                                (#{itemUtilsBean.formatEndBidDate(bidding.item, "EEEE dd/MM, HH:mm")})
-                            </ui:fragment>
-                        </td>
-                        <!-- state -->
-                        <td>
-                            <ui:fragment rendered="#{!itemUtilsBean.isBidOver(bidding.item)}">
-                                En cours
-                            </ui:fragment>
-                            <ui:fragment rendered="#{itemUtilsBean.winner(bidding.item)}">
-                                Gagnée
-                            </ui:fragment>
-                            <ui:fragment rendered="#{itemUtilsBean.isBidOver(bidding.item) and !itemUtilsBean.winner(bidding.item)}">
-                                Perdue
-                            </ui:fragment>
-                        </td>
-                        <td class="action">
-                            <h:form>
-                                <h:commandButton action="#{accountBean.removeUserBidding(bidding.id)}" image="res/img/supprimer.png">
-                                </h:commandButton>
-                            </h:form>
-                        </td>
-                        <td>
-                            <h:form>
-                                <h:commandButton value="Ajouter au panier" rendered="#{accountBean.winner(bidding) and !cartBean.isInCart(bidding.item)}"
-                                                 action="#{cartBean.addItem(bidding.item)}"/>
-                                <h:commandButton value="Retirer du panier" rendered="#{accountBean.winner(bidding) and cartBean.isInCart(bidding.item)}"
-                                                 action="#{cartBean.removeItem(bidding.item)}"/>
-                            </h:form>
-                        </td>
-                    </tr>
-                </ui:repeat>
-            </table>
-                 </c:if>
+                    <table>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Mon enchère</th>
+                            <th>Meilleure enchère</th>
+                            <th>Temps restant</th>
+                            <th>Etat</th>
+                            <th class="action">Annuler</th>
+                        </tr>
+                        <ui:repeat var="bidding" value="#{accountBean.getUserBiddings(sessionScope.sessionUtilisateur.id)}">
+                            <tr class="#{accountBean.pair ? 'pair' : 'impair'}">
+                                <td><h:link value="#{bidding.item.title}" outcome="item" >
+                                        <f:param name="id" value="#{bidding.item.id}" />
+                                    </h:link>
+                                </td>
+                                <td>#{bidding.price} &euro;</td>
+                                <td>#{itemUtilsBean.getCurrentPrice(bidding.item)} &euro;</td>
+                                <td>
+                                    <!-- if bidding is over -->
+                                    <ui:fragment rendered="#{itemUtilsBean.isBidOver(bidding.item)}">
+                                        Ench&egrave;re termin&eacute;e
+                                        (#{itemUtilsBean.formatEndBidDate(bidding.item, "EEEE dd/MM/YYYY")})
+                                    </ui:fragment>
+                                    <!-- else -->
+                                    <ui:fragment rendered="#{!itemUtilsBean.isBidOver(bidding.item)}">
+                                        #{itemUtilsBean.getBidRemainingTime(bidding.item)}
+                                        (#{itemUtilsBean.formatEndBidDate(bidding.item, "EEEE dd/MM, HH:mm")})
+                                    </ui:fragment>
+                                </td>
+                                <!-- state -->
+                                <td>
+                                    <ui:fragment rendered="#{!itemUtilsBean.isBidOver(bidding.item)}">
+                                        En cours
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{itemUtilsBean.winner(bidding.item)}">
+                                        Gagnée
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{itemUtilsBean.isBidOver(bidding.item) and !itemUtilsBean.winner(bidding.item)}">
+                                        Perdue
+                                    </ui:fragment>
+                                </td>
+                                <td class="action">
+                                    <ui:fragment rendered="#{not cartBean.isInCart(bidding.item)}">
+                                        <h:form>
+                                            <h:commandButton action="#{accountBean.removeUserBidding(bidding)}" image="res/img/supprimer.png">
+                                            </h:commandButton>
+                                        </h:form>
+                                    </ui:fragment>
+                                </td>
+                                <td>
+                                    <ui:fragment rendered="#{not itemUtilsBean.isItemOrdered(bidding.item)}">
+                                        <h:form>
+                                            <h:commandButton value="Ajouter au panier" rendered="#{accountBean.winner(bidding) and !cartBean.isInCart(bidding.item)}"
+                                                             action="#{cartBean.addItem(bidding.item)}"/>
+                                            <h:commandButton value="Retirer du panier" rendered="#{accountBean.winner(bidding) and cartBean.isInCart(bidding.item)}"
+                                                             action="#{cartBean.removeItem(bidding.item)}"/>
+                                        </h:form>
+                                    </ui:fragment>
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                    </table>
+                </c:if>
                 <c:if test="#{empty accountBean.getUserBiddings(sessionScope.sessionUtilisateur.id)}">
-                    Vous n'avez pas d'enchere
+                    Vous n'avez aucune enchère
                 </c:if>
 
-            <h2>Mes commandes</h2>
-                            <c:if test="#{!empty accountBean.getUserOrders(sessionScope.sessionUtilisateur.id)}">
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Prix total</th>
-                    <th>Livraison</th>
-                </tr>
-                <ui:repeat var="order" value="#{accountBean.getUserOrders(sessionScope.sessionUtilisateur.id)}">
-                    <tr>
-                        <td>#{accountBean.formatOrderDate(order, "dd/MM/YYYY")}</td>
-                        <td>#{order.totalPrice}</td>
-                        <td>
-                            <ui:fragment rendered="#{accountBean.isOrderInProcess(order)}">
-                                En attente
-                            </ui:fragment>
-                            <ui:fragment rendered="#{accountBean.isOrderSent(order)}">
-                                Envoyée
-                            </ui:fragment>
-                        </td>
-                    </tr>
-                </ui:repeat>
-            </table>
-            </c:if>
-                            <c:if test="#{empty accountBean.getUserOrders(sessionScope.sessionUtilisateur.id)}">
+                <h2>Mes commandes</h2>
+                <c:if test="#{!empty accountBean.getUserOrders(sessionScope.sessionUtilisateur.id)}">
+                    <table>
+                        <tr>
+                            <th>Date</th>
+                            <th>Prix total</th>
+                            <th>Livraison</th>
+                        </tr>
+                        <ui:repeat var="order" value="#{accountBean.getUserOrders(sessionScope.sessionUtilisateur.id)}">
+                            <tr>
+                                <td>#{accountBean.formatOrderDate(order, "dd/MM/YYYY")}</td>
+                                <td>#{order.totalPrice}</td>
+                                <td>
+                                    <ui:fragment rendered="#{accountBean.isOrderInProcess(order)}">
+                                        En attente
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{accountBean.isOrderSent(order)}">
+                                        Envoyée
+                                    </ui:fragment>
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                    </table>
+                </c:if>
+                <c:if test="#{empty accountBean.getUserOrders(sessionScope.sessionUtilisateur.id)}">
                     Vous n'avez aucune commande
                 </c:if>
-                            </c:if>
+            </c:if>
 
-                <ui:include src="/WEB-INF/footer.xhtml" />
+            <ui:include src="/WEB-INF/footer.xhtml" />
         </div>
-        
+
     </h:body>
 </html>
