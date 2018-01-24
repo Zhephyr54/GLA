@@ -91,6 +91,7 @@ public class UpdateBiddingManagedBean implements Serializable {
     
     public void onload() {
         this.item = itemDAO.findById(itemId);
+        this.subId = item.getSubcategory().getId();
         this.subcategory = s.findAll();
     }
     
