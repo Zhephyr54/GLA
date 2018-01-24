@@ -55,6 +55,8 @@ public class User implements Serializable {
     @Column(name = "cancelled_bids")
     private int cancelledBids = 0;
     
+    public static final int MAX_CANCELLED_BIDS = 5;
+    
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private List<CreditCard> creditCard = new ArrayList<>(); 
     
