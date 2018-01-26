@@ -52,8 +52,12 @@ public class CreateBidding extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         this.subcategory = s.findAll();
+        User user = (User) request.getSession().getAttribute(ATT_SESSION_USER);
+        int max_cancelled_bids = User.MAX_CANCELLED_BIDS;
+        boolean banned = user.getCancelledBids() >= max_cancelled_bids;
+        request.setAttribute("max_cancelled_bids", max_cancelled_bids);
         request.setAttribute("subcategory", subcategory);
-
+        request.setAttribute("banned", banned);
         this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
     }
 

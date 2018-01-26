@@ -16,6 +16,13 @@
     <body>
         <%@include file="/WEB-INF/header.xhtml" %>
 
+        <% if ((Boolean)request.getAttribute("banned")) {%>
+            <p>
+                Vous avez reçu ${max_cancelled_bids} avertissements ou plus suite à l'annulation de certaines de vos enchères.<br/>
+                Vous n'avez donc plus le droit de liciter.
+            </p>
+        <%} else {%>
+        
         <form method="post" action="enchere">
             <fieldset>
                 <legend>Creer une enchere</legend>
@@ -45,8 +52,8 @@
                 </select>
                 <br/>
 
-                
-            <label for="SubCategory">Choisir la sous categorie<span class="requis">*</span></label>
+
+                <label for="SubCategory">Choisir la sous categorie<span class="requis">*</span></label>
                 <select name="sub" id="sub">
                     <c:forEach items="${subcategory}" var="c">
                         <option value=${c.id}>${c.title}</option>
@@ -58,5 +65,6 @@
                 <br/>
             </fieldset>
         </form>
+        <% }%>
     </body>
 </html>
