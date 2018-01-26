@@ -30,7 +30,5 @@
                 <p class="${empty form.erreurs ? 'succes' : 'erreur'}">${form.resultat}</p>
             </fieldset>
         </form>
-                    <%@include file="/WEB-INF/footer.xhtml" %>
-
     </body>
 </html>

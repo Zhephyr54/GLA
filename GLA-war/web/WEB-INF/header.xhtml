@@ -23,17 +23,17 @@
                     <ul class="navbar-nav ml-auto">
                         <c:if test="${!empty sessionScope.sessionUtilisateur}">
 
-                            <li class="nav-item">
-                                <p class="nav-link"> Bonjour ${sessionScope.sessionUtilisateur.lastname} ${sessionScope.sessionUtilisateur.firstname}  --- </p>
+                            <li>
+                                <p class="nav-link" style="color: white;"> Bonjour ${sessionScope.sessionUtilisateur.lastname} ${sessionScope.sessionUtilisateur.firstname}  </p>
                             </li>
                             <li class="nav-item">
-                                <h:link class="nav-link" outcome="account" value="Mon Compte"/>
+                                <a class="nav-link" href="account.xhtml">Mon compte</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="deconnexion">D&eacute;connexion</a>
                             </li>
                             <li class="nav-item">
-                                <h:link class="nav-link" outcome="cart" value="Panier"/>
+                                <a class="nav-link" href="cart.xhtml">Panier</a>
                             </li>
                         </c:if>
                         <li class="nav-item">

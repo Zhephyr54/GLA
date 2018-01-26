@@ -55,32 +55,44 @@ public class DatabaseSeed {
         item4.setUser(user2);
         Item item5 = new Item("Tv 4k", "Incroyable du pure 4K", BigDecimal.valueOf(10099.99), LocalDateTime.now());
         item5.setUser(user2);
-
-        Category c1 = new Category("Multimedia");
-        Category c2 = new Category("Loisirs");
+        Item item6 = new Item("BMX super cool", "Super BMX trop cool ! En très bon état. A ne pas louper !", BigDecimal.valueOf(50.60), LocalDateTime.now().plusDays(3));
+        item6.setUser(user3);
+        
+        Category c1 = new Category("MULTIMEDIA");
 
         Subcategory s1 = new Subcategory("Informatique");
-        Subcategory s2 = new Subcategory("Jeux");
-        Subcategory s3 = new Subcategory("Livres");
-        Subcategory s4 = new Subcategory("Velos");
+        Subcategory s2 = new Subcategory("Jeux vidéos");
 
+        Category c2 = new Category("LOISIRS");
+
+        Subcategory s3 = new Subcategory("Livres");
+        Subcategory s4 = new Subcategory("Vélos");
+        
+        Category c3 = new Category("VEHICULES");
+        
+        Subcategory s5 = new Subcategory("Voitures");
+        Subcategory s6 = new Subcategory("Motos");
+
+        
         s1.setCategory(c1);
         s2.setCategory(c1);
         s3.setCategory(c2);
         s4.setCategory(c2);
-
+        s5.setCategory(c3);
+        s6.setCategory(c3);
+        
         item1.setSubcategory(s1);
         item2.setSubcategory(s1);
         item3.setSubcategory(s1);
         item4.setSubcategory(s1);
         item5.setSubcategory(s1);
-
+        item6.setSubcategory(s4);
+        
         Address adr = new Address("10 rue des aaa");
         adr.setUser(user1);
         Address adr2 = new Address("11 rue des aaa");
         adr2.setUser(user1);
 
-        
         Bidding bidding1 = new Bidding(BigDecimal.valueOf(500), user2, item1);
         Bidding bidding2 = new Bidding(BigDecimal.valueOf(10100), user3, item5);
         Bidding bidding3 = new Bidding(BigDecimal.valueOf(10101), user1, item5);
@@ -103,6 +115,7 @@ public class DatabaseSeed {
         em.persist(item3);
         em.persist(item4);
         em.persist(item5);
+        em.persist(item6);
         em.persist(bidding1);
         em.persist(bidding2);
         em.persist(bidding3);
@@ -112,10 +125,13 @@ public class DatabaseSeed {
         em.persist(bidding7);
         em.persist(c1);
         em.persist(c2);
+        em.persist(c3);
         em.persist(s1);
         em.persist(s2);
         em.persist(s3);
         em.persist(s4);
+        em.persist(s5);
+        em.persist(s6);
         em.persist(adr);
         em.persist(adr2);
         em.persist(o);

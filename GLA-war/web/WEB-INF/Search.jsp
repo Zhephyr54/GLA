@@ -65,7 +65,5 @@
                 <br/>
             </fieldset>
         </form>
-        <%@include file="/WEB-INF/footer.xhtml" %>
-        </div>       
     </body>
 </html>

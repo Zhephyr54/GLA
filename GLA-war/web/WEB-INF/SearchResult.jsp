@@ -24,7 +24,5 @@
             <div>Subcategory : ${c.subcategory.title}</div>
             <hr>
         </c:forEach>
-       <%@include file="/WEB-INF/footer.xhtml" %>
-
     </body>
 </html>

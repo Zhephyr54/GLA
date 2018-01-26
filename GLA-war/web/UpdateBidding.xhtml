@@ -43,21 +43,20 @@
                 </h:selectOneMenu>
                 <br/>
 
-                
+
                 <label for="SubCategory">Choisir la sous categorie<span class="requis">*</span></label>
-                
+
                 <h:selectOneMenu value = "#{updateBiddingBean.subId}">
                     <c:forEach items="#{updateBiddingBean.subcategory}" var="cat">
                         <f:selectItem itemValue="#{cat.id}" itemLabel="#{cat.title}" />
                     </c:forEach>
                 </h:selectOneMenu>
-                
+
                 <br/>
                 <h:commandButton value="Relancer l'enchère" action="#{updateBiddingBean.update()}" />
                 <br/>
             </fieldset>
         </h:form>
-        <ui:include src="/WEB-INF/footer.xhtml"/>
     </h:body>
 </html>
 
