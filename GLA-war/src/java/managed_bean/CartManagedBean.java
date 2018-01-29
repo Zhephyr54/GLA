@@ -237,8 +237,6 @@ public class CartManagedBean implements Serializable {
 
     @Asynchronous
     private void sendGlaRequest(Order order) {
-        System.out.println("+++++++++++++++++++++");
-        System.out.println(order.getUser().getFirstname());
         context.createProducer().send(orderQueue, order);
     }
 }

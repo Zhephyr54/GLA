@@ -7,8 +7,10 @@ package mdb;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
+import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
+import javax.jms.TextMessage;
 
 /**
  *
@@ -25,8 +27,13 @@ public class OrderMDB implements MessageListener {
     
     @Override
     public void onMessage(Message message) {
-        System.out.println("mdb.OrderMDB.onMessage()");
-        System.out.println(message.toString());
+        if (message instanceof TextMessage) {  
+            TextMessage tm = (TextMessage) message;  
+            try {  
+                String text = tm.getText();  
+                System.out.println("Received new message :" + text);  
+            } catch (JMSException e) {}  
+        }  
     }
     
 }

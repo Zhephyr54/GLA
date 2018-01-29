@@ -7,7 +7,7 @@
         <title>Inscription</title>
     </head>
     <body>
-                            <%@include file="/WEB-INF/header.xhtml" %>
+        <%@include file="/WEB-INF/header.xhtml" %>
 
         <form method="post" action="inscription">
             <fieldset>
