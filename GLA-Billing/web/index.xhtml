@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Traitement des facturations</title>
+        <style>
+            table{
+                border-collapse: collapse;
+            }
+            tr.pair{
+                background-color: #efefef;
+            }
+            tr.impair{
+                background-color: #fff;	
+            }
+            th{
+                color: #0568CD;
+                border: 1px solid #0568CD;
+                padding: 5px;
+            }
+            th.action{
+                border: 1px solid #900;
+                color: #900;
+            }
+            td{
+                border: 1px solid #ddd;
+                padding: 5px;
+            }
+            td.action{
+                text-align: center;
+            }
+
+            footer{
+                position:absolute;
+                bottom:0;
+                width: 100%;
+            }
+
+            .row{
+                padding-bottom:80px;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h2>Demande de facturation</h2>
+        <c:if test="#{not empty billingBean.orders}">
+            <table border="1">
+                <tr>
+                    <th>N° Commande</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Date</th>
+                    <th>Payer</th>
+                </tr>
+                <ui:repeat var="order" value="#{billingBean.orders}">
+                    <tr>
+                        <td>#{order.id}</td>
+                        <td>#{order.user.lastname}</td>
+                        <td>#{order.user.firstname}</td>
+                        <td>#{order.orderDate}</td>
+                        <td><c:if test="#{billingBean.verif}">OK</c:if></td>
+                        <td class="action">
+                            <h:form>
+                                <h:commandButton action="#{billingBean.verification()}" image="">
+                                </h:commandButton>
+                            </h:form>
+                        </td>
+                    </tr>
+                </ui:repeat>
+            </table>
+        </c:if>
+    </h:body>
+</html>
+

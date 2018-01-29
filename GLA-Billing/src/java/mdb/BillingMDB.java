@@ -12,28 +12,28 @@ import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-import managed_bean.DeliveryManagedBean;
+import managed_bean.BillingManagedBean;
 
 /**
  *
  * @author Nihad
  */
 @MessageDriven(activationConfig = {
-    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/glaRequest"),
+    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/glaRequestB"),
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 })
-public class DeliveryMDB implements MessageListener {
+public class BillingMDB implements MessageListener {
     
     @EJB
-    private DeliveryManagedBean deliveryManagedBean;
+    private BillingManagedBean billingManagedBean;
     
-    public DeliveryMDB() {
+    public BillingMDB() {
     }
     
     @Override
     public void onMessage(Message message) {
         try {
-            deliveryManagedBean.setOrder(message.getBody(Order.class));
+            billingManagedBean.setOrder(message.getBody(Order.class));
         } catch (JMSException ex) {}
     }
     

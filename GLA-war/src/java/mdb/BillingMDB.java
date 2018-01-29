@@ -5,36 +5,35 @@
  */
 package mdb;
 
-import entity.Order;
 import javax.ejb.ActivationConfigProperty;
-import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-import managed_bean.DeliveryManagedBean;
+import javax.jms.TextMessage;
 
 /**
  *
- * @author Nihad
+ * @author NIhad
  */
 @MessageDriven(activationConfig = {
-    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/glaRequest"),
+    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/glaResponseB"),
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 })
-public class DeliveryMDB implements MessageListener {
+public class BillingMDB implements MessageListener {
     
-    @EJB
-    private DeliveryManagedBean deliveryManagedBean;
-    
-    public DeliveryMDB() {
+    public BillingMDB() {
     }
     
     @Override
     public void onMessage(Message message) {
-        try {
-            deliveryManagedBean.setOrder(message.getBody(Order.class));
-        } catch (JMSException ex) {}
+        if (message instanceof TextMessage) {  
+            TextMessage tm = (TextMessage) message;  
+            try {  
+                String text = tm.getText();  
+                System.out.println("Received new message :" + text);  
+            } catch (JMSException e) {}  
+        }  
     }
     
 }

@@ -22,14 +22,14 @@ import javax.jms.JMSContext;
  *
  * @author Nihad
  */
-@Named(value = "deliveryBean")
+@Named(value = "billingBean")
 @SessionScoped
-public class DeliveryManagedBean implements Serializable {
+public class BillingManagedBean implements Serializable{
 
     @Inject
     private JMSContext context;
 
-    @Resource(lookup = "jms/glaResponse")
+    @Resource(lookup = "jms/glaResponseB")
     Destination orderQueue;
     
     private Order order;
@@ -38,7 +38,7 @@ public class DeliveryManagedBean implements Serializable {
     @EJB
     OrderDAO orderDAO;
 
-    public DeliveryManagedBean() {
+    public BillingManagedBean() {
     }
 
     public Order getOrder() {

@@ -42,10 +42,13 @@ import javax.jms.JMSContext;
 public class CartManagedBean implements Serializable {
     
     @Inject
-    private JMSContext context;
+    private JMSContext deleveryContext, billingContext;
 
     @Resource(lookup = "jms/glaRequest")
-    Destination orderQueue;
+    Destination deleveryQueue;
+    
+    @Resource(lookup = "jms/glaRequestB")
+    Destination billingQueue;
 
     private String address;
     private Long cvv;
@@ -149,7 +152,7 @@ public class CartManagedBean implements Serializable {
         Order order = new Order(user, a, a2, cb, listItems, calculateTotalPrice());
         orderDAO.edit(order);
         listItems.clear();
-        this.sendGlaRequest(order);
+        this.sendGlaRequestB(order);
         return "account.xhtml";
     }
 
@@ -237,6 +240,11 @@ public class CartManagedBean implements Serializable {
 
     @Asynchronous
     private void sendGlaRequest(Order order) {
-        context.createProducer().send(orderQueue, order);
+        deleveryContext.createProducer().send(deleveryQueue, order);
+    }
+    
+    @Asynchronous
+    private void sendGlaRequestB(Order order) {
+        billingContext.createProducer().send(billingQueue, order);
     }
 }
