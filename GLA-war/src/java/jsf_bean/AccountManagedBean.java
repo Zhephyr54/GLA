@@ -108,6 +108,13 @@ public class AccountManagedBean {
         return orderDAO.findOrderByUserId(userId);
     }
     
+    public boolean isOrderedByUser(Long userId, Item item) {
+        if (item.getOrder() == null) {
+            return false;
+        }
+        return item.getOrder().getUser().getId().equals(userId);
+    }
+    
     public String formatOrderDate(Order order, String pattern) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
         return order.getOrderDate().format(formatter);
