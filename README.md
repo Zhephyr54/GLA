@@ -13,5 +13,11 @@ Puis lancer les commandes suivantes :
     
     ./asadmin create-jms-resource --restype javax.jms.Queue --property Name=glaResponse jms/glaResponse
     ./asadmin create-jms-resource --restype javax.jms.QueueConnectionFactory --description "connection factory for jms/glaResponse" jms/glaResponseFactory
+    
+    ./asadmin create-jms-resource --restype javax.jms.Queue --property Name=glaRequestB jms/glaRequestB
+    ./asadmin create-jms-resource --restype javax.jms.QueueConnectionFactory --description "connection factory for jms/glaRequestB" jms/glaRequestBFactory
+    
+    ./asadmin create-jms-resource --restype javax.jms.Queue --property Name=glaResponseB jms/glaResponseB
+    ./asadmin create-jms-resource --restype javax.jms.QueueConnectionFactory --description "connection factory for jms/glaResponseB" jms/glaResponseBFactory
 
 La configuration est terminée
