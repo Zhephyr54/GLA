@@ -6,7 +6,10 @@
 package mdb;
 
 
+import db.dao.OrderDAO;
+import entity.Order;
 import javax.ejb.ActivationConfigProperty;
+import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -24,6 +27,9 @@ import javax.jms.TextMessage;
 })
 public class BillingMDB implements MessageListener {
 
+    @EJB
+    OrderDAO orderDAO;
+    
     public BillingMDB() {
     }
 
@@ -36,9 +42,9 @@ public class BillingMDB implements MessageListener {
             try {
                 String text = tm.getText();
                 Long id = Long.valueOf(text);
-                /*Order o = orderDAO.findById(id);
-                o.setOrderState(Order.OrderState.IN_PROCESS);*/
-                System.out.println("Received new message :" + id);
+                Order o = orderDAO.findById(id);
+                o.setOrderState(Order.OrderState.IN_PROCESS);
+                System.out.println("Received new message billing :" + id);
             } catch (JMSException e) {
             }
         }

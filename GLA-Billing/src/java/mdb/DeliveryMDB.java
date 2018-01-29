@@ -22,11 +22,12 @@ import managed_bean.BillingManagedBean;
     @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/glaRequestB"),
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 })
-public class BillingMDB implements MessageListener {
+public class DeliveryMDB implements MessageListener {
+    
     @EJB
     BillingManagedBean billingManagedBean;
     
-    public BillingMDB() {
+    public DeliveryMDB() {
     }
     
     @Override
