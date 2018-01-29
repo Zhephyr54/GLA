@@ -23,10 +23,15 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.jms.Destination;
+import javax.jms.JMSContext;
 
 /**
  *
@@ -35,6 +40,12 @@ import javax.inject.Named;
 @Named(value = "cartBean")
 @SessionScoped
 public class CartManagedBean implements Serializable {
+    
+    @Inject
+    private JMSContext context;
+
+    @Resource(lookup = "jms/glaRequest")
+    Destination orderQueue;
 
     private String address;
     private Long cvv;
@@ -138,6 +149,7 @@ public class CartManagedBean implements Serializable {
         Order order = new Order(user, a, a2, cb, listItems, calculateTotalPrice());
         orderDAO.edit(order);
         listItems.clear();
+        this.sendGlaRequest(order);
         return "account.xhtml";
     }
 
@@ -221,5 +233,12 @@ public class CartManagedBean implements Serializable {
 
     public void setAddress2Id(Long address2Id) {
         this.address2Id = address2Id;
+    }
+
+    @Asynchronous
+    private void sendGlaRequest(Order order) {
+        System.out.println("+++++++++++++++++++++");
+        System.out.println(order.getUser().getFirstname());
+        context.createProducer().send(orderQueue, order);
     }
 }

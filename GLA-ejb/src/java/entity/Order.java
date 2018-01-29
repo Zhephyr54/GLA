@@ -27,8 +27,11 @@ import javax.persistence.Table;
  */
 @NamedQueries({
     @NamedQuery(
+            name = "Order.findAll", 
+            query = "SELECT o FROM Order o"),
+    @NamedQuery(
             name = "Order.findOrderByUserId", 
-            query = "SELECT o FROM Order o WHERE o.user.id = :userId ORDER BY o.orderDate DESC"),
+            query = "SELECT o FROM Order o WHERE o.user.id = :userId ORDER BY o.orderDate DESC")
 })
 @Entity
 @Table(name = "Orders")

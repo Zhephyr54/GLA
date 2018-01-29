@@ -39,4 +39,8 @@ public class OrderDAO extends AbstractDAO<Order> {
         return query.getResultList();
     }
     
+    public List<Order> findAll() {
+        return executeNamedQuery("Order.findAll");
+    }
+    
 }
