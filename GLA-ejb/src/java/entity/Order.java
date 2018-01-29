@@ -37,7 +37,7 @@ import javax.persistence.Table;
 @Table(name = "Orders")
 public class Order implements Serializable {
 
-    public enum OrderState { IN_PROCESS, SENT }
+    public enum OrderState { WAITING_PAYMENT, IN_PROCESS, SENT }
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -51,7 +51,7 @@ public class Order implements Serializable {
     private BigDecimal totalPrice;
 
     @Column(name = "order_state")
-    private OrderState orderState = OrderState.IN_PROCESS;
+    private OrderState orderState = OrderState.WAITING_PAYMENT;
     
     @ManyToOne
     private User user;

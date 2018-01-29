@@ -134,12 +134,12 @@
                                 <ui:fragment rendered="#{itemUtilsBean.isBidOver(bidding.item) and !itemUtilsBean.winner(bidding.item)}">
                                     Perdu
                                 </ui:fragment>
-                                <ui:fragment rendered="#{itemUtilsBean.isItemOrdered(bidding.item)}">
+                                <ui:fragment rendered="#{accountBean.isOrderedByUser(sessionScope.sessionUtilisateur.id, bidding.item)}">
                                     Commandé
                                 </ui:fragment>
                             </td>
                             <td class="action">
-                                <h:form rendered="#{not cartBean.isInCart(bidding.item)}">
+                                <h:form rendered="#{!cartBean.isInCart(bidding.item) and !accountBean.isOrderedByUser(sessionScope.sessionUtilisateur.id, bidding.item)}">
                                     <h:commandButton action="#{accountBean.removeUserBidding(bidding)}" image="res/img/supprimer.png">
                                     </h:commandButton>
                                 </h:form>
@@ -168,15 +168,18 @@
                     <tr>
                         <th>Date</th>
                         <th>Prix total</th>
-                        <th>Livraison</th>
+                        <th>Etat</th>
                     </tr>
                     <ui:repeat var="order" value="#{accountBean.getUserOrders(sessionScope.sessionUtilisateur.id)}">
                         <tr>
                             <td>#{accountBean.formatOrderDate(order, "dd/MM/YYYY")}</td>
                             <td>#{order.totalPrice} &euro;</td>
                             <td>
+                                <ui:fragment rendered="#{accountBean.isOrderWaitingPayment(order)}">
+                                    Validation de paiement
+                                </ui:fragment>
                                 <ui:fragment rendered="#{accountBean.isOrderInProcess(order)}">
-                                    En attente
+                                    Validation de l'envoi 
                                 </ui:fragment>
                                 <ui:fragment rendered="#{accountBean.isOrderSent(order)}">
                                     Envoyée

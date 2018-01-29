@@ -16,6 +16,9 @@
                     <path-in-war>/</path-in-war>
                 </library>
                 <library>
+                    <file>${reference.Gla-Validation.dist-ear}</file>
+                </library>
+                <library>
                     <file>${reference.GLA-Validation.dist-ear}</file>
                     <path-in-war>/</path-in-war>
                 </library>

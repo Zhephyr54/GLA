@@ -108,6 +108,13 @@ public class AccountManagedBean {
         return orderDAO.findOrderByUserId(userId);
     }
     
+    public boolean isOrderedByUser(Long userId, Item item) {
+        if (item.getOrder() == null) {
+            return false;
+        }
+        return item.getOrder().getUser().getId().equals(userId);
+    }
+    
     public String formatOrderDate(Order order, String pattern) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
         return order.getOrderDate().format(formatter);
@@ -117,7 +124,12 @@ public class AccountManagedBean {
         return Order.OrderState.SENT.equals(order.getOrderState());
     }
     
+    public boolean isOrderWaitingPayment(Order order) {
+        return Order.OrderState.WAITING_PAYMENT.equals(order.getOrderState());
+    }
+    
     public boolean isOrderInProcess(Order order) {
         return Order.OrderState.IN_PROCESS.equals(order.getOrderState());
     }
+   
 }
