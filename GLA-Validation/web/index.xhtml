@@ -67,7 +67,7 @@
                         <td><c:if test="#{deliveryBean.verif}">OK</c:if></td>
                         <td class="action">
                             <h:form>
-                                <h:commandButton action="#{deliveryBean.verification()}" image="">
+                                <h:commandButton action="#{deliveryBean.verification(order.id)}" image="">
                                 </h:commandButton>
                             </h:form>
                         </td>

@@ -26,7 +26,7 @@ import javax.jms.JMSContext;
 @SessionScoped
 public class BillingManagedBean implements Serializable{
 
-    @Inject
+     @Inject
     private JMSContext context;
 
     @Resource(lookup = "jms/glaResponseB")
@@ -57,9 +57,9 @@ public class BillingManagedBean implements Serializable{
         return this.verif;
     }
     
-    public void verification(){
+    public void verification(long id){
         this.verif = true;
-        this.sendGlaResponse(this.order.getId()+"");
+        this.sendGlaResponse(id+"");
     }  
 
     @Asynchronous

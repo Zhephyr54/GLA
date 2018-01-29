@@ -17,23 +17,25 @@ import javax.jms.TextMessage;
  * @author Nihad
  */
 @MessageDriven(activationConfig = {
-    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/glaResponse"),
+    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/glaResponse")
+    ,
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 })
 public class OrderMDB implements MessageListener {
-    
+
     public OrderMDB() {
     }
-    
+
     @Override
     public void onMessage(Message message) {
-        if (message instanceof TextMessage) {  
-            TextMessage tm = (TextMessage) message;  
-            try {  
-                String text = tm.getText();  
-                System.out.println("Received new message :" + text);  
-            } catch (JMSException e) {}  
-        }  
+        if (message instanceof TextMessage) {
+            TextMessage tm = (TextMessage) message;
+            try {
+                String text = tm.getText();
+                System.out.println("Received new message :" + text);
+            } catch (JMSException e) {
+            }
+        }
     }
-    
+
 }

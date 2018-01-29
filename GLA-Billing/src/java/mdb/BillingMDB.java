@@ -24,7 +24,6 @@ import managed_bean.BillingManagedBean;
 })
 public class BillingMDB implements MessageListener {
     
-    @EJB
     private BillingManagedBean billingManagedBean;
     
     public BillingMDB() {

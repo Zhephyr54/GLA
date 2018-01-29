@@ -64,7 +64,7 @@
                         <td><c:if test="#{billingBean.verif}">OK</c:if></td>
                         <td class="action">
                             <h:form>
-                                <h:commandButton action="#{billingBean.verification()}" image="">
+                                <h:commandButton action="#{billingBean.verification(order.id)}" image="">
                                 </h:commandButton>
                             </h:form>
                         </td>

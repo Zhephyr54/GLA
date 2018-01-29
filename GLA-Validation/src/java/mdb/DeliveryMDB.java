@@ -24,7 +24,6 @@ import managed_bean.DeliveryManagedBean;
 })
 public class DeliveryMDB implements MessageListener {
     
-    @EJB
     private DeliveryManagedBean deliveryManagedBean;
     
     public DeliveryMDB() {

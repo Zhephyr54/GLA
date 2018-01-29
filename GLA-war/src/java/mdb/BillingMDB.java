@@ -5,6 +5,7 @@
  */
 package mdb;
 
+
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
@@ -17,23 +18,30 @@ import javax.jms.TextMessage;
  * @author NIhad
  */
 @MessageDriven(activationConfig = {
-    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/glaResponseB"),
+    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/glaResponseB")
+    ,
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 })
 public class BillingMDB implements MessageListener {
-    
+
     public BillingMDB() {
     }
-    
-    @Override
+
+   @Override
     public void onMessage(Message message) {
-        if (message instanceof TextMessage) {  
-            TextMessage tm = (TextMessage) message;  
-            try {  
-                String text = tm.getText();  
-                System.out.println("Received new message :" + text);  
-            } catch (JMSException e) {}  
-        }  
+                        System.out.println("Received new message :" + message);
+
+        if (message instanceof TextMessage) {
+            TextMessage tm = (TextMessage) message;
+            try {
+                String text = tm.getText();
+                Long id = Long.valueOf(text);
+                /*Order o = orderDAO.findById(id);
+                o.setOrderState(Order.OrderState.IN_PROCESS);*/
+                System.out.println("Received new message :" + id);
+            } catch (JMSException e) {
+            }
+        }
     }
-    
+
 }

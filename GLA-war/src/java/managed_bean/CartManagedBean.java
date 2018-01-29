@@ -42,11 +42,8 @@ import javax.jms.JMSContext;
 public class CartManagedBean implements Serializable {
     
     @Inject
-    private JMSContext deleveryContext, billingContext;
-
-    @Resource(lookup = "jms/glaRequest")
-    Destination deleveryQueue;
-    
+    private JMSContext billingContext;
+  
     @Resource(lookup = "jms/glaRequestB")
     Destination billingQueue;
 
@@ -236,11 +233,6 @@ public class CartManagedBean implements Serializable {
 
     public void setAddress2Id(Long address2Id) {
         this.address2Id = address2Id;
-    }
-
-    @Asynchronous
-    private void sendGlaRequest(Order order) {
-        deleveryContext.createProducer().send(deleveryQueue, order);
     }
     
     @Asynchronous

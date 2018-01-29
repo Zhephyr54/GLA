@@ -57,9 +57,9 @@ public class DeliveryManagedBean implements Serializable {
         return this.verif;
     }
     
-    public void verification(){
+    public void verification(long id){
         this.verif = true;
-        this.sendGlaResponse(this.order.getId()+"");
+        this.sendGlaResponse(id+"");
     }  
 
     @Asynchronous
