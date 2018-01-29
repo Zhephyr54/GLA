@@ -5,7 +5,10 @@
  */
 package mdb;
 
+import db.dao.OrderDAO;
+import entity.Order;
 import javax.ejb.ActivationConfigProperty;
+import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -23,15 +26,24 @@ import javax.jms.TextMessage;
 })
 public class OrderMDB implements MessageListener {
 
+    @EJB
+    OrderDAO orderDAO;
+            
     public OrderMDB() {
     }
 
     @Override
     public void onMessage(Message message) {
+                                System.out.println("Received new message :" + message);
+
         if (message instanceof TextMessage) {
             TextMessage tm = (TextMessage) message;
             try {
                 String text = tm.getText();
+                Long id = Long.valueOf(text);
+                Order o = orderDAO.findById(id);
+                o.setOrderState(Order.OrderState.SENT);
+                
                 System.out.println("Received new message :" + text);
             } catch (JMSException e) {
             }

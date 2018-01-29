@@ -23,8 +23,8 @@ import managed_bean.BillingManagedBean;
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 })
 public class BillingMDB implements MessageListener {
-    
-    private BillingManagedBean billingManagedBean;
+    @EJB
+    BillingManagedBean billingManagedBean;
     
     public BillingMDB() {
     }
