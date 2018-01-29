@@ -117,7 +117,12 @@ public class AccountManagedBean {
         return Order.OrderState.SENT.equals(order.getOrderState());
     }
     
+    public boolean isOrderWaitingPayment(Order order) {
+        return Order.OrderState.WAITING_PAYMENT.equals(order.getOrderState());
+    }
+    
     public boolean isOrderInProcess(Order order) {
         return Order.OrderState.IN_PROCESS.equals(order.getOrderState());
     }
+   
 }
