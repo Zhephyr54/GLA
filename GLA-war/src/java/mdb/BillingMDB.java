@@ -5,12 +5,16 @@
  */
 package mdb;
 
-
 import db.dao.OrderDAO;
 import entity.Order;
+import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
+import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
+import javax.inject.Inject;
+import javax.jms.Destination;
+import javax.jms.JMSContext;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -29,14 +33,18 @@ public class BillingMDB implements MessageListener {
 
     @EJB
     OrderDAO orderDAO;
-    
+
+    @Inject
+    private JMSContext billingContext;
+
+    @Resource(lookup = "jms/glaRequest")
+    Destination deliveryQueue;
+
     public BillingMDB() {
     }
 
-   @Override
+    @Override
     public void onMessage(Message message) {
-                        System.out.println("Received new message :" + message);
-
         if (message instanceof TextMessage) {
             TextMessage tm = (TextMessage) message;
             try {
@@ -44,10 +52,15 @@ public class BillingMDB implements MessageListener {
                 Long id = Long.valueOf(text);
                 Order o = orderDAO.findById(id);
                 o.setOrderState(Order.OrderState.IN_PROCESS);
-                System.out.println("Received new message billing :" + id);
+                sendGlaRequest(o);
             } catch (JMSException e) {
             }
         }
+    }
+    
+    @Asynchronous
+    private void sendGlaRequest(Order order) {
+        billingContext.createProducer().send(deliveryQueue, order);
     }
 
 }

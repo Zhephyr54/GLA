@@ -28,14 +28,12 @@ public class OrderMDB implements MessageListener {
 
     @EJB
     OrderDAO orderDAO;
-            
+
     public OrderMDB() {
     }
 
     @Override
     public void onMessage(Message message) {
-                                System.out.println("Received new message :" + message);
-
         if (message instanceof TextMessage) {
             TextMessage tm = (TextMessage) message;
             try {
@@ -43,8 +41,6 @@ public class OrderMDB implements MessageListener {
                 Long id = Long.valueOf(text);
                 Order o = orderDAO.findById(id);
                 o.setOrderState(Order.OrderState.SENT);
-                
-                System.out.println("Received new message :" + text);
             } catch (JMSException e) {
             }
         }

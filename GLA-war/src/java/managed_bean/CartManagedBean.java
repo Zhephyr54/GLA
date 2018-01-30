@@ -47,6 +47,7 @@ public class CartManagedBean implements Serializable {
     @Resource(lookup = "jms/glaRequestB")
     Destination billingQueue;
 
+  
     private String address;
     private Long cvv;
     private Long number;
@@ -234,9 +235,12 @@ public class CartManagedBean implements Serializable {
     public void setAddress2Id(Long address2Id) {
         this.address2Id = address2Id;
     }
+      
     
     @Asynchronous
     private void sendGlaRequestB(Order order) {
         billingContext.createProducer().send(billingQueue, order);
     }
+    
+
 }

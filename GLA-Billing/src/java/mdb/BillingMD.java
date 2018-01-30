@@ -22,12 +22,12 @@ import bean.OrderHandlerBean2;
     @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/glaRequestB"),
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 })
-public class DeliveryMDB implements MessageListener {
+public class BillingMD implements MessageListener {
         
     @EJB
     private OrderHandlerBean2 handlerBean;
         
-    public DeliveryMDB() {
+    public BillingMD() {
     }
     
     @Override
