@@ -21,3 +21,9 @@ Puis lancer les commandes suivantes :
     ./asadmin create-jms-resource --restype javax.jms.QueueConnectionFactory --description "connection factory for jms/glaResponseB" jms/glaResponseBFactory
 
 La configuration est terminée
+
+Pour valider le paiement : 
+http://localhost:8080/GLA-Billing/
+
+Pour valider l'envoie :
+http://localhost:8080/GLA-Validation/
