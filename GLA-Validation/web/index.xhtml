@@ -47,7 +47,7 @@
     </h:head>
     <h:body>
         <h2>Demande de livraison</h2>
-        <c:if test="#{not empty deliveryBean.orders}">
+        <c:if test="#{!deliveryBean.orders.isEmpty()}">
             <table border="1">
                 <tr>
                     <th>N° Commande</th>
@@ -56,6 +56,7 @@
                     <th>Date</th>
                     <th>Poids</th>
                     <th>Dimension</th>
+                    <th>Livraison</th>
                 </tr>
                 <ui:repeat var="order" value="#{deliveryBean.orders}">
                     <tr>
@@ -63,11 +64,11 @@
                         <td>#{order.user.lastname}</td>
                         <td>#{order.user.firstname}</td>
                         <td>#{order.orderDate}</td>
-                        <td><c:if test="#{deliveryBean.verif}">OK</c:if></td>
-                        <td><c:if test="#{deliveryBean.verif}">OK</c:if></td>
+                        <td></td>
+                        <td></td>
                         <td class="action">
                             <h:form>
-                                <h:commandButton action="#{deliveryBean.verification(order.id)}" image="">
+                                <h:commandButton action="#{deliveryBean.validate(order)}" image="" value="Envoyer">
                                 </h:commandButton>
                             </h:form>
                         </td>

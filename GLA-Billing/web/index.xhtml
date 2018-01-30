@@ -46,14 +46,14 @@
     </h:head>
     <h:body>
         <h2>Demande de facturation</h2>
-        <c:if test="#{not empty billingBean.orders}">
+        <c:if test="#{!billingBean.orders.isEmpty()}">
             <table border="1">
                 <tr>
                     <th>N° Commande</th>
                     <th>Nom</th>
                     <th>Prenom</th>
                     <th>Date</th>
-                    <th>Payer</th>
+                    <th>Paiement</th>
                 </tr>
                 <ui:repeat var="order" value="#{billingBean.orders}">
                     <tr>
@@ -61,10 +61,9 @@
                         <td>#{order.user.lastname}</td>
                         <td>#{order.user.firstname}</td>
                         <td>#{order.orderDate}</td>
-                        <td><c:if test="#{billingBean.verif}">OK</c:if></td>
                         <td class="action">
                             <h:form>
-                                <h:commandButton action="#{billingBean.verification(order.id)}" image="">
+                                <h:commandButton action="#{billingBean.validate(order)}" image="" value="Valider">
                                 </h:commandButton>
                             </h:form>
                         </td>

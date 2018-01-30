@@ -5,6 +5,7 @@
  */
 package mdb;
 
+import bean.OrderHandlerBean;
 import entity.Order;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
@@ -12,7 +13,6 @@ import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-import managed_bean.DeliveryManagedBean;
 
 /**
  *
@@ -25,7 +25,7 @@ import managed_bean.DeliveryManagedBean;
 public class DeliveryMDB implements MessageListener {
     
     @EJB
-    DeliveryManagedBean deliveryManagedBean;
+    private OrderHandlerBean handlerBean;
     
     public DeliveryMDB() {
     }
@@ -33,7 +33,10 @@ public class DeliveryMDB implements MessageListener {
     @Override
     public void onMessage(Message message) {
         try {
-            deliveryManagedBean.setOrder(message.getBody(Order.class));
+            Order order = message.getBody(Order.class);
+            if (order != null) {
+                handlerBean.addOrder(order);
+            }
         } catch (JMSException ex) {}
     }
     

@@ -12,7 +12,7 @@ import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-import managed_bean.BillingManagedBean;
+import bean.OrderHandlerBean2;
 
 /**
  *
@@ -23,17 +23,20 @@ import managed_bean.BillingManagedBean;
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 })
 public class DeliveryMDB implements MessageListener {
-    
+        
     @EJB
-    BillingManagedBean billingManagedBean;
-    
+    private OrderHandlerBean2 handlerBean;
+        
     public DeliveryMDB() {
     }
     
     @Override
     public void onMessage(Message message) {
         try {
-            billingManagedBean.setOrder(message.getBody(Order.class));
+            Order order = message.getBody(Order.class);
+            if (order != null) {
+                handlerBean.addOrder(order);
+            }
         } catch (JMSException ex) {}
     }
     

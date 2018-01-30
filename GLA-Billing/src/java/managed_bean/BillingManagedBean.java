@@ -5,7 +5,6 @@
  */
 package managed_bean;
 
-import db.dao.OrderDAO;
 import entity.Order;
 import java.io.Serializable;
 import java.util.List;
@@ -17,6 +16,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.jms.Destination;
 import javax.jms.JMSContext;
+import bean.OrderHandlerBean2;
 
 /**
  *
@@ -26,40 +26,25 @@ import javax.jms.JMSContext;
 @SessionScoped
 public class BillingManagedBean implements Serializable{
 
-     @Inject
+    @Inject
     private JMSContext context;
 
     @Resource(lookup = "jms/glaResponseB")
     Destination orderQueue;
-    
-    private Order order;
-    private boolean verif = false;
-    
+        
     @EJB
-    OrderDAO orderDAO;
-
+    OrderHandlerBean2 hanldlerBean; 
+    
     public BillingManagedBean() {
     }
 
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-    
     public List<Order> getOrders() {
-        return orderDAO.findAll();
-    } 
-    
-    public boolean isVerif(){
-        return this.verif;
+        return hanldlerBean.getOrders();
     }
     
-    public void verification(long id){
-        this.verif = true;
-        this.sendGlaResponse(id+"");
+    public void validate(Order order) {
+        hanldlerBean.removerOrder(order);
+        this.sendGlaResponse(order.getId()+"");
     }  
 
     @Asynchronous

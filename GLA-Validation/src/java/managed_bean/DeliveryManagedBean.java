@@ -5,7 +5,7 @@
  */
 package managed_bean;
 
-import db.dao.OrderDAO;
+import bean.OrderHandlerBean;
 import entity.Order;
 import java.io.Serializable;
 import java.util.List;
@@ -31,35 +31,20 @@ public class DeliveryManagedBean implements Serializable {
 
     @Resource(lookup = "jms/glaResponse")
     Destination orderQueue;
-    
-    private Order order;
-    private boolean verif = false;
-    
+
     @EJB
-    OrderDAO orderDAO;
+    OrderHandlerBean hanldlerBean;     
 
     public DeliveryManagedBean() {
     }
 
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-    
     public List<Order> getOrders() {
-        return orderDAO.findAll();
-    } 
-    
-    public boolean isVerif(){
-        return this.verif;
+        return hanldlerBean.getOrders();
     }
     
-    public void verification(long id){
-        this.verif = true;
-        this.sendGlaResponse(id+"");
+    public void validate(Order order) {
+        hanldlerBean.removerOrder(order);
+        this.sendGlaResponse(order.getId()+"");
     }  
 
     @Asynchronous

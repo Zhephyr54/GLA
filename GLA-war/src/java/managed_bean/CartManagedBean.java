@@ -147,7 +147,7 @@ public class CartManagedBean implements Serializable {
         Address a2 = adrDAO.findById(address2Id);
         CreditCard cb = cbDAO.findById(cbID);
         Order order = new Order(user, a, a2, cb, listItems, calculateTotalPrice());
-        orderDAO.edit(order);
+        order = orderDAO.edit(order);
         listItems.clear();
         this.sendGlaRequestB(order);
         return "account.xhtml";
