@@ -5,7 +5,6 @@
  */
 package managed_bean;
 
-import bean.OrderHandlerBean;
 import entity.Order;
 import java.io.Serializable;
 import java.util.List;
@@ -17,6 +16,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.jms.Destination;
 import javax.jms.JMSContext;
+import bean.OrderHandlerBean2;
 
 /**
  *
@@ -33,7 +33,7 @@ public class DeliveryManagedBean implements Serializable {
     Destination orderQueue;
 
     @EJB
-    OrderHandlerBean hanldlerBean;     
+    OrderHandlerBean2 hanldlerBean;     
 
     public DeliveryManagedBean() {
     }

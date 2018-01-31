@@ -12,7 +12,7 @@ import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-import bean.OrderHandlerBean2;
+import bean.OrderHandlerBean;
 
 /**
  *
@@ -25,7 +25,7 @@ import bean.OrderHandlerBean2;
 public class BillingMD implements MessageListener {
         
     @EJB
-    private OrderHandlerBean2 handlerBean;
+    private OrderHandlerBean handlerBean;
         
     public BillingMD() {
     }

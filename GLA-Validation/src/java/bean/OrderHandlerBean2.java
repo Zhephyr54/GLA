@@ -7,13 +7,13 @@ package bean;
 
 import entity.Order;
 import java.util.List;
-import javax.ejb.Remote;
+import javax.ejb.Local;
 
 /**
  *
  * @author alexis
  */
-@Remote
+@Local
 public interface OrderHandlerBean2 {
  
     public void addOrder(Order order);

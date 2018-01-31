@@ -16,7 +16,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.jms.Destination;
 import javax.jms.JMSContext;
-import bean.OrderHandlerBean2;
+import bean.OrderHandlerBean;
 
 /**
  *
@@ -33,7 +33,7 @@ public class BillingManagedBean implements Serializable{
     Destination orderQueue;
         
     @EJB
-    OrderHandlerBean2 hanldlerBean; 
+    OrderHandlerBean hanldlerBean; 
     
     public BillingManagedBean() {
     }

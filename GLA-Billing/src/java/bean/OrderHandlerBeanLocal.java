@@ -15,11 +15,11 @@ import javax.ejb.Stateless;
  * @author alexis
  */
 @Stateless
-public class OrderHandlerBeanRemote implements OrderHandlerBean {
+public class OrderHandlerBeanLocal implements OrderHandlerBean {
 
     private final List<Order> orders;
 
-    public OrderHandlerBeanRemote() {
+    public OrderHandlerBeanLocal() {
         orders = new ArrayList<>();
     }
     
