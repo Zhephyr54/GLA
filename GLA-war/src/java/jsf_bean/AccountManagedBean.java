@@ -65,9 +65,7 @@ public class AccountManagedBean {
         itemDAO.removeById(itemId);
     }
 
-    public boolean canRestart(Item i) {
-        System.out.println("aaaaaaaaaaaaaaaaa" + i.getBiddings().toString());
-                
+    public boolean canRestart(Item i) {              
         return itemDAO.getNumberOfBiddingsById(i.getId()) == 0 && i.getEndBidDate().isBefore(LocalDateTime.now())
                 && i.getOrder() == null;
     }
